@@ -11,8 +11,9 @@ interface errorType {
   email: string | false;
   password: string | false;
 }
+type Props = { type: "signin" | "signup" };
 
-const RegisterForm: React.FC<LoginFormProps> = () => {
+const AuthForm = ({ type }: Props) => {
   const [state, setState] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState<errorType>({
     username: false,
@@ -25,14 +26,13 @@ const RegisterForm: React.FC<LoginFormProps> = () => {
     password: false,
   });
   const [status, reqMessage, user, jwtToken, onSubmit] = useAuthSubmit(
-    "signin",
+    type,
     state
   );
   const { setUser } = useGlobalContext();
-  
+
   useEffect(() => {
     setUser(user);
-    console.log("jwtToken", jwtToken);
   }, [user, jwtToken, setUser]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -77,16 +77,20 @@ const RegisterForm: React.FC<LoginFormProps> = () => {
           onBlur={handleBlur}
         />
         <span className="form__error-message">{error.username}</span>
-        <label htmlFor="email">Email : </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={state.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <span className="form__error-message">{error.email}</span>
+        {type === "signup" && (
+          <>
+            <label htmlFor="email">Email : </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={state.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <span className="form__error-message">{error.email}</span>
+          </>
+        )}
         <label htmlFor="password">Password : </label>
         <input
           type="password"
@@ -103,4 +107,4 @@ const RegisterForm: React.FC<LoginFormProps> = () => {
   );
 };
 
-export default RegisterForm;
+export default AuthForm;

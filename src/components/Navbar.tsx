@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useGlobalContext } from "../utils/context";
 
 export interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
   const { user, setUser } = useGlobalContext();
-  console.log(user);
+  const history = useHistory();
   return (
     <nav className="nav">
       <div className="nav__header">
@@ -23,7 +23,15 @@ const Navbar: React.FC<NavbarProps> = () => {
             <>
               <div className="user">{user?.username}</div>
               <li>
-                <button onClick={() => setUser(undefined)}>Logout</button>
+                <button
+                  onClick={() => {
+                    history.push("/");
+                    localStorage.clear()
+                    setUser(undefined);
+                  }}
+                >
+                  Logout
+                </button>
               </li>
             </>
           ) : (
