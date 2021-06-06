@@ -1,0 +1,96 @@
+import { useState } from "react";
+
+//Types
+import { stateType, TCustomHook, Tstatus, Tmessage, IUser } from "../types";
+
+function useAuthSubmit(
+  type: "signin" | "signup",
+  state: stateType
+): TCustomHook {
+  const [status, setStatus] = useState<Tstatus>("idle");
+  const [message, setMessage] = useState<Tmessage>();
+  const [user, setUser] = useState<IUser | undefined>();
+  const [jwtToken, setToken] = useState<string | undefined>();
+
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const data = JSON.stringify(state);
+  const requestOptions: RequestInit = {
+    method: "POST",
+    headers: myHeaders,
+    body: data,
+    redirect: "follow",
+    mode: "cors",
+  };
+  const onSubmit = async () => {
+    setStatus("pending");
+    try {
+      const resp = await fetch(
+        "http://localhost:5050/auth/" + type,
+        requestOptions
+      );
+      const jsonData = await resp.json();
+      setStatus("idle");
+
+      if (!resp.ok) {
+        // Show an error message on top of the form
+        setMessage({ type: "error", message: jsonData.message });
+      } else {
+        const { token, user: receivedUser } = jsonData;
+        setToken(token);
+        setUser(receivedUser);
+        setMessage(undefined);
+      }
+    } catch (error) {
+      setMessage({ type: "error", message: error.message });
+    }
+  };
+  return [status, message, user, jwtToken, onSubmit];
+}
+
+// async function useAuthSubmit(type: "signin" | "signup", data: stateType) {
+//   const [reqMessage, setReqMessage] =
+//     useState<{
+//       type: "error" | "success" | "loading";
+//       message: string;
+//     } | null>();
+//   const [loading, setLoading] = useState(false);
+//   const [user, setUser] = useState();
+
+//   setReqMessage({ type: "loading", message: "Submitting form..." });
+//   const myHeaders = new Headers();
+//   myHeaders.append("Content-Type", "application/json");
+//   const data = JSON.stringify(state);
+//   const requestOptions: RequestInit = {
+//     method: "POST",
+//     headers: myHeaders,
+//     body: data,
+//     redirect: "follow",
+//     mode: "cors",
+//   };
+//   const onSubmit = async () => {
+//     try {
+//       const resp = await fetch(
+//         "http://localhost:5050/auth/" + type,
+//         requestOptions
+//       );
+//       const jsonData = await resp.json();
+//       setLoading(false);
+//       if (!resp.ok) {
+//         // Show an error message on top of the form
+//         setReqMessage({ type: "error", message: jsonData.message });
+//       } else {
+//         const { token, user: receivedUser } = jsonData;
+//         console.log(token);
+//         setUser(receivedUser);
+//         setReqMessage({ type: "success", message: JSON.stringify(user) });
+//       }
+//     } catch (error) {
+//       setReqMessage({ type: "error", message: error.message });
+//     }
+//   };
+
+//   return [onSubmit];
+// }
+
+export default useAuthSubmit;

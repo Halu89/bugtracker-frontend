@@ -1,32 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import FormInput from "./FormInput";
-
-type validateFunc = (a: string) => string | false;
-
-const validate: {
-  username: validateFunc;
-  email: validateFunc;
-  password: validateFunc;
-} = {
-  username: (value) => {
-    if (!value) {
-      return "Please fill out this field";
-    }
-    return false;
-  },
-  email: (value: string): string | false => {
-    if (!value) {
-      return "Please fill out this field";
-    }
-    return false;
-  },
-  password: (value: string): string | false => {
-    if (!value) {
-      return "Please fill out this field";
-    }
-    return false;
-  },
-};
+import validate from "../utils/validate";
+import useAuthSubmit from "../hooks/useAuthSubmit";
+import { useGlobalContext } from "../utils/context";
 
 export interface LoginFormProps {}
 
@@ -48,13 +24,16 @@ const RegisterForm: React.FC<LoginFormProps> = () => {
     email: false,
     password: false,
   });
-  const [reqMessage, setReqMessage] =
-    useState<{
-      type: "error" | "success";
-      message: string;
-    } | null>();
-
-  const [loading, setLoading] = useState(false);
+  const [status, reqMessage, user, jwtToken, onSubmit] = useAuthSubmit(
+    "signin",
+    state
+  );
+  const { setUser } = useGlobalContext();
+  
+  useEffect(() => {
+    setUser(user);
+    console.log("jwtToken", jwtToken);
+  }, [user, jwtToken, setUser]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget as typeof e.currentTarget & {
@@ -70,51 +49,20 @@ const RegisterForm: React.FC<LoginFormProps> = () => {
       name: "username" | "email" | "password";
       value: string;
     };
-
     //Check for errors
     setError({ ...error, [name]: validate[name](value) });
-
     // Set touched
     setTouched({ ...touched, [e.currentTarget.name]: true });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    const data = JSON.stringify(state);
-    const requestOptions: RequestInit = {
-      method: "POST",
-      headers: myHeaders,
-      body: data,
-      redirect: "follow",
-      mode: "cors",
-    };
-    try {
-      const resp = await fetch(
-        "http://localhost:5050/auth/signup",
-        requestOptions
-      );
-      const jsonData = await resp.json();
-      setLoading(false);
-      if (!resp.ok) {
-        // Show an error message on top of the form
-        setReqMessage({ type: "error", message: jsonData.message });
-      } else {
-        const { token } = jsonData;
-        setReqMessage({ type: "success", message: token });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    // .then((response) => response.json())
-    // .then((result) => console.log(result.token))
-    // .catch((error) => console.log("error", error));
+    onSubmit();
   };
+
   return (
     <div className="container">
-      {loading && <div className="success">Loading ...</div>}
+      {status === "pending" && <div className="success">Loading ...</div>}
       {reqMessage && (
         <div className={reqMessage.type}>{reqMessage.message}</div>
       )}
