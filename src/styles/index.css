@@ -1,0 +1,42 @@
+@import "./reset.css";
+.App {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #bb2c2c;
+  font-size: 2rem;
+}
+nav .nav__links ul {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+nav .nav__links li {
+  margin: 1rem 2rem;
+}
+nav .nav__links a {
+  text-decoration: none;
+}
+nav .nav__links a:hover {
+  color: white;
+}
+
+main {
+  display: grid;
+  place-items: center;
+  background: #acacac;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+form input {
+  margin: 0.7rem 0;
+}/*# sourceMappingURL=index.css.map */

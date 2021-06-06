@@ -1,0 +1,49 @@
+@import "./reset.css";
+
+$main-color: rgb(187, 44, 44);
+
+.App {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $main-color;
+  font-size: 2rem;
+
+  .nav__links {
+    ul {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+    }
+
+    li {
+      margin: 1rem 2rem;
+    }
+    a {
+      text-decoration: none;
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}
+
+main {
+  display: grid;
+  place-items: center;
+  background: rgb(172, 172, 172);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  input {
+    margin: 0.7rem 0;
+  }
+}
