@@ -1,39 +1,25 @@
 import { useState, useEffect } from "react";
-import { IIssue, IProject } from "../types";
+import { IIssue, IProject, RequestError } from "../types";
+import { apiCall } from "../utils";
 
 const useFetch = (
   url: string,
-  method: "POST" | "GET" | "UPDATE" | "DELETE",
+  method: "POST" | "GET" | "PUT" | "DELETE",
   data?: IIssue | IProject
 ) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<any>();
-  const [error, setError] = useState("");
+  const [error, setError] = useState<RequestError>();
 
   useEffect(() => {
+    setLoading(true);
     const sendReq = async () => {
-      setLoading(true);
-      console.log("sending request");
-      let body;
-      if (data) {
-        body = JSON.stringify(data);
-      }
-
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${localStorage.token}`);
-      const requestOptions: RequestInit = {
-        method: method,
-        headers: myHeaders,
-        body: body,
-        redirect: "follow",
-        mode: "cors",
-      };
+      console.log("sending request"); // XXX
       try {
-        const resp = await fetch(url, requestOptions);
+        const resp = await apiCall(url, method);
         setLoading(false);
         if (resp.status === 401) {
-          return setError("Unauthorized");
+          return setError({ statusCode: 401, message: "Unauthorized" });
         }
         const jsonResp = await resp.json();
         if (!resp.ok) {
@@ -42,8 +28,8 @@ const useFetch = (
         } else {
           return setResponse(jsonResp);
         }
-      } catch (error) {
-        return setError(error);
+      } catch (e) {
+        return setError({ statusCode: 500, message: e.message });
       }
     };
     sendReq();

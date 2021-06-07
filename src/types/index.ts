@@ -32,6 +32,11 @@ export interface IIssue {
   updatedAt: string;
 }
 export type Tstatus = "idle" | "pending";
+export type RequestError = {
+  statusCode: number;
+  message: string;
+  stack?: string;
+};
 
 export type Tmessage =
   | {
@@ -55,3 +60,5 @@ export interface IFormState {
 }
 
 export type AuthLabels = "username" | "email" | "password";
+
+export type HTTPMethods = "GET" | "POST" | "PUT" | "DELETE";

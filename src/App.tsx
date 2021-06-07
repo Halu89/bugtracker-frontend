@@ -11,7 +11,7 @@ function App() {
   const { setUser } = useGlobalContext();
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      console.log("Authenticating from the cookie");
+      console.log("Authenticating from the cookie"); // XXX
       try {
         const { id, username } = jwtDecode<{ id: string; username: string }>(
           localStorage.token
@@ -31,7 +31,7 @@ function App() {
         <Navbar />
         <main>
           <Switch>
-            <Route path="/projects/:issueId">
+            <Route path="/projects/:projectId">
               <Project />
             </Route>
             <Route path="/projects">

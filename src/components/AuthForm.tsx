@@ -75,6 +75,7 @@ const AuthForm = ({ type }: Props) => {
       return el ? true : acc;
     }, false);
     // Verify that we have values
+    // FIXME don't look at the email field if we are on signin
     const isEmpty = Object.values(state).reduce((acc: boolean, el: string) => {
       return el.length <= 0 ? true : acc;
     }, false);

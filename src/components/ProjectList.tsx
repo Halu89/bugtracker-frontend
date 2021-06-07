@@ -4,8 +4,8 @@ import { IProject } from "../types";
 import { useGlobalContext } from "../utils/context";
 
 const ProjectList = () => {
-  const [loading, response, error] = useFetch(
-    "http://localhost:5050/projects",
+  const [loading, response] = useFetch(
+    "/projects",
     "GET"
   );
   let projects;

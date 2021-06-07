@@ -1,6 +1,6 @@
 export type Tmethod = "GET" | "POST" | "PUT" | "DELETE";
 
-const apiCall = async (path: string, method: Tmethod, data: object) => {
+const apiCall = async (path: string, method: Tmethod, data?: object) => {
   const baseUrl = process.env.REACT_APP_API_URL;
 
   //Set default headers and auth token

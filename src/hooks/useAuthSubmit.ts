@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { apiCall } from "../utils/";
 //Types
 import { stateType, TCustomHook, Tstatus, Tmessage, IUser } from "../types";
 
@@ -14,23 +15,10 @@ function useAuthSubmit(
   const [jwtToken, setToken] = useState<string | undefined>();
   const history = useHistory();
 
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  const data = JSON.stringify(state);
-  const requestOptions: RequestInit = {
-    method: "POST",
-    headers: myHeaders,
-    body: data,
-    redirect: "follow",
-    mode: "cors",
-  };
   const submitForm = async () => {
     setStatus("pending");
     try {
-      const resp = await fetch(
-        "http://localhost:5050/auth/" + type,
-        requestOptions
-      );
+      const resp = await apiCall(`/auth/${type}`, "POST", state);
       const jsonData = await resp.json();
       setStatus("idle");
 
@@ -40,7 +28,7 @@ function useAuthSubmit(
       } else {
         const { token, user: receivedUser } = jsonData;
         setToken(token);
-        console.log("Decoded Token :>> ", jwt_decode(token));
+        console.log("Decoded Token :>> ", jwt_decode(token)); // XXX
         localStorage.setItem("token", token);
         setUser(receivedUser);
         setMessage(undefined);

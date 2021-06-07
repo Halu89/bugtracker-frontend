@@ -7,19 +7,12 @@ import { useGlobalContext } from "../utils/context";
 export interface Props {}
 
 const Project: React.FC<Props> = () => {
-  const { issueId } = useParams<{ issueId: string }>();
-  const [loading, response] = useFetch(
-    `http://localhost:5050/projects/${issueId}`,
-    "GET"
-  );
+  const { projectId } = useParams<{ projectId: string }>();
+  const [loading, response] = useFetch(`/projects/${projectId}`, "GET");
   const { project, setProject } = useGlobalContext();
 
-  // useEffect(() => {
-  //   setProject(response);
-  // }, [response, setProject]);
-
   let issues;
-  console.log("Issues", response);
+  console.log("Issues", response); // XXX
   if (response) {
     issues = response.map((issue: IIssue) => {
       return (
