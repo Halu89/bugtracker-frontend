@@ -4,6 +4,7 @@ import AuthForm from "./components/AuthForm";
 import Navbar from "./components/Navbar";
 import { useGlobalContext } from "./utils/context";
 import jwtDecode from "jwt-decode";
+import Main from "./components/Main";
 
 function App() {
   const { setUser } = useGlobalContext();
@@ -33,7 +34,7 @@ function App() {
               Home
             </Route>
             <Route exact path="/projects">
-              My projects
+              <Main />
             </Route>
             <Route exact path="/login">
               <AuthForm type="signin" />
