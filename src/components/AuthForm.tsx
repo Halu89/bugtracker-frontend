@@ -96,21 +96,21 @@ const AuthForm = ({ type }: Props) => {
       )}
       <form onSubmit={handleSubmit} noValidate>
         <FormInput
-          name="username"
+          field="username"
           label="Name : "
           value={state.username}
           formLogic={formLogic}
         />
         {type === "signup" && (
           <FormInput
-            name="email"
+            field="email"
             label="Email : "
             value={state.email}
             formLogic={formLogic}
           />
         )}
         <FormInput
-          name="password"
+          field="password"
           label="Password : "
           value={state.password}
           formLogic={formLogic}

@@ -1,7 +1,7 @@
 import React from "react";
 import { IFormState } from "../types";
 export interface FormInputProps {
-  name: "username" | "email" | "password";
+  field: "username" | "email" | "password";
   label: string;
   value: string;
   formLogic: {
@@ -13,27 +13,27 @@ export interface FormInputProps {
 }
 
 const FormInput: React.FC<FormInputProps> = ({
-  name,
+  field,
   label,
   value,
   formLogic,
 }) => {
   const { handleChange, handleBlur, touched, errors } = formLogic;
 
-  const inputType = name === "password" ? "password" : "text";
+  const inputType = field === "password" ? "password" : "text";
   return (
-    <label htmlFor="name">
+    <label htmlFor={field}>
       {label}
       <input
         type={inputType}
-        name={name}
-        id={name}
+        name={field}
+        id={field}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
       />
       <span className="form__error-message">
-        {touched[name] && errors[name]}
+        {touched[field] && errors[field]}
       </span>
     </label>
   );

@@ -6,6 +6,7 @@ import { useGlobalContext } from "./utils/context";
 import jwtDecode from "jwt-decode";
 import ProjectList from "./components/ProjectList";
 import Project from "./components/Project";
+import NewProjectForm from "./components/NewProjectForm";
 
 function App() {
   const { setUser } = useGlobalContext();
@@ -43,7 +44,9 @@ function App() {
             <Route path="/register">
               <AuthForm type="signup" />
             </Route>
-            <Route path="/">Home</Route>
+            <Route path="/">
+              <NewProjectForm />
+            </Route>
           </Switch>
         </main>
       </div>
