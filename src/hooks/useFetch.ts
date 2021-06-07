@@ -8,6 +8,7 @@ const useFetch = (
 ) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<any>();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const sendReq = async () => {
@@ -32,24 +33,23 @@ const useFetch = (
         const resp = await fetch(url, requestOptions);
         setLoading(false);
         if (resp.status === 401) {
-          return setResponse("Unauthorized");
+          return setError("Unauthorized");
         }
         const jsonResp = await resp.json();
         if (!resp.ok) {
-          return setResponse(jsonResp.message);
+          console.log("Error from fetch", jsonResp);
+          return setError(jsonResp.message);
         } else {
           return setResponse(jsonResp);
         }
       } catch (error) {
-        return setResponse(error);
+        return setError(error);
       }
     };
     sendReq();
   }, [data, method, url]);
 
-  return [loading, response];
+  return [loading, response, error];
 };
 
 export default useFetch;
-
-// [boolean, any, (data?: IIssue | IProject) => void]

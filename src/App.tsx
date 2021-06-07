@@ -4,7 +4,8 @@ import AuthForm from "./components/AuthForm";
 import Navbar from "./components/Navbar";
 import { useGlobalContext } from "./utils/context";
 import jwtDecode from "jwt-decode";
-import Main from "./components/Main";
+import ProjectList from "./components/ProjectList";
+import Project from "./components/Project";
 
 function App() {
   const { setUser } = useGlobalContext();
@@ -30,18 +31,19 @@ function App() {
         <Navbar />
         <main>
           <Switch>
-            <Route exact path="/">
-              Home
+            <Route path="/projects/:issueId">
+              <Project />
             </Route>
-            <Route exact path="/projects">
-              <Main />
+            <Route path="/projects">
+              <ProjectList />
             </Route>
-            <Route exact path="/login">
+            <Route path="/login">
               <AuthForm type="signin" />
             </Route>
-            <Route exact path="/register">
+            <Route path="/register">
               <AuthForm type="signup" />
             </Route>
+            <Route path="/">Home</Route>
           </Switch>
         </main>
       </div>

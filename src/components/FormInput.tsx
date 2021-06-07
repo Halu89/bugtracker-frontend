@@ -1,10 +1,15 @@
 import React from "react";
-
+import { IFormState } from "../types";
 export interface FormInputProps {
-  name: string;
+  name: "username" | "email" | "password";
   label: string;
   value: string;
-  formLogic: any;
+  formLogic: {
+    handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+    handleBlur: (e: React.FormEvent<HTMLInputElement>) => void;
+    touched: { username: boolean; password: boolean; email: boolean };
+    errors: IFormState;
+  };
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -13,21 +18,23 @@ const FormInput: React.FC<FormInputProps> = ({
   value,
   formLogic,
 }) => {
-  const { handleChange, onBlur, touched, errors } = formLogic;
+  const { handleChange, handleBlur, touched, errors } = formLogic;
+
+  const inputType = name === "password" ? "password" : "text";
   return (
-    <label htmlFor={`"${name}"`}>
+    <label htmlFor="name">
       {label}
       <input
-        type={name === "email" ? "email" : "text"}
+        type={inputType}
         name={name}
         id={name}
         value={value}
         onChange={handleChange}
-        onBlur={onBlur}
-        required
-        autoComplete={name === "name" || "email" ? "off" : "on"}
+        onBlur={handleBlur}
       />
-      <span>{touched[name] && errors[name]}</span>
+      <span className="form__error-message">
+        {touched[name] && errors[name]}
+      </span>
     </label>
   );
 };

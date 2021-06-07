@@ -24,7 +24,7 @@ function useAuthSubmit(
     redirect: "follow",
     mode: "cors",
   };
-  const onSubmit = async () => {
+  const submitForm = async () => {
     setStatus("pending");
     try {
       const resp = await fetch(
@@ -43,8 +43,6 @@ function useAuthSubmit(
         console.log("Decoded Token :>> ", jwt_decode(token));
         localStorage.setItem("token", token);
         setUser(receivedUser);
-        localStorage.setItem("user", receivedUser);
-        //Set the user in a localStorage cookie
         setMessage(undefined);
         history.push("/projects");
       }
@@ -52,7 +50,7 @@ function useAuthSubmit(
       setMessage({ type: "error", message: error.message });
     }
   };
-  return [status, message, user, jwtToken, onSubmit];
+  return [status, message, user, jwtToken, submitForm];
 }
 
 export default useAuthSubmit;

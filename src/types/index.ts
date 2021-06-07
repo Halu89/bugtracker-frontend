@@ -32,6 +32,7 @@ export interface IIssue {
   updatedAt: string;
 }
 export type Tstatus = "idle" | "pending";
+
 export type Tmessage =
   | {
       type: "error" | "success";
@@ -46,3 +47,11 @@ export type TCustomHook = [
   string | undefined,
   () => void
 ];
+
+export interface IFormState {
+  username: string | false;
+  email: string | false;
+  password: string | false;
+}
+
+export type AuthLabels = "username" | "email" | "password";

@@ -32,6 +32,9 @@ main {
   place-items: center;
   background: #acacac;
 }
+main .projects-container > div {
+  outline: 2px solid blue;
+}
 
 form {
   display: flex;

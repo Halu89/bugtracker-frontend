@@ -38,6 +38,10 @@ main {
   display: grid;
   place-items: center;
   background: rgb(172, 172, 172);
+
+  .projects-container > div {
+    outline: 2px solid blue;
+  }
 }
 
 form {
