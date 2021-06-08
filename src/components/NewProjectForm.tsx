@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useSend from "../hooks/useSend";
-import FormInput from "./FormInput copy";
+import TextInput, { TextArea } from "./FormInputs";
 
 export interface NewProjectFormProps {}
 
@@ -9,8 +9,14 @@ type ProjectFormTouched = { name: boolean; description: boolean };
 type FormFields = "name" | "description";
 
 const validate = {
-  name: (a: string) => {},
-  description: (a: string) => {},
+  name: (a: string) => {
+    if (!a.trim()) return "Please fill out this field";
+    return false;
+  },
+  description: (a: string) => {
+    if (!a.trim()) return "Please fill out this field";
+    return false;
+  },
 };
 const NewProjectForm: React.FC<NewProjectFormProps> = () => {
   const [state, setState] = useState({ name: "", description: "" });
@@ -30,16 +36,20 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
     sendRequest: sendNewProject,
   } = useSend("/projects", "POST", state);
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.currentTarget as typeof e.currentTarget & {
-      name: "name" | "description";
+      name: keyof typeof state;
       value: string;
     };
     setState({ ...state, [name]: value });
     setTouched({ ...touched, [name]: true });
   };
 
-  const handleBlur = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleBlur = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.currentTarget as typeof e.currentTarget & {
       name: "name" | "description";
       value: string;
@@ -94,17 +104,18 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
         {status === "pending" && (
           <div>Sending the project to the server...</div>
         )}
-        <FormInput<typeof state>
+        <TextInput<typeof state>
           label="Project name : "
           value={state.name}
           field="name"
           formLogic={formLogic}
         />
-        <FormInput<typeof state>
+        <TextArea<typeof state>
           label="Project Description : "
           value={state.description}
           field="description"
           formLogic={formLogic}
+          dimensions={{ rows: 12, cols: 40 }}
         />
 
         <button type="submit">Submit</button>

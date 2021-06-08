@@ -22,6 +22,7 @@ function useSend(path: string, method: HTTPMethods, data?: object) {
         setResponse(jsonData);
       }
     } catch (e) {
+      setStatus("idle");
       setError({ statusCode: 500, message: e.message });
     }
   };

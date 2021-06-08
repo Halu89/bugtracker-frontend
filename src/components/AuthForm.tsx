@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import validate from "../utils/validate";
 import useAuthSubmit from "../hooks/useAuthSubmit";
 import { useGlobalContext } from "../utils/context";
-import FormInput from "./FormInput";
+import FormInput from "./FormInputs";
 
 import { AuthLabels } from "../types";
 

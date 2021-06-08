@@ -3,8 +3,8 @@ import NavUser from "./NavUser";
 
 const NavLinks = () => {
   return (
-    <div className="nav__links">
-      <ul>
+    <>
+      <ul className="nav__links">
         <li>
           <NavLink
             activeStyle={{ color: "grey" }}
@@ -25,9 +25,11 @@ const NavLinks = () => {
             Projects
           </NavLink>
         </li>
+      </ul>
+      <ul className="nav__user">
         <NavUser />
       </ul>
-    </div>
+    </>
   );
 };
 
