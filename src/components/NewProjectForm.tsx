@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useSend from "../hooks/useSend";
-import FormInput from "./FormInput";
+import FormInput from "./FormInput copy";
 
 export interface NewProjectFormProps {}
 
@@ -94,31 +94,19 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
         {status === "pending" && (
           <div>Sending the project to the server...</div>
         )}
-        {/* <FormInput
+        <FormInput<typeof state>
           label="Project name : "
           value={state.name}
-          name="name"
+          field="name"
           formLogic={formLogic}
-        /> */}
-        <label htmlFor="name"></label>
-        Name:
-        <input
-          id="name"
-          type="text"
-          name="name"
-          value={state.name}
-          onChange={handleChange}
-          onBlur={handleBlur}
         />
-        <label htmlFor="description">Description :</label>
-        <input
-          id="description"
-          type="text"
-          name="description"
+        <FormInput<typeof state>
+          label="Project Description : "
           value={state.description}
-          onChange={handleChange}
-          onBlur={handleBlur}
+          field="description"
+          formLogic={formLogic}
         />
+
         <button type="submit">Submit</button>
       </form>
     </div>
