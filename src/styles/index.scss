@@ -143,9 +143,13 @@ nav {
       margin: 0.8em;
       padding: 0.3em 1em;
       cursor: pointer;
+      text-transform: none;
       &#get-started {
         color: white;
         background-color: $accent-color;
+      }
+      &#learn-more {
+        background-color: white;
       }
       &:hover {
         animation-name: bounce;
@@ -195,6 +199,7 @@ nav {
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 1rem;
     display: grid;
+    width: clamp(18rem, 80%, 25rem);
   }
   form {
     display: flex;

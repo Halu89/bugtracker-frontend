@@ -32,6 +32,13 @@ const AuthForm = ({ type }: Props) => {
   type FormFieldsType = keyof typeof state;
   const { setUser } = useGlobalContext();
 
+  //Skip email validation on login form
+  if (type === "signin") {
+    validate.email = () => {
+      return false;
+    };
+  }
+
   useEffect(() => {
     const labelArrays = Object.keys(state) as Array<FormFieldsType>;
     // Apply custom styles depending on the fields validation
@@ -85,7 +92,7 @@ const AuthForm = ({ type }: Props) => {
       setTouched((touched) => ({ ...touched, [el]: true }));
       setErrors((errors) => ({ ...errors, [el]: validate[el](state[el]) }));
     });
-
+    console.log(errors);
     // Verify that there is no error
     // errors here is the errors object before the handleSubmit call
     const isError = Object.values(errors).reduce((acc: boolean, el) => {
@@ -93,10 +100,17 @@ const AuthForm = ({ type }: Props) => {
     }, false);
     // Verify that we have values
     // FIXME don't look at the email field if we are on signin
-    const isEmpty = Object.values(state).reduce((acc: boolean, el: string) => {
-      return el.length <= 0 ? true : acc;
-    }, false);
+    let isEmpty;
+    if (type === "signup") {
+      isEmpty = Object.values(state).reduce((acc: boolean, el: string) => {
+        return el.length === 0 ? true : acc;
+      }, false);
+    } else {
+      isEmpty = state.username.length === 0 || state.password.length === 0;
+    }
 
+    console.log("Error", isError);
+    console.log("empty", isEmpty);
     if (isError || isEmpty) return;
 
     // Submit
