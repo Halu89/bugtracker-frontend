@@ -1,9 +1,23 @@
+import React, { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useGlobalContext } from "../../utils/context";
+import AuthForm from "../AuthForm";
 
 const NavUser = () => {
   const { user, setUser } = useGlobalContext();
+  const [displayLogin, setDisplayLogin] = useState(false);
+
   const history = useHistory();
+
+  //Listen for page changes to remove the login form
+  useEffect(() => {
+    const unlisten = history.listen((_, action) => {
+      if (action === "PUSH") {
+        setDisplayLogin(false);
+      }
+    });
+    return unlisten;
+  }, [history]);
 
   if (user) {
     return (
@@ -26,15 +40,17 @@ const NavUser = () => {
     return (
       <>
         <li>
-          <NavLink exact to="/login" className="nav__link">
-            Login
-          </NavLink>
+          <button onClick={() => setDisplayLogin(!displayLogin)}>Login</button>
         </li>
         <li>
           <NavLink exact to="/register" className="nav__link">
             Register
           </NavLink>
         </li>
+
+        <div className={displayLogin ? "login-form" : "login-form hide"}>
+          <AuthForm type="signin" />
+        </div>
       </>
     );
   }

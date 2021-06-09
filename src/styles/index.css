@@ -24,9 +24,65 @@ button:hover {
   cursor: pointer;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+  position: relative;
+}
+form label {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+  color: #004e17;
+  font-size: 1.5rem;
+}
+form input {
+  font-size: 0.9rem;
+  margin-top: 0.2em;
+  padding: 0.3em 0.8em;
+  width: 90%;
+  border-radius: 0.2em;
+  border: 1px solid black;
+}
+form input + span::after {
+  position: absolute;
+  top: -1.7em;
+  left: -1.2em;
+}
+form input.valid {
+  border-color: green;
+}
+form input.valid + span::after {
+  content: "✓";
+  color: green;
+}
+form input.invalid {
+  border-color: #c21b1b;
+}
+form input.invalid + span::after {
+  content: "X";
+  color: #c21b1b;
+}
+form span {
+  position: relative;
+  font-size: 0.8rem;
+  color: #c21b1b;
+}
+form button {
+  padding: 0.35em 1.5em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-self: center;
+  font-size: 1.2rem;
+}
+
 nav {
   background-color: #004e17;
   color: white;
+  position: relative;
+  height: 6rem;
   font-size: 1.5rem;
   display: grid;
   gap: 1rem;
@@ -85,7 +141,15 @@ nav .nav__user .user {
   font-size: 1rem;
   align-self: center;
 }
+nav .nav__user button {
+  padding: 0.5em 1em;
+  line-height: 1.3rem;
+  font-size: 1.2rem;
+}
 nav .nav__user a {
+  display: inline-block;
+  line-height: 1.3rem;
+  font-size: 1.2rem;
   background-color: #9b411a;
   padding: 0.5em 1em;
   border-radius: 0.25em;
@@ -97,6 +161,28 @@ nav .nav__user a:hover {
   color: #9b411a;
   background-color: white;
   border: 2px solid #9b411a;
+}
+nav .login-form {
+  position: absolute;
+  right: 0;
+  top: 6rem;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0 0 0 1em;
+  transition-duration: 0.3s;
+  transform-origin: top;
+  transition-property: transform, opacity;
+  height: auto;
+  color: #004e17;
+}
+nav .login-form .form-container > div {
+  margin-left: 10%;
+  font-size: 0.8rem;
+  color: #c21b1b;
+}
+nav .login-form.hide {
+  opacity: 0;
+  transform: scaleY(0.6);
 }
 
 .homepage {
@@ -211,57 +297,4 @@ nav .nav__user a:hover {
   border-radius: 1rem;
   display: grid;
   width: clamp(18rem, 80%, 25rem);
-}
-.register form {
-  display: flex;
-  flex-direction: column;
-  margin-left: 10%;
-  position: relative;
-}
-.register form label {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 1em;
-  color: #004e17;
-  font-size: 1.5rem;
-}
-.register form input {
-  font-size: 0.9rem;
-  margin-top: 0.2em;
-  padding: 0.3em 0.8em;
-  width: 90%;
-  border-radius: 0.2em;
-  border: 1px solid black;
-}
-.register form input + span::after {
-  position: absolute;
-  top: -1.7em;
-  left: -1.2em;
-}
-.register form input.valid {
-  border-color: green;
-}
-.register form input.valid + span::after {
-  content: "✓";
-  color: green;
-}
-.register form input.invalid {
-  border-color: #c21b1b;
-}
-.register form input.invalid + span::after {
-  content: "X";
-  color: #c21b1b;
-}
-.register form span {
-  position: relative;
-  font-size: 0.8rem;
-  color: #c21b1b;
-}
-.register form button {
-  padding: 0.35em 1.5em;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  align-self: center;
-  font-size: 1.2rem;
 }/*# sourceMappingURL=index.css.map */
