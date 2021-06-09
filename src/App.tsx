@@ -46,7 +46,16 @@ function App() {
               <AuthForm type="signin" />
             </Route>
             <Route path="/register">
-              <AuthForm type="signup" />
+              <div className="register">
+                <AuthForm type="signup" />
+                <section className="illustration">
+                  <div className="registration">
+                    <h2>Simple and easy</h2>
+                    <h2>No email validation</h2>
+                    <h2>Get started in 20 seconds</h2>
+                  </div>
+                </section>
+              </div>
             </Route>
             <Route path="/">
               <Home />

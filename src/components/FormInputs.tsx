@@ -23,6 +23,13 @@ const TextInput = <state,>({
 }: PropsWithChildren<FormInputProps<state, HTMLInputElement>>) => {
   const { handleChange, handleBlur, touched, errors } = formLogic;
 
+  const autoComplete =
+    field === "username"
+      ? "username"
+      : field === "password"
+      ? "current-password"
+      : undefined;
+
   const inputType = field === "password" ? "password" : "text";
   return (
     <label htmlFor={field}>
@@ -34,6 +41,7 @@ const TextInput = <state,>({
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
+        autoComplete={autoComplete}
       />
       <span className="form__error-message">
         {touched[field] && errors[field]}

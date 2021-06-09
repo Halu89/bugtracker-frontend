@@ -1,53 +1,260 @@
 @import "./reset.css";
 
-$main-color: rgb(187, 44, 44);
+$main-color: #004e17;
+$accent-color: #9b411a;
+$dark-red: #c21b1b;
+$bg-color: #eeeeee;
 
 .App {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
+  font-family: "Montserrat", sans-serif;
+}
+
+button {
+  text-transform: lowercase;
+  background: $accent-color;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1.4rem;
+  padding: 0.2em 0.6em;
+  transition: all 0.2s;
+  &:hover {
+    border: 1px solid $accent-color;
+    color: $accent-color;
+    background-color: white;
+    cursor: pointer;
+  }
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background-color: $main-color;
-  font-size: 2rem;
+  color: white;
+  font-size: 1.5rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns:
+    min-content
+    auto
+    max-content;
+  grid-template-areas: "logo nav user";
+  a {
+    color: white;
+    text-decoration: none;
+    text-transform: lowercase;
+    position: relative;
+  }
+
+  ul {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav__header {
+    margin: 0.5em 0 0.5em 3rem;
+    font-size: 2.5rem;
+    span {
+      color: $accent-color;
+      font-weight: bold;
+    }
+  }
 
   .nav__links {
-    ul {
-      display: flex;
-      flex-direction: row;
-      margin: 0;
+    grid-area: nav;
+    align-self: center;
+
+    a.active {
+      color: #4cae7d;
+    }
+    a:not(.active)::after {
+      content: "";
+      width: 0;
+      height: 2px;
+      color: red;
+      background-color: red;
+      z-index: 100;
+      position: absolute;
+      bottom: -0.2em;
+      left: 0;
+      opacity: 0;
+      transition: all 0.3s;
     }
 
-    li {
-      margin: 1rem 2rem;
+    a:hover::after {
+      opacity: 1;
+      width: 100%;
+    }
+  }
+  .nav__user {
+    grid-area: user;
+    align-self: center;
+    margin-right: 2rem;
+    .user {
+      font-size: 1rem;
+      align-self: center;
     }
     a {
-      text-decoration: none;
+      background-color: $accent-color;
+      padding: 0.5em 1em;
+      border-radius: 0.25em;
+      border: 2px solid transparent;
+      transition-property: background-color, color;
+      transition-duration: 0.3s;
+
       &:hover {
-        color: white;
+        color: $accent-color;
+        background-color: white;
+        border: 2px solid $accent-color;
       }
     }
   }
 }
 
-main {
+.homepage {
+  height: 100%;
   display: grid;
-  place-items: center;
-  background: rgb(172, 172, 172);
 
-  .projects-container > div {
-    outline: 2px solid blue;
+  background: url(../images/background.png),
+    linear-gradient(-45deg, transparent, rgba(167, 167, 167, 0.568));
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: bottom;
+  .hero {
+    font-size: 2.5rem;
+    justify-self: left;
+    align-self: center;
+    margin-left: 8%;
+    color: $main-color;
+    text-shadow: 2px 2px 6px rgba(226, 226, 226, 0.637);
+    span {
+      color: $accent-color;
+    }
+  }
+  .cta {
+    justify-self: center;
+    button {
+      color: $accent-color;
+      font-weight: bold;
+      border: 2px solid $accent-color;
+      border-radius: 0.5em;
+      font-size: 1.6rem;
+      margin: 0.8em;
+      padding: 0.3em 1em;
+      cursor: pointer;
+      &#get-started {
+        color: white;
+        background-color: $accent-color;
+      }
+      &:hover {
+        animation-name: bounce;
+        animation-duration: 1s;
+        animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+      @keyframes bounce {
+        0% {
+          transform: scale(1, 1) translateY(0);
+        }
+        10% {
+          transform: scale(1.1, 0.9) translateY(0);
+        }
+        30% {
+          transform: scale(0.9, 1.1) translateY(-0.5em);
+        }
+        50% {
+          transform: scale(1.05, 0.95) translateY(0);
+        }
+        57% {
+          transform: scale(1, 1) translateY(-0.05em);
+        }
+        64% {
+          transform: scale(1, 1) translateY(0);
+        }
+        100% {
+          transform: scale(1, 1) translateY(0);
+        }
+      }
+    }
   }
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  input {
-    margin: 0.7rem 0;
+.register {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  background-color: $bg-color;
+
+  .form-container {
+    margin: 0.5rem;
+    padding: 2.5rem 1.3rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1rem;
+    display: grid;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    position: relative;
+    label {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 1em;
+      color: $main-color;
+      font-size: 1.5rem;
+    }
+    input {
+      font-size: 0.9rem;
+      margin-top: 0.2em;
+      padding: 0.3em 0.8em;
+      width: 90%;
+      border-radius: 0.2em;
+      border: 1px solid black;
+    }
+    input + span::after {
+      position: absolute;
+      top: -1.7em;
+      left: -1.2em;
+    }
+    input.valid {
+      border-color: green;
+    }
+    input.valid + span::after {
+      content: "✓";
+      color: green;
+    }
+    input.invalid {
+      border-color: $dark-red;
+    }
+    input.invalid + span::after {
+      content: "X";
+      color: $dark-red;
+    }
+    span {
+      position: relative;
+      font-size: 0.8rem;
+      color: $dark-red;
+    }
+
+    button {
+      padding: 0.35em 1.5em;
+      width: fit-content;
+      align-self: center;
+      font-size: 1.2rem;
+    }
+    // textarea {
+    //   width: calc(max(80%, 250px));
+    //   height: 150px;
+    //   resize: none;
+    //   background-color: #f0564515;
+    //   border-radius: 5px;
+    //   border: 1px solid black;
+    //   padding: 10px;
+    // }
   }
 }

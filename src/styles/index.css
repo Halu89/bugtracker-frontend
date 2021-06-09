@@ -1,45 +1,262 @@
+@charset "UTF-8";
 @import "./reset.css";
 .App {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
+  font-family: "Montserrat", sans-serif;
+}
+
+button {
+  text-transform: lowercase;
+  background: #9b411a;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1.4rem;
+  padding: 0.2em 0.6em;
+  transition: all 0.2s;
+}
+button:hover {
+  border: 1px solid #9b411a;
+  color: #9b411a;
+  background-color: white;
+  cursor: pointer;
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #bb2c2c;
-  font-size: 2rem;
-}
-nav .nav__links ul {
-  display: flex;
-  flex-direction: row;
-  margin: 0;
-}
-nav .nav__links li {
-  margin: 1rem 2rem;
-}
-nav .nav__links a {
-  text-decoration: none;
-}
-nav .nav__links a:hover {
+  background-color: #004e17;
   color: white;
-}
-
-main {
+  font-size: 1.5rem;
   display: grid;
-  place-items: center;
-  background: #acacac;
+  gap: 1rem;
+  grid-template-columns: -webkit-min-content auto -webkit-max-content;
+  grid-template-columns: min-content auto max-content;
+  grid-template-areas: "logo nav user";
 }
-main .projects-container > div {
-  outline: 2px solid blue;
+nav a {
+  color: white;
+  text-decoration: none;
+  text-transform: lowercase;
+  position: relative;
+}
+nav ul {
+  display: flex;
+  gap: 1.5rem;
+}
+nav .nav__header {
+  margin: 0.5em 0 0.5em 3rem;
+  font-size: 2.5rem;
+}
+nav .nav__header span {
+  color: #9b411a;
+  font-weight: bold;
+}
+nav .nav__links {
+  grid-area: nav;
+  align-self: center;
+}
+nav .nav__links a.active {
+  color: #4cae7d;
+}
+nav .nav__links a:not(.active)::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  color: red;
+  background-color: red;
+  z-index: 100;
+  position: absolute;
+  bottom: -0.2em;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s;
+}
+nav .nav__links a:hover::after {
+  opacity: 1;
+  width: 100%;
+}
+nav .nav__user {
+  grid-area: user;
+  align-self: center;
+  margin-right: 2rem;
+}
+nav .nav__user .user {
+  font-size: 1rem;
+  align-self: center;
+}
+nav .nav__user a {
+  background-color: #9b411a;
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  border: 2px solid transparent;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+}
+nav .nav__user a:hover {
+  color: #9b411a;
+  background-color: white;
+  border: 2px solid #9b411a;
 }
 
-form {
+.homepage {
+  height: 100%;
+  display: grid;
+  background: url(../images/background.png), linear-gradient(-45deg, transparent, rgba(167, 167, 167, 0.568));
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: bottom;
+}
+.homepage .hero {
+  font-size: 2.5rem;
+  justify-self: left;
+  align-self: center;
+  margin-left: 8%;
+  color: #004e17;
+  text-shadow: 2px 2px 6px rgba(226, 226, 226, 0.637);
+}
+.homepage .hero span {
+  color: #9b411a;
+}
+.homepage .cta {
+  justify-self: center;
+}
+.homepage .cta button {
+  color: #9b411a;
+  font-weight: bold;
+  border: 2px solid #9b411a;
+  border-radius: 0.5em;
+  font-size: 1.6rem;
+  margin: 0.8em;
+  padding: 0.3em 1em;
+  cursor: pointer;
+}
+.homepage .cta button#get-started {
+  color: white;
+  background-color: #9b411a;
+}
+.homepage .cta button:hover {
+  -webkit-animation-name: bounce;
+          animation-name: bounce;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+          animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+}
+.homepage .cta button:active {
+  transform: scale(0.95);
+}
+@-webkit-keyframes bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-0.5em);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-0.05em);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-0.5em);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-0.05em);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+
+.register {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  background-color: #eeeeee;
+}
+.register .form-container {
+  margin: 0.5rem;
+  padding: 2.5rem 1.3rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  display: grid;
+}
+.register form {
   display: flex;
   flex-direction: column;
+  margin-left: 10%;
+  position: relative;
 }
-form input {
-  margin: 0.7rem 0;
+.register form label {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+  color: #004e17;
+  font-size: 1.5rem;
+}
+.register form input {
+  font-size: 0.9rem;
+  margin-top: 0.2em;
+  padding: 0.3em 0.8em;
+  width: 90%;
+  border-radius: 0.2em;
+  border: 1px solid black;
+}
+.register form input + span::after {
+  position: absolute;
+  top: -1.7em;
+  left: -1.2em;
+}
+.register form input.valid {
+  border-color: green;
+}
+.register form input.valid + span::after {
+  content: "✓";
+  color: green;
+}
+.register form input.invalid {
+  border-color: #c21b1b;
+}
+.register form input.invalid + span::after {
+  content: "X";
+  color: #c21b1b;
+}
+.register form span {
+  position: relative;
+  font-size: 0.8rem;
+  color: #c21b1b;
+}
+.register form button {
+  padding: 0.35em 1.5em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-self: center;
+  font-size: 1.2rem;
 }/*# sourceMappingURL=index.css.map */

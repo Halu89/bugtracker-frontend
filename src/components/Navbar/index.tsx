@@ -7,7 +7,7 @@ const Navbar: React.FC<NavbarProps> = () => {
   return (
     <nav className="nav">
       <div className="nav__header">
-        Issue<span>tracker</span>
+        Issue<span>Tracker</span>
       </div>
       <NavLinks />
     </nav>

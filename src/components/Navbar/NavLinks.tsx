@@ -6,18 +6,13 @@ const NavLinks = () => {
     <>
       <ul className="nav__links">
         <li>
-          <NavLink
-            activeStyle={{ color: "grey" }}
-            exact
-            to="/"
-            className="nav__link"
-          >
+          <NavLink activeClassName="active" exact to="/" className="nav__link">
             Home
           </NavLink>
         </li>
         <li>
           <NavLink
-            activeStyle={{ color: "grey" }}
+            activeClassName="active"
             exact
             to="/projects"
             className="nav__link"

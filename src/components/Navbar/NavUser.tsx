@@ -8,7 +8,7 @@ const NavUser = () => {
   if (user) {
     return (
       <>
-        <div className="user">{user?.username}</div>
+        <div className="user">Logged in as {user?.username}</div>
         <li>
           <button
             onClick={() => {
@@ -26,22 +26,12 @@ const NavUser = () => {
     return (
       <>
         <li>
-          <NavLink
-            activeStyle={{ color: "grey" }}
-            exact
-            to="/login"
-            className="nav__link"
-          >
+          <NavLink exact to="/login" className="nav__link">
             Login
           </NavLink>
         </li>
         <li>
-          <NavLink
-            activeStyle={{ color: "grey" }}
-            exact
-            to="/register"
-            className="nav__link"
-          >
+          <NavLink exact to="/register" className="nav__link">
             Register
           </NavLink>
         </li>

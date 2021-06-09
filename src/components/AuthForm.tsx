@@ -5,8 +5,6 @@ import useAuthSubmit from "../hooks/useAuthSubmit";
 import { useGlobalContext } from "../utils/context";
 import FormInput from "./FormInputs";
 
-import { AuthLabels } from "../types";
-
 interface errorType {
   username: string | false;
   email: string | false;
@@ -30,7 +28,26 @@ const AuthForm = ({ type }: Props) => {
     type,
     state
   );
+  // Restrict the type so we can be call errors[field] and touched[field]
+  type FormFieldsType = keyof typeof state;
   const { setUser } = useGlobalContext();
+
+  useEffect(() => {
+    const labelArrays = Object.keys(state) as Array<FormFieldsType>;
+    // Apply custom styles depending on the fields validation
+    labelArrays.forEach((field) => {
+      const input = document.getElementById(field);
+      if (!input) return;
+      if (touched[field] && errors[field]) {
+        input.classList.add("invalid");
+        input.classList.remove("valid");
+      }
+      if (touched[field] && !errors[field]) {
+        input.classList.remove("invalid");
+        input.classList.add("valid");
+      }
+    });
+  }, [errors, state, touched]);
 
   useEffect(() => {
     setUser(user);
@@ -38,7 +55,7 @@ const AuthForm = ({ type }: Props) => {
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget as typeof e.currentTarget & {
-      name: "username" | "email" | "password";
+      name: FormFieldsType;
       value: string;
     };
     setState({ ...state, [name]: value });
@@ -47,7 +64,7 @@ const AuthForm = ({ type }: Props) => {
 
   const handleBlur = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget as typeof e.currentTarget & {
-      name: "username" | "email" | "password";
+      name: FormFieldsType;
       value: string;
     };
     //Check for errors
@@ -63,7 +80,7 @@ const AuthForm = ({ type }: Props) => {
       return;
     }
     // Touch all fields and display errors if any
-    const labelArray: AuthLabels[] = ["username", "email", "password"];
+    const labelArray = Object.keys(state) as FormFieldsType[];
     labelArray.forEach((el) => {
       setTouched((touched) => ({ ...touched, [el]: true }));
       setErrors((errors) => ({ ...errors, [el]: validate[el](state[el]) }));
@@ -89,7 +106,7 @@ const AuthForm = ({ type }: Props) => {
   const formLogic = { handleChange, handleBlur, errors, touched };
 
   return (
-    <div className="container">
+    <div className="form-container">
       {status === "pending" && <div className="success">Loading ...</div>}
       {reqMessage && (
         <div className={reqMessage.type}>{reqMessage.message}</div>
@@ -97,7 +114,7 @@ const AuthForm = ({ type }: Props) => {
       <form onSubmit={handleSubmit} noValidate>
         <FormInput
           field="username"
-          label="Name : "
+          label="Username : "
           value={state.username}
           formLogic={formLogic}
         />
@@ -115,7 +132,9 @@ const AuthForm = ({ type }: Props) => {
           value={state.password}
           formLogic={formLogic}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">
+          {type === "signup" ? "Register" : "Login"}
+        </button>
       </form>
     </div>
   );
