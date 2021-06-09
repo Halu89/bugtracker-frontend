@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { IUser } from "../../types";
 import { useGlobalContext } from "../../utils/context";
 import AuthForm from "../AuthForm";
 
-const NavUser = () => {
-  const { user, setUser } = useGlobalContext();
+const NavUser = ({ user }: { user: IUser }) => {
+  const { setUser } = useGlobalContext();
   const [displayLogin, setDisplayLogin] = useState(false);
 
   const history = useHistory();
