@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import useSend from "../hooks/useSend";
 import TextInput, { TextArea } from "./FormInputs";
 
@@ -29,6 +30,24 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
     description: false,
   });
 
+  type FormFieldsType = keyof typeof state;
+  useEffect(() => {
+    const labelArrays = Object.keys(state) as Array<FormFieldsType>;
+    // Apply custom styles depending on the fields validation
+    labelArrays.forEach((field) => {
+      const input = document.getElementById(field);
+      if (!input) return;
+      if (touched[field] && errors[field]) {
+        input.classList.add("invalid");
+        input.classList.remove("valid");
+      }
+      if (touched[field] && !errors[field]) {
+        input.classList.remove("invalid");
+        input.classList.add("valid");
+      }
+    });
+  }, [errors, state, touched]);
+
   const {
     status,
     response,
@@ -36,6 +55,12 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
     sendRequest: sendNewProject,
   } = useSend("/projects", "POST", state);
 
+  const history = useHistory();
+  useEffect(() => {
+    if (response) {
+      history.push("/projects");
+    }
+  }, [response, history]);
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -115,7 +140,7 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
           value={state.description}
           field="description"
           formLogic={formLogic}
-          dimensions={{ rows: 12, cols: 40 }}
+          dimensions={{ rows: 15, cols: 40 }}
         />
 
         <button type="submit">Submit</button>

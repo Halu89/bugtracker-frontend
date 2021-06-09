@@ -82,15 +82,14 @@ form {
     align-self: center;
     font-size: 1.2rem;
   }
-  // textarea {
-  //   width: calc(max(80%, 250px));
-  //   height: 150px;
-  //   resize: none;
-  //   background-color: #f0564515;
-  //   border-radius: 5px;
-  //   border: 1px solid black;
-  //   padding: 10px;
-  // }
+  textarea {
+    width: 100%;
+    font-size: 0.9rem;
+    resize: none;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 0.3em 0.8em;
+  }
 }
 
 nav {
@@ -450,6 +449,9 @@ main {
             color: white;
             line-height: 1.1;
           }
+          &:hover ~ ::before {
+            background-color: #004e173a;
+          }
 
           &:checked ~ ::before {
             content: "✓";
@@ -457,6 +459,16 @@ main {
           }
         }
       }
+    }
+  }
+}
+
+.new-project-form {
+  place-self: center;
+  width: clamp(20rem, 70%, 50rem);
+  form {
+    input {
+      width: 100%;
     }
   }
 }

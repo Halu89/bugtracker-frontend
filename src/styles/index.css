@@ -77,6 +77,14 @@ form button {
   align-self: center;
   font-size: 1.2rem;
 }
+form textarea {
+  width: 100%;
+  font-size: 0.9rem;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 0.3em 0.8em;
+}
 
 nav {
   background-color: #004e17;
@@ -436,7 +444,18 @@ main {
   color: white;
   line-height: 1.1;
 }
+.projects aside .filters__issues-open input:hover ~ ::before {
+  background-color: #004e173a;
+}
 .projects aside .filters__issues-open input:checked ~ ::before {
   content: "✓";
   background-color: #004e17;
+}
+
+.new-project-form {
+  place-self: center;
+  width: clamp(20rem, 70%, 50rem);
+}
+.new-project-form form input {
+  width: 100%;
 }/*# sourceMappingURL=index.css.map */
