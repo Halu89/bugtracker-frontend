@@ -1,0 +1,20 @@
+<svg id="edit-2-outline" xmlns="http://www.w3.org/2000/svg" width="50.938" height="50.938" viewBox="0 0 50.938 50.938">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #145d40;
+      }
+
+      .cls-1 {
+        opacity: 0;
+      }
+    </style>
+  </defs>
+  <g id="edit-2-outline-2" data-name="edit-2-outline" transform="translate(0 0)">
+    <g id="edit-2">
+      <rect id="Rectangle_35" data-name="Rectangle 35" class="cls-1" width="50.938" height="50.938"/>
+      <path id="Path_60" data-name="Path 60" class="cls-2" d="M36.059,20H6.137a2.137,2.137,0,1,0,0,4.275H36.059a2.137,2.137,0,0,0,0-4.275Z" transform="translate(4.549 22.746)"/>
+      <path id="Path_61" data-name="Path 61" class="cls-2" d="M6.142,36.131h.192l8.912-.812A4.275,4.275,0,0,0,17.833,34.1L37.069,14.865a4.1,4.1,0,0,0-.15-5.792L31.063,3.217a4.275,4.275,0,0,0-5.685-.15L6.142,22.3a4.275,4.275,0,0,0-1.218,2.586L4,33.8a2.132,2.132,0,0,0,2.137,2.33ZM28.092,6.209l5.835,5.835-4.275,4.168-5.728-5.728ZM9.07,25.252,21.1,13.3l5.771,5.771L14.9,31.044l-6.412.6Z" transform="translate(4.544 2.34)"/>
+    </g>
+  </g>
+</svg>

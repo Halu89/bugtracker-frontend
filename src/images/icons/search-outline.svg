@@ -1,0 +1,19 @@
+<svg id="search-outline" xmlns="http://www.w3.org/2000/svg" width="23.761" height="23.761" viewBox="0 0 23.761 23.761">
+  <defs>
+    <style>
+      <!-- .cls-1, .cls-2 {
+        fill: #9b411a;
+      } -->
+
+      .cls-1 {
+        opacity: 0;
+      }
+    </style>
+  </defs>
+  <g id="search-outline-2" data-name="search-outline">
+    <g id="search">
+      <rect id="Rectangle_54" data-name="Rectangle 54" class="cls-1" width="23.761" height="23.761"/>
+      <path id="Path_97" data-name="Path 97" class="cls-2" d="M20.913,19.477l-3.439-3.429a8.011,8.011,0,0,0,1.709-4.956,8.092,8.092,0,1,0-8.092,8.092,8.011,8.011,0,0,0,4.956-1.709l3.429,3.439a1.016,1.016,0,1,0,1.436-1.436ZM5.023,11.092a6.069,6.069,0,1,1,6.069,6.069,6.069,6.069,0,0,1-6.069-6.069Z" transform="translate(0.034 0.034)"/>
+    </g>
+  </g>
+</svg>

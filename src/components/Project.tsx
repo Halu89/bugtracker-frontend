@@ -1,37 +1,59 @@
-import * as React from "react";
-import { Link, useParams } from "react-router-dom";
-import { useFetch } from "../hooks";
-import { IIssue } from "../types";
+import React from "react";
+import { IProject } from "../types";
 import { useGlobalContext } from "../utils/context";
+import deleteIcon from "../images/icons/delete.svg";
+import editIcon from "../images/icons/edit.svg";
+import personOutline from "../images/icons/person-outline.svg";
 
-export interface Props {}
+interface Props {
+  project: IProject;
+  setProject: any;
+  history: any;
+}
 
-const Project: React.FC<Props> = () => {
-  const { projectId } = useParams<{ projectId: string }>();
-  const [loading, response] = useFetch(`/projects/${projectId}`, "GET");
-  const { project, setProject } = useGlobalContext();
+const Project = ({ project, setProject, history }: Props) => {
+  const { user } = useGlobalContext();
 
-  let issues;
-  console.log("Issues", response); // XXX
-  if (response) {
-    issues = response.map((issue: IIssue) => {
-      return (
-        <div className="issue" key={issue._id}>
-          <h3 className="issue__title">{issue.title}</h3>
-          <p className="issue__author">Created by {issue.author.username}</p>
-          <p className="issue__description">Description :{issue.description}</p>
-        </div>
-      );
-    });
-  }
+  // Format the contributors message string
+  const contribNum = project.team.length + project.admins.length + 1;
+  const contribMessage = `${contribNum} contributor${
+    contribNum > 1 ? "s" : ""
+  }`;
+
+  // Only show buttons when admin or author
+  const showControls =
+    user.id === project.author || project.admins.includes(user.id);
+
   return (
-    <div className="issues-container">
-      <h3>{project?.name}</h3>
-      {loading && <div>Loading...</div>}
-      {issues}
-      <Link to={"/projects"} onClick={() => setProject(undefined)}>
-        Back
-      </Link>
+    <div className="project" key={project._id}>
+      <div className="project__header">
+        <h3 className="project__name">{project.name}</h3>
+
+        {showControls && (
+          <div className="project__controls">
+            <button aria-label="edit">
+              <img src={editIcon} alt="edit" />
+            </button>
+            <button>
+              <img src={deleteIcon} alt="delete" aria-label="delete" />
+            </button>
+          </div>
+        )}
+        <div className="project__contrib">
+          <img src={personOutline} alt="icon"></img>
+          <span>{contribMessage}</span>
+        </div>
+      </div>
+      <p className="project__description">{project.description}</p>
+      <button
+        className="project__issues-open"
+        onClick={() => {
+          setProject(project);
+          history.push(`/projects/${project._id}`);
+        }}
+      >
+        {project.issues.length} issues open
+      </button>
     </div>
   );
 };

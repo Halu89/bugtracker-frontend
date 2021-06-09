@@ -30,6 +30,7 @@ function useAuthSubmit(
         setToken(token);
         console.log("Decoded Token :>> ", jwt_decode(token)); // XXX
         localStorage.setItem("token", token);
+        console.log(receivedUser); //XXX
         setUser(receivedUser);
         setMessage(undefined);
         history.push("/projects");

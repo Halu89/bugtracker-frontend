@@ -185,8 +185,13 @@ nav .login-form.hide {
   transform: scaleY(0.6);
 }
 
-.homepage {
+main {
+  background-color: #eeeeee;
   height: 100%;
+  display: grid;
+}
+
+.homepage {
   display: grid;
   background: url(../images/background.png), linear-gradient(-45deg, transparent, rgba(167, 167, 167, 0.568));
   background-blend-mode: overlay;
@@ -284,11 +289,9 @@ nav .login-form.hide {
 }
 
 .register {
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   place-items: center;
-  background-color: #eeeeee;
 }
 .register .form-container {
   margin: 0.5rem;
@@ -297,4 +300,143 @@ nav .login-form.hide {
   border-radius: 1rem;
   display: grid;
   width: clamp(18rem, 80%, 25rem);
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 20rem;
+  position: relative;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+.projects__new-button {
+  padding: 0.5em 2em;
+  margin: 0 auto;
+}
+.projects .project {
+  background-color: white;
+  border-radius: 1em;
+  display: grid;
+  grid-template-areas: "header" "main" "issues";
+  padding: 1.5rem;
+  margin: 1rem;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s;
+}
+.projects .project img {
+  width: 2.5rem;
+}
+.projects .project button {
+  background-color: transparent;
+  color: #004e17;
+}
+.projects .project:hover {
+  box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.2);
+}
+.projects .project:hover .project__issues-open {
+  border: 1px #004e17 solid;
+}
+.projects .project__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.projects .project__controls {
+  margin-left: auto;
+  margin-right: 1rem;
+}
+.projects .project__description {
+  grid-area: main;
+  padding: 2rem;
+}
+.projects .project__issues-open {
+  grid-area: issues;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.projects .project__contrib {
+  display: flex;
+  align-items: center;
+}
+.projects .project__contrib img {
+  display: inline-block;
+}
+.projects aside .container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+}
+.projects aside .filters {
+  background-color: white;
+  border-radius: 0.35em;
+  padding: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.projects aside .filters h2 {
+  align-self: center;
+}
+.projects aside .filters__search-input {
+  position: relative;
+  margin: 1rem;
+}
+.projects aside .filters__search-input img {
+  fill: #004e17;
+  top: 0;
+  right: 0;
+  position: absolute;
+  width: 1.8rem;
+}
+.projects aside .filters__search-input input {
+  border: none;
+  border-bottom: 1px solid #004e17;
+  padding: 0.3em 0.8em;
+  outline: none;
+  box-shadow: none;
+}
+.projects aside .filters__team-buttons button {
+  background-color: white;
+  color: #004e17;
+  margin: 0.5rem;
+  border: 2px solid #004e17;
+  transition-property: background-color, color;
+  transition-duration: 0.3s;
+}
+.projects aside .filters__team-buttons button:hover, .projects aside .filters__team-buttons button:focus {
+  font-weight: bold;
+}
+.projects aside .filters__team-buttons button.active {
+  background-color: #004e17;
+  color: white;
+}
+.projects aside .filters__issues-open {
+  padding: 0.5rem 1rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  align-self: center;
+  position: relative;
+}
+.projects aside .filters__issues-open input {
+  display: none;
+}
+.projects aside .filters__issues-open input ~ ::before {
+  transition: background-color 0.4s;
+  position: absolute;
+  left: -1rem;
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2px solid #004e17;
+  color: white;
+  line-height: 1.1;
+}
+.projects aside .filters__issues-open input:checked ~ ::before {
+  content: "✓";
+  background-color: #004e17;
 }/*# sourceMappingURL=index.css.map */

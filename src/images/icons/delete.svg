@@ -1,0 +1,17 @@
+<svg id="delete_outline" xmlns="http://www.w3.org/2000/svg" width="51.393" height="51.393" viewBox="0 0 51.393 51.393">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #6e0c0c;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="delete_outline-2" data-name="delete_outline" transform="translate(0)">
+    <path id="Path_64" data-name="Path 64" class="cls-1" d="M7.012,36.3a4.107,4.107,0,0,0,4.025,4.162h16.1A4.107,4.107,0,0,0,31.161,36.3V11.325H7.012Zm4.025-20.812h16.1V36.3h-16.1ZM26.13,5.081,24.118,3H14.056L12.043,5.081H5V9.244H33.173V5.081Z" transform="translate(6.61 3.966)"/>
+    <path id="Path_65" data-name="Path 65" class="cls-2" d="M0,0H51.393V51.393H0Z"/>
+  </g>
+</svg>

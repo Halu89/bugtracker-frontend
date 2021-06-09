@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import { useGlobalContext } from "./utils/context";
 import jwtDecode from "jwt-decode";
 import ProjectList from "./components/ProjectList";
-import Project from "./components/Project";
+import IssuesList from "./components/IssuesList";
 import NewProjectForm from "./components/NewProjectForm";
 import Home from "./components/Home";
 
@@ -37,7 +37,7 @@ function App() {
               <NewProjectForm />
             </Route>
             <Route path="/projects/:projectId">
-              <Project />
+              <IssuesList />
             </Route>
             <Route path="/projects">
               <ProjectList />

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0;
+      }
+    </style>
+  </defs>
+  <g id="person-outline" transform="translate(0.27)">
+    <g id="person">
+      <rect id="Rectangle_37" data-name="Rectangle 37" class="cls-1" width="60" height="60" transform="translate(-0.27)"/>
+      <path id="Path_68" data-name="Path 68" d="M18.026,23.053A10.026,10.026,0,1,0,8,13.026,10.026,10.026,0,0,0,18.026,23.053Zm0-15.04a5.013,5.013,0,1,1-5.013,5.013A5.013,5.013,0,0,1,18.026,8.013Z" transform="translate(12.151 4.52)"/>
+      <path id="Path_69" data-name="Path 69" d="M22.546,13A17.546,17.546,0,0,0,5,30.546a2.507,2.507,0,0,0,5.013,0,12.533,12.533,0,1,1,25.066,0,2.507,2.507,0,1,0,5.013,0A17.546,17.546,0,0,0,22.546,13Z" transform="translate(7.631 19.586)"/>
+    </g>
+  </g>
+</svg>
