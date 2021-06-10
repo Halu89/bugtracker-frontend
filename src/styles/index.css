@@ -437,10 +437,10 @@ main {
   align-self: center;
   position: relative;
 }
-.projects aside .filters__issues-open input {
+.projects aside .filters__issues-open input[type=checkbox] {
   display: none;
 }
-.projects aside .filters__issues-open input ~ ::before {
+.projects aside .filters__issues-open input[type=checkbox] ~ ::before {
   transition: background-color 0.4s;
   position: absolute;
   left: -1rem;
@@ -451,41 +451,206 @@ main {
   color: white;
   line-height: 1.1;
 }
-.projects aside .filters__issues-open input:hover ~ ::before {
+.projects aside .filters__issues-open input[type=checkbox]:hover ~ ::before {
   background-color: #004e173a;
 }
-.projects aside .filters__issues-open input:checked ~ ::before {
+.projects aside .filters__issues-open input[type=checkbox]:checked ~ ::before {
   content: "✓";
   background-color: #004e17;
 }
 
 .new-project-form,
+.new-issue-form,
 .edit-project-form {
   place-self: center;
   width: clamp(20rem, 70%, 50rem);
 }
 .new-project-form form input,
+.new-issue-form form input,
 .edit-project-form form input {
   width: 100%;
 }
 .new-project-form form .form-commands,
+.new-issue-form form .form-commands,
 .edit-project-form form .form-commands {
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 1.5rem;
 }
 .new-project-form form .form-commands button:focus,
+.new-issue-form form .form-commands button:focus,
 .edit-project-form form .form-commands button:focus {
   outline: none;
 }
 .new-project-form form .form-commands button:not([type=submit]),
+.new-issue-form form .form-commands button:not([type=submit]),
 .edit-project-form form .form-commands button:not([type=submit]) {
   background-color: white;
   color: #004e17;
   border: 2px solid #004e17;
 }
 .new-project-form form .form-commands button:not([type=submit]):hover,
+.new-issue-form form .form-commands button:not([type=submit]):hover,
 .edit-project-form form .form-commands button:not([type=submit]):hover {
   background-color: #004e17;
   color: white;
+}
+
+.issues {
+  display: grid;
+  grid-template-columns: 1fr 24rem;
+}
+.issues .container .issues__header {
+  background-color: white;
+  font-size: 1.7rem;
+  padding: 2rem;
+  margin: 1rem 3rem;
+  border-radius: 1em;
+  border: 1px solid #004e17;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.issues .container .issues__header a {
+  color: #004e17;
+  font-size: 1.2rem;
+}
+.issues .container .issues__list {
+  margin: 1rem 3rem;
+}
+.issues .container .issues__list .issue {
+  background-color: white;
+  margin: 1rem 0;
+  padding: 0.5rem 2rem 1.5rem;
+  border-radius: 1em;
+}
+.issues .container .issues__list .issue header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.issues .container .issues__list .issue header button {
+  background-color: transparent;
+  width: 4rem;
+}
+.issues .container .issues__list .issue .issue__description {
+  position: relative;
+}
+.issues .container .issues__list .issue .issue__description::after {
+  content: "";
+  width: 20rem;
+  bottom: -1rem;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #004e17, transparent);
+  position: absolute;
+}
+.issues .container .issues__list .issue__subtitle {
+  font-size: 0.8em;
+  line-height: 1.3;
+}
+.issues .container .issues__list .issue__subtitle .date {
+  color: gray;
+}
+.issues .container .issues__list .issue__subtitle .author {
+  color: #004e17;
+}
+.issues .container .issues__list .issue__description {
+  margin: 1.5rem 0;
+}
+.issues .container .issues__list .issue__assignedTo {
+  margin-top: 1rem;
+}
+.issues aside {
+  position: relative;
+}
+.issues aside .container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  position: sticky;
+  top: 17vh;
+}
+.issues aside .container button {
+  align-self: center;
+  padding: 0.5em 1.5em;
+}
+.issues aside .container .filters {
+  background-color: white;
+  border-radius: 0.5em;
+  width: 20rem;
+  height: 27rem;
+  margin: 1rem 1rem;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.issues aside .container .filters h2 {
+  font-size: 1.8rem;
+  text-align: center;
+}
+.issues aside .container .filters label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.issues aside .container .filters label:not(.filters__checkbox) {
+  font-weight: bold;
+}
+.issues aside .container .filters label input {
+  font-weight: normal;
+  border: none;
+  border-bottom: 1px solid #004e17;
+  padding: 0.2em 1em;
+  margin: 0.5em;
+}
+.issues aside .container .filters label input:focus {
+  outline: none;
+  border-bottom: 2px solid #004e17;
+  border-left: 2px solid #004e17;
+}
+.issues aside .container .filters label input:focus::-moz-placeholder {
+  color: transparent;
+}
+.issues aside .container .filters label input:focus:-ms-input-placeholder {
+  color: transparent;
+}
+.issues aside .container .filters label input:focus::placeholder {
+  color: transparent;
+}
+.issues aside .container .filters label img {
+  position: absolute;
+  right: 0%;
+  bottom: 0.75em;
+}
+.issues aside .container .filters label input[type=checkbox] {
+  display: none;
+}
+.issues aside .container .filters label input[type=checkbox] ~ ::before {
+  transition: background-color 0.4s;
+  position: absolute;
+  left: -1.5em;
+  bottom: 0.2em;
+  content: "";
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid #004e17;
+  color: white;
+  line-height: 1.1;
+}
+.issues aside .container .filters label input[type=checkbox]:checked ~ ::before {
+  content: "✓";
+  background-color: #004e17;
+}
+.issues aside .container .filters label input[type=checkbox]:hover ~ ::before {
+  background-color: #004e1770;
+}
+.issues aside .container .filters__checkboxes {
+  align-self: center;
+  margin-top: 0.5em;
+}
+.issues aside .container .filters__checkboxes label {
+  margin-top: 0.6em;
 }/*# sourceMappingURL=index.css.map */
