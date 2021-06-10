@@ -45,22 +45,27 @@ form input {
   border-radius: 0.2em;
   border: 1px solid black;
 }
-form input + span::after {
+form input + span::after,
+form textarea + span::after {
   position: absolute;
   top: -1.7em;
   left: -1.2em;
 }
-form input.valid {
+form input.valid,
+form textarea.valid {
   border-color: green;
 }
-form input.valid + span::after {
+form input.valid + span::after,
+form textarea.valid + span::after {
   content: "✓";
   color: green;
 }
-form input.invalid {
+form input.invalid,
+form textarea.invalid {
   border-color: #c21b1b;
 }
-form input.invalid + span::after {
+form input.invalid + span::after,
+form textarea.invalid + span::after {
   content: "X";
   color: #c21b1b;
 }
@@ -122,6 +127,7 @@ nav .nav__links {
 }
 nav .nav__links a.active {
   color: #4cae7d;
+  pointer-events: none;
 }
 nav .nav__links a:not(.active)::after {
   content: "";
@@ -136,7 +142,8 @@ nav .nav__links a:not(.active)::after {
   opacity: 0;
   transition: all 0.3s;
 }
-nav .nav__links a:hover::after {
+nav .nav__links a:hover::after,
+nav .nav__links a:focus::after {
   opacity: 1;
   width: 100%;
 }
@@ -165,7 +172,7 @@ nav .nav__user a {
   transition-property: background-color, color;
   transition-duration: 0.3s;
 }
-nav .nav__user a:hover {
+nav .nav__user a:hover, nav .nav__user a:focus {
   color: #9b411a;
   background-color: white;
   border: 2px solid #9b411a;
@@ -238,7 +245,7 @@ main {
 .homepage .cta button#learn-more {
   background-color: white;
 }
-.homepage .cta button:hover {
+.homepage .cta button:hover, .homepage .cta button:focus {
   -webkit-animation-name: bounce;
           animation-name: bounce;
   -webkit-animation-duration: 1s;
@@ -338,10 +345,10 @@ main {
   background-color: transparent;
   color: #004e17;
 }
-.projects .project:hover {
+.projects .project:hover, .projects .project:focus {
   box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.2);
 }
-.projects .project:hover .project__issues-open {
+.projects .project:hover .project__issues-open, .projects .project:focus .project__issues-open {
   border: 1px #004e17 solid;
 }
 .projects .project__header {
@@ -452,10 +459,33 @@ main {
   background-color: #004e17;
 }
 
-.new-project-form {
+.new-project-form,
+.edit-project-form {
   place-self: center;
   width: clamp(20rem, 70%, 50rem);
 }
-.new-project-form form input {
+.new-project-form form input,
+.edit-project-form form input {
   width: 100%;
+}
+.new-project-form form .form-commands,
+.edit-project-form form .form-commands {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 1.5rem;
+}
+.new-project-form form .form-commands button:focus,
+.edit-project-form form .form-commands button:focus {
+  outline: none;
+}
+.new-project-form form .form-commands button:not([type=submit]),
+.edit-project-form form .form-commands button:not([type=submit]) {
+  background-color: white;
+  color: #004e17;
+  border: 2px solid #004e17;
+}
+.new-project-form form .form-commands button:not([type=submit]):hover,
+.edit-project-form form .form-commands button:not([type=submit]):hover {
+  background-color: #004e17;
+  color: white;
 }/*# sourceMappingURL=index.css.map */

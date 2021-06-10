@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router";
 import useSend from "../hooks/useSend";
+import { apiCall } from "../utils";
+import { useGlobalContext } from "../utils/context";
 import TextInput, { TextArea } from "./FormInputs";
+import ManageMembers from "./ManageMembers";
 
 export interface NewProjectFormProps {}
 
@@ -20,8 +22,12 @@ const validate = {
     return false;
   },
 };
-const NewProjectForm: React.FC<NewProjectFormProps> = () => {
-  const [state, setState] = useState({ name: "", description: "" });
+const EditProjectForm: React.FC<NewProjectFormProps> = () => {
+  const { project, setProject } = useGlobalContext();
+  const [state, setState] = useState({
+    name: project?.name,
+    description: project?.description,
+  });
   const [errors, setErrors] = useState<ProjectFormError>({
     name: false,
     description: false,
@@ -30,6 +36,23 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
     name: false,
     description: false,
   });
+
+  // Populate the edit fields in case we did
+  // not get to the page via the app and the projects context is not populated
+  const params = useParams() as { projectId: string };
+  useEffect(() => {
+    const { projectId } = params;
+    if (!project) {
+      apiCall(`/projects/${projectId}/details`, "GET")
+        .then((resp) => {
+          return resp.json();
+        })
+        .then((d) => {
+          setState({ name: d.name, description: d.description });
+          setProject(d);
+        });
+    }
+  }, [project, params, setProject]);
 
   type FormFieldsType = keyof typeof state;
   useEffect(() => {
@@ -107,51 +130,53 @@ const NewProjectForm: React.FC<NewProjectFormProps> = () => {
     if (isError || isEmpty) return;
 
     // Submit
-    sendNewProject("/projects", "POST", state).then(() => {
+    sendNewProject(`/projects/${project?._id}`, "PUT", state).then(() => {
       setState({ name: "", description: "" });
     });
   };
 
   useEffect(() => {
-    console.log(error);
+    console.log(error); //XXX
   }, [error]);
 
   const formLogic = { handleChange, handleBlur, errors, touched };
 
   return (
-    <div className="new-project-form">
-      {error && <div>{error.message}</div>}
-      <form onSubmit={handleSubmit}>
-        {status === "pending" && (
-          <div>Sending the project to the server...</div>
-        )}
-        <TextInput<typeof state>
-          label="Project name : "
-          value={state.name}
-          field="name"
-          formLogic={formLogic}
-        />
-        <TextArea<typeof state>
-          label="Project Description : "
-          value={state.description}
-          field="description"
-          formLogic={formLogic}
-          dimensions={{ rows: 15, cols: 40 }}
-        />
-
-        <div className="form-commands">
-          <button type="submit">Submit</button>
-          <button
-            onClick={() => {
-              history.push("/projects");
-            }}
-          >
-            Back
-          </button>
-        </div>
-      </form>
+    <div className="edit-project">
+      <div className="new-project-form">
+        {error && <div>{error.message}</div>}
+        <form onSubmit={handleSubmit}>
+          {status === "pending" && (
+            <div>Sending the project to the server...</div>
+          )}
+          <TextInput<typeof state>
+            label="Project name : "
+            value={state.name}
+            field="name"
+            formLogic={formLogic}
+          />
+          <TextArea<typeof state>
+            label="Project Description : "
+            value={state.description}
+            field="description"
+            formLogic={formLogic}
+            dimensions={{ rows: 15, cols: 40 }}
+          />
+          <div className="form-commands">
+            <button type="submit">Submit</button>
+            <button
+              onClick={() => {
+                history.push("/projects");
+              }}
+            >
+              Back
+            </button>
+          </div>
+        </form>
+      </div>
+      <ManageMembers projectId={project?._id} />
     </div>
   );
 };
 
-export default NewProjectForm;
+export default EditProjectForm;

@@ -4,12 +4,16 @@ import { apiCall } from "../utils/";
 //Types
 import { Tstatus, HTTPMethods, IIssue, IProject, RequestError } from "../types";
 
-function useSend(path: string, method: HTTPMethods, data?: object) {
+function useSend() {
   const [status, setStatus] = useState<Tstatus>("idle");
   const [response, setResponse] = useState<IProject | IIssue>();
   const [error, setError] = useState<RequestError>();
 
-  const sendRequest = async () => {
+  const sendRequest = async (
+    path: string,
+    method: HTTPMethods,
+    data?: object
+  ) => {
     setStatus("pending");
     try {
       const resp = await apiCall(path, method, data);

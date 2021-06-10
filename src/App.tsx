@@ -8,6 +8,7 @@ import ProjectList from "./components/ProjectList";
 import IssuesList from "./components/IssuesList";
 import NewProjectForm from "./components/NewProjectForm";
 import Home from "./components/Home";
+import EditProjectForm from "./components/EditProjectForm";
 
 function App() {
   const { setUser } = useGlobalContext();
@@ -35,6 +36,9 @@ function App() {
           <Switch>
             <Route path="/projects/new">
               <NewProjectForm />
+            </Route>
+            <Route path="/projects/:projectId/edit">
+              <EditProjectForm />
             </Route>
             <Route path="/projects/:projectId">
               <IssuesList />

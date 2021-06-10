@@ -4,6 +4,7 @@ import { useGlobalContext } from "../utils/context";
 import deleteIcon from "../images/icons/delete.svg";
 import editIcon from "../images/icons/edit.svg";
 import personOutline from "../images/icons/person-outline.svg";
+import useSend from "../hooks/useSend";
 
 interface Props {
   project: IProject;
@@ -20,6 +21,8 @@ const Project = ({ project, setProject, history }: Props) => {
     contribNum > 1 ? "s" : ""
   }`;
 
+  const { sendRequest: sendDelete } = useSend();
+
   // Only show buttons when admin or author
   const showControls =
     user.id === project.author || project.admins.includes(user.id);
@@ -31,10 +34,21 @@ const Project = ({ project, setProject, history }: Props) => {
 
         {showControls && (
           <div className="project__controls">
-            <button aria-label="edit">
+            <button
+              aria-label="edit"
+              onClick={() => {
+                setProject(project);
+                history.push(`/projects/${project._id}/edit`);
+              }}
+            >
               <img src={editIcon} alt="edit" />
             </button>
-            <button>
+            <button
+              onClick={() => {
+                //TODO : ask for confirmation and remove projects from projects displayed if no error
+                sendDelete(`/projects/${project._id}`, "DELETE");
+              }}
+            >
               <img src={deleteIcon} alt="delete" aria-label="delete" />
             </button>
           </div>
