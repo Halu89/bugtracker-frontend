@@ -4,11 +4,11 @@ import AuthForm from "./components/AuthForm";
 import Navbar from "./components/Navbar";
 import { useGlobalContext } from "./utils/context";
 import jwtDecode from "jwt-decode";
-import ProjectList from "./components/ProjectList";
-import IssuesList from "./components/IssuesList";
-import NewProjectForm from "./components/NewProjectForm";
+import ProjectList from "./components/Projects/ProjectList";
+import IssuesList from "./components/Issues/IssuesList";
+import NewProjectForm from "./components/Projects/NewProjectForm";
 import Home from "./components/Home";
-import EditProjectForm from "./components/EditProjectForm";
+import EditProjectForm from "./components/Projects/EditProjectForm";
 
 function App() {
   const { setUser } = useGlobalContext();

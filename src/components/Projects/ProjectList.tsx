@@ -1,10 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useFetch } from "../hooks";
-import { IProject } from "../types";
-import { useGlobalContext } from "../utils/context";
+import { useFetch } from "../../hooks";
+import { IProject } from "../../types";
+import { useGlobalContext } from "../../utils/context";
 import Project from "./Project";
-import searchIcon from "../images/icons/search-outline.svg";
+import searchIcon from "../../images/icons/search-outline.svg";
 
 const ProjectList = () => {
   const [loading, response] = useFetch("/projects", "GET");

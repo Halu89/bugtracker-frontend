@@ -1,10 +1,10 @@
 import React from "react";
-import { IProject } from "../types";
-import { useGlobalContext } from "../utils/context";
-import deleteIcon from "../images/icons/delete.svg";
-import editIcon from "../images/icons/edit.svg";
-import personOutline from "../images/icons/person-outline.svg";
-import useSend from "../hooks/useSend";
+import { IProject } from "../../types";
+import { useGlobalContext } from "../../utils/context";
+import deleteIcon from "../../images/icons/delete.svg";
+import editIcon from "../../images/icons/edit.svg";
+import personOutline from "../../images/icons/person-outline.svg";
+import useSend from "../../hooks/useSend";
 
 interface Props {
   project: IProject;

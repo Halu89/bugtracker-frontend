@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useSend from "../hooks/useSend";
-import TextInput from "./FormInputs";
 
 const validate = (val: string) => {
   if (val) return false;
@@ -29,7 +28,6 @@ const ManageMembers = ({ projectId }: Props) => {
       username,
     });
   };
-  console.log(projectId);
   return (
     <div className="manage-members">
       <button

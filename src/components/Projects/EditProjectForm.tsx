@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import useSend from "../hooks/useSend";
-import { apiCall } from "../utils";
-import { useGlobalContext } from "../utils/context";
-import TextInput, { TextArea } from "./FormInputs";
-import ManageMembers from "./ManageMembers";
+import useSend from "../../hooks/useSend";
+import { apiCall } from "../../utils";
+import { useGlobalContext } from "../../utils/context";
+import TextInput, { TextArea } from "../FormInputs";
+import ManageMembers from "../ManageMembers";
 
 export interface NewProjectFormProps {}
 
