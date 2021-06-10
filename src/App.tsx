@@ -10,6 +10,7 @@ import NewProjectForm from "./components/Projects/NewProjectForm";
 import Home from "./components/Home";
 import EditProjectForm from "./components/Projects/EditProjectForm";
 import NewIssueForm from "./components/Issues/NewIssueForm";
+import EditIssueForm from "./components/Issues/EditIssueForm";
 
 function App() {
   const { setUser } = useGlobalContext();
@@ -43,6 +44,9 @@ function App() {
             </Route>
             <Route path="/projects/:projectId/new">
               <NewIssueForm />
+            </Route>
+            <Route path="/projects/:projectId/:issueId/edit">
+              <EditIssueForm  />
             </Route>
             <Route path="/projects/:projectId">
               <IssuesList />
