@@ -151,13 +151,13 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
           )}
           <TextInput<typeof state>
             label="Project name : "
-            value={state.name}
+            value={state.name || ""}
             field="name"
             formLogic={formLogic}
           />
           <TextArea<typeof state>
             label="Project Description : "
-            value={state.description}
+            value={state.description || ""}
             field="description"
             formLogic={formLogic}
             dimensions={{ rows: 15, cols: 40 }}

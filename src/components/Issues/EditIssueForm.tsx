@@ -64,12 +64,12 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
         .then((resp) => {
           return resp.json();
         })
-        .then((iss) => {
-          setState({ title: iss.title, description: iss.description });
-          setIssue(iss);
+        .then((data) => {
+          setState({ title: data.title, description: data.description });
+          setIssue(data);
         });
     }
-  }, [issue, params, setProject]);
+  }, [issue, params, setIssue]);
 
   type FormFieldsType = keyof typeof state;
   useEffect(() => {
@@ -98,7 +98,7 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
       history.push(`/projects/${project?._id}`);
     }
   }, [response, history, project]);
-  
+
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -168,19 +168,20 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
     <div className="edit-issue">
       <div className="new-issue-form">
         {error && <div>{error.message}</div>}
+
         <form onSubmit={handleSubmit}>
           {status === "pending" && (
             <div>Sending the project to the server...</div>
           )}
           <TextInput<typeof state>
             label="Issue name : "
-            value={state.title}
+            value={state.title || ""}
             field="title"
             formLogic={formLogic}
           />
           <TextArea<typeof state>
             label="Issue Description : "
-            value={state.description}
+            value={state.description || ""}
             field="description"
             formLogic={formLogic}
             dimensions={{ rows: 8, cols: 40 }}
