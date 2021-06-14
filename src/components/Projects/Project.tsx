@@ -10,9 +10,10 @@ interface Props {
   project: IProject;
   setProject: any;
   history: any;
+  removeProject: () => void;
 }
 
-const Project = ({ project, setProject, history }: Props) => {
+const Project = ({ project, setProject, history, removeProject }: Props) => {
   const { user } = useGlobalContext();
 
   // Format the contributors message string
@@ -48,6 +49,7 @@ const Project = ({ project, setProject, history }: Props) => {
                 //TODO : ask for confirmation and remove projects from projects displayed if no error
                 const confirm = window.confirm("Do you really want to delete");
                 if (confirm) {
+                  removeProject();
                   sendDelete(`/projects/${project._id}`, "DELETE");
                 }
               }}

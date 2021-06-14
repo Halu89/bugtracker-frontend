@@ -7,9 +7,10 @@ import useSend from "../../hooks/useSend";
 
 export interface IssueProps {
   issue: IIssue;
+  removeIssue: () => void;
 }
 
-const Issue: React.FC<IssueProps> = ({ issue }) => {
+const Issue: React.FC<IssueProps> = ({ issue, removeIssue }) => {
   // const [showControls, setControls] = useState(true);
   const createdAt = new Date(issue.createdAt).toDateString();
 
@@ -23,7 +24,7 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
   const showControls =
     user.id === currentProject?.author?._id ||
     currentProject?.admins.includes(user.id) ||
-    currentProject.author;
+    currentProject?.author;
 
   return (
     <div className="issue" key={issue._id}>
@@ -46,7 +47,7 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
               onClick={() => {
                 //TODO : ask for confirmation and remove issue from issues displayed if no error
                 if (window.confirm("Are you sure ?")) {
-                  console.log("DELETEING");
+                  removeIssue();
                   sendDelete(
                     `/projects/${currentProject._id}/${issue?._id}`,
                     "DELETE"
@@ -61,13 +62,13 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
       </header>
       <p className="issue__subtitle">
         Opened on <span className="date">{createdAt}</span> by{" "}
-        <span className="author">{issue.author.username}</span>
+        <span className="author">{issue?.author?.username}</span>
       </p>
 
       <p className="issue__description">{issue.description}</p>
       <p className="issue__assignedTo">
         Assigned to :{" "}
-        {issue.assignedTo.length ? issue.assignedTo.join(", ") : "Nobody"}
+        {issue.assignedTo?.length ? issue.assignedTo?.join(", ") : "Nobody"}
       </p>
     </div>
   );

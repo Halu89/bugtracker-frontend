@@ -15,7 +15,7 @@ type filtersType = {
 };
 
 const applyFilters = (
-  projectsArray: IProject[] & { team: string[]; admins: string[] },
+  projectsArray: IProject[],
   filters: filtersType,
   user: IUser
 ) => {
@@ -48,8 +48,14 @@ const applyFilters = (
 const ProjectList = () => {
   //Load the user projects
   const [loading, response] = useFetch("/projects", "GET");
-  let projects;
-  const { setCurrentProject, user, setProjects } = useGlobalContext();
+  useEffect(() => {
+    if (response) {
+      setProjects(response);
+    }
+  }, [response]);
+
+  const [projects, setProjects] = useState<IProject[]>([]);
+  const { setCurrentProject, user } = useGlobalContext();
   const history = useHistory();
   const [filters, setFilters] = useState({
     author: false,
@@ -59,29 +65,29 @@ const ProjectList = () => {
     name: "",
   });
 
-  if (response) {
-    // Get the user projects in the global context
-    setProjects(response);
+  const removeProject = (id: string) => {
+    setProjects(projects.filter((proj) => proj._id !== id));
+  };
 
-    //Apply the filters
-    const displayedProjects = applyFilters(response, filters, user);
-
-    projects = displayedProjects.map((project: IProject) => {
-      return (
-        <Project
-          project={project}
-          setProject={setCurrentProject}
-          history={history}
-          key={project._id}
-        />
-      );
-    });
-  }
+  //Apply the filters
+  const displayedProjects = applyFilters(projects, filters, user);
 
   return (
     <main className="projects">
       {loading && <div className="loading">Loading...</div>}
-      <section className="projects-container">{projects}</section>
+      <section className="projects-container">
+        {displayedProjects.map((project: IProject) => {
+          return (
+            <Project
+              project={project}
+              setProject={setCurrentProject}
+              history={history}
+              key={project._id}
+              removeProject={() => removeProject(project._id)}
+            />
+          );
+        })}
+      </section>
       <aside>
         <div className="container">
           <button

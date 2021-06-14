@@ -11,9 +11,8 @@ export interface Props {}
 
 const IssuesList: React.FC<Props> = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const [loading, response] = useFetch(`/projects/${projectId}`, "GET");
   const { currentProject, setCurrentProject } = useGlobalContext();
-
+  const [issues, setIssues] = React.useState<IIssue[]>([]);
   const history = useHistory();
 
   //Populate the project in case we refresh
@@ -28,9 +27,17 @@ const IssuesList: React.FC<Props> = () => {
       });
   }, [currentProject, projectId, setCurrentProject]);
 
-  const issues = response?.map((issue: IIssue) => {
-    return <Issue issue={issue} key={issue._id} />;
-  });
+  const removeIssue = (id: string) => {
+    setIssues(issues.filter((issue) => issue._id !== id));
+  };
+
+  // Load the issues from the server
+  const [loading, response] = useFetch(`/projects/${projectId}`, "GET");
+  React.useEffect(() => {
+    if (response) {
+      setIssues(response);
+    }
+  }, [response]);
 
   return (
     <div className="issues">
@@ -42,7 +49,17 @@ const IssuesList: React.FC<Props> = () => {
           </Link>
         </header>
         {loading && <div>Loading...</div>}
-        <div className="issues__list">{issues}</div>
+        <div className="issues__list">
+          {issues.map((issue: IIssue) => {
+            return (
+              <Issue
+                issue={issue}
+                key={issue._id}
+                removeIssue={() => removeIssue(issue._id)}
+              />
+            );
+          })}
+        </div>
       </div>
       <aside>
         <div className="container">
