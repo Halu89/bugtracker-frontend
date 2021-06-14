@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { IIssue } from "../../types";
 import deleteIcon from "../../images/icons/delete.svg";
 import editIcon from "../../images/icons/edit.svg";
@@ -14,7 +13,7 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
   // const [showControls, setControls] = useState(true);
   const createdAt = new Date(issue.createdAt).toDateString();
 
-  const { setIssue, project, user } = useGlobalContext();
+  const { setIssue, currentProject, user } = useGlobalContext();
   const history = useHistory();
 
   const { sendRequest: sendDelete } = useSend();
@@ -22,9 +21,9 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
   // Only show buttons when admin or author
   // Must handle the case when the project author is populated from mongo or not
   const showControls =
-    user.id === project?.author?._id ||
-    project?.admins.includes(user.id) ||
-    project.author;
+    user.id === currentProject?.author?._id ||
+    currentProject?.admins.includes(user.id) ||
+    currentProject.author;
 
   return (
     <div className="issue" key={issue._id}>
@@ -36,7 +35,9 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
               aria-label="edit"
               onClick={() => {
                 setIssue(issue);
-                history.push(`/projects/${project?._id}/${issue?._id}/edit`);
+                history.push(
+                  `/projects/${currentProject?._id}/${issue?._id}/edit`
+                );
               }}
             >
               <img src={editIcon} alt="edit" />
@@ -44,7 +45,13 @@ const Issue: React.FC<IssueProps> = ({ issue }) => {
             <button
               onClick={() => {
                 //TODO : ask for confirmation and remove issue from issues displayed if no error
-                sendDelete(`/projects/${project._id}/${issue?._id}`, "DELETE");
+                if (window.confirm("Are you sure ?")) {
+                  console.log("DELETEING");
+                  sendDelete(
+                    `/projects/${currentProject._id}/${issue?._id}`,
+                    "DELETE"
+                  );
+                }
               }}
             >
               <img src={deleteIcon} alt="delete" aria-label="delete" />

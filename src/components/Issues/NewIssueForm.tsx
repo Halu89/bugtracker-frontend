@@ -32,22 +32,22 @@ const NewIssueForm: React.FC<NewIssueFormProps> = () => {
     description: false,
   });
 
-  const { project, setProject } = useGlobalContext();
+  const { currentProject, setCurrentProject } = useGlobalContext();
 
   const { projectId } = useParams<{ projectId: string | undefined }>();
 
   //Populate the project in case we refresh
   useEffect(() => {
-    if (project) return;
+    if (currentProject) return;
     apiCall(`/projects/${projectId}/details`, "GET")
       .then((resp: any) => {
         return resp.json();
       })
       .then((d: any) => {
         console.log("project from useEffect : ", d);
-        setProject(d);
+        setCurrentProject(d);
       });
-  }, [project, projectId, setProject]);
+  }, [currentProject, projectId, setCurrentProject]);
 
   // Apply custom styles depending on the fields validation
   type FormFieldsType = keyof typeof state;

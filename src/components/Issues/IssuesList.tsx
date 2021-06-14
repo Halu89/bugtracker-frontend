@@ -12,22 +12,21 @@ export interface Props {}
 const IssuesList: React.FC<Props> = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [loading, response] = useFetch(`/projects/${projectId}`, "GET");
-  const { project, setProject } = useGlobalContext();
+  const { currentProject, setCurrentProject } = useGlobalContext();
 
   const history = useHistory();
 
   //Populate the project in case we refresh
   React.useEffect(() => {
-    if (project) return;
+    if (currentProject) return;
     apiCall(`/projects/${projectId}/details`, "GET")
       .then((resp: any) => {
         return resp.json();
       })
       .then((d: any) => {
-        console.log("project from useEffect : ", d);
-        setProject(d);
+        setCurrentProject(d);
       });
-  }, [project, projectId, setProject]);
+  }, [currentProject, projectId, setCurrentProject]);
 
   const issues = response?.map((issue: IIssue) => {
     return <Issue issue={issue} key={issue._id} />;
@@ -37,8 +36,8 @@ const IssuesList: React.FC<Props> = () => {
     <div className="issues">
       <div className="container">
         <header className="issues__header">
-          <h3>{project?.name}</h3>
-          <Link to={"/projects"} onClick={() => setProject(undefined)}>
+          <h3>{currentProject?.name}</h3>
+          <Link to={"/projects"} onClick={() => setCurrentProject(undefined)}>
             Back to projects
           </Link>
         </header>

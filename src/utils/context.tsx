@@ -6,21 +6,24 @@ type Props = { children: React.ReactNode };
 
 const AppProvider = ({ children }: Props): JSX.Element => {
   const [user, setUser] = useState<IUser | undefined>();
-  const [project, setProject] = useState<IProject | undefined>();
+  const [currentProject, setCurrentProject] = useState<IProject | undefined>();
   const [issue, setIssue] = useState<IIssue | undefined>();
   const [errors, setErrors] = useState();
+  const [projects, setProjects] = useState<IProject[]>([]);
 
   return (
     <AppContext.Provider
       value={{
         user,
         setUser,
-        project,
-        setProject,
+        currentProject,
+        setCurrentProject,
         issue,
         setIssue,
         errors,
         setErrors,
+        setProjects,
+        projects
       }}
     >
       {children}

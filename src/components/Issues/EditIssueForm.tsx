@@ -26,7 +26,7 @@ const validate = {
   },
 };
 const EditIssueForm: React.FC<NewIssueFormProps> = () => {
-  const { project, setProject, issue, setIssue } = useGlobalContext();
+  const { currentProject, setCurrentProject, issue, setIssue } = useGlobalContext();
 
   const [state, setState] = useState({
     title: issue?.title,
@@ -52,10 +52,10 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
           return resp.json();
         })
         .then((proj) => {
-          setProject(proj);
+          setCurrentProject(proj);
         });
     }
-  }, [issue, params, setProject]);
+  }, [issue, params, setCurrentProject]);
 
   useEffect(() => {
     const { issueId, projectId } = params;
@@ -95,9 +95,9 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
   const history = useHistory();
   useEffect(() => {
     if (response) {
-      history.push(`/projects/${project?._id}`);
+      history.push(`/projects/${currentProject?._id}`);
     }
-  }, [response, history, project]);
+  }, [response, history, currentProject]);
 
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -150,7 +150,7 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
 
     // Submit
     sendEditedIssue(
-      `/projects/${project?._id}/${issue?._id}`,
+      `/projects/${currentProject?._id}/${issue?._id}`,
       "PUT",
       state
     ).then(() => {
@@ -190,7 +190,7 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
             <button type="submit">Submit</button>
             <button
               onClick={() => {
-                history.push(`/projects/${project?._id}`);
+                history.push(`/projects/${currentProject?._id}`);
               }}
             >
               Back

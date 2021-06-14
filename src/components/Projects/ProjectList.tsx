@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFetch } from "../../hooks";
 import { IProject, IUser } from "../../types";
@@ -46,9 +46,10 @@ const applyFilters = (
 };
 
 const ProjectList = () => {
+  //Load the user projects
   const [loading, response] = useFetch("/projects", "GET");
   let projects;
-  const { setProject, user } = useGlobalContext();
+  const { setCurrentProject, user, setProjects } = useGlobalContext();
   const history = useHistory();
   const [filters, setFilters] = useState({
     author: false,
@@ -59,12 +60,17 @@ const ProjectList = () => {
   });
 
   if (response) {
+    // Get the user projects in the global context
+    setProjects(response);
+
+    //Apply the filters
     const displayedProjects = applyFilters(response, filters, user);
+
     projects = displayedProjects.map((project: IProject) => {
       return (
         <Project
           project={project}
-          setProject={setProject}
+          setProject={setCurrentProject}
           history={history}
           key={project._id}
         />

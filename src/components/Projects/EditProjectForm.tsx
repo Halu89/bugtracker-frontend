@@ -23,10 +23,10 @@ const validate = {
   },
 };
 const EditProjectForm: React.FC<NewProjectFormProps> = () => {
-  const { project, setProject } = useGlobalContext();
+  const { currentProject, setCurrentProject } = useGlobalContext();
   const [state, setState] = useState({
-    name: project?.name,
-    description: project?.description,
+    name: currentProject?.name,
+    description: currentProject?.description,
   });
   const [errors, setErrors] = useState<ProjectFormError>({
     name: false,
@@ -42,17 +42,17 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
   const params = useParams() as { projectId: string };
   useEffect(() => {
     const { projectId } = params;
-    if (!project) {
+    if (!currentProject) {
       apiCall(`/projects/${projectId}/details`, "GET")
         .then((resp) => {
           return resp.json();
         })
         .then((d) => {
           setState({ name: d.name, description: d.description });
-          setProject(d);
+          setCurrentProject(d);
         });
     }
-  }, [project, params, setProject]);
+  }, [currentProject, params, setCurrentProject]);
 
   type FormFieldsType = keyof typeof state;
   useEffect(() => {
@@ -130,9 +130,11 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
     if (isError || isEmpty) return;
 
     // Submit
-    sendNewProject(`/projects/${project?._id}`, "PUT", state).then(() => {
-      setState({ name: "", description: "" });
-    });
+    sendNewProject(`/projects/${currentProject?._id}`, "PUT", state).then(
+      () => {
+        setState({ name: "", description: "" });
+      }
+    );
   };
 
   useEffect(() => {
@@ -174,7 +176,7 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
           </div>
         </form>
       </div>
-      <ManageMembers projectId={project?._id} />
+      <ManageMembers projectId={currentProject?._id} />
     </div>
   );
 };
