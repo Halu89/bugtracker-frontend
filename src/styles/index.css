@@ -5,6 +5,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   font-family: "Montserrat", sans-serif;
+  background-color: #eeeeee;
 }
 
 button {
@@ -17,7 +18,7 @@ button {
   padding: 0.2em 0.6em;
   transition: all 0.2s;
 }
-button:hover {
+button:hover, button:focus {
   border: 1px solid #9b411a;
   color: #9b411a;
   background-color: white;
@@ -204,6 +205,7 @@ main {
   background-color: #eeeeee;
   height: 100%;
   display: grid;
+  width: 98vw;
 }
 
 .homepage {

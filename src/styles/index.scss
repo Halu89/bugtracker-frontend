@@ -10,6 +10,7 @@ $bg-color: #eeeeee;
   display: grid;
   grid-template-rows: auto 1fr;
   font-family: "Montserrat", sans-serif;
+  background-color: $bg-color;
 }
 
 // Buttons default
@@ -22,7 +23,8 @@ button {
   font-size: 1.4rem;
   padding: 0.2em 0.6em;
   transition: all 0.2s;
-  &:hover {
+  &:hover,
+  &:focus {
     border: 1px solid $accent-color;
     color: $accent-color;
     background-color: white;
@@ -223,6 +225,7 @@ main {
   background-color: $bg-color;
   height: 100%;
   display: grid;
+  width:98vw;
 }
 
 .homepage {
