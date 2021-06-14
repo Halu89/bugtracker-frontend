@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import FormInput from "./FormInput";
 import validate from "../utils/validate";
 import useAuthSubmit from "../hooks/useAuthSubmit";
 import { useGlobalContext } from "../utils/context";
@@ -92,14 +91,13 @@ const AuthForm = ({ type }: Props) => {
       setTouched((touched) => ({ ...touched, [el]: true }));
       setErrors((errors) => ({ ...errors, [el]: validate[el](state[el]) }));
     });
-    console.log(errors);
+    console.log(errors); //XXX
     // Verify that there is no error
     // errors here is the errors object before the handleSubmit call
     const isError = Object.values(errors).reduce((acc: boolean, el) => {
       return el ? true : acc;
     }, false);
     // Verify that we have values
-    // FIXME don't look at the email field if we are on signin
     let isEmpty;
     if (type === "signup") {
       isEmpty = Object.values(state).reduce((acc: boolean, el: string) => {

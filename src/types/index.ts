@@ -3,7 +3,7 @@ export type stateType = { username: string; password: string; email: string };
 export interface IUser {
   id: string;
   username: string;
-  email: string;
+  email?: string;
   issues?: string[];
   projects?: string[];
 }
@@ -12,10 +12,10 @@ export interface IProject {
   _id: string;
   name: string;
   description: string;
-  author: IUser;
-  issues: IIssue[];
-  team: IUser[];
-  admins: IUser[];
+  author: IUser | string;
+  issues: IIssue[] | string[];
+  team: IUser[] | string[];
+  admins: IUser[] | string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -23,7 +23,7 @@ export interface IIssue {
   _id: string;
   title: string;
   description: string;
-  project: IProject;
+  project: IProject | string;
   author: IUser;
   assignedTo: IUser[];
   statusText: string;

@@ -46,7 +46,10 @@ const Project = ({ project, setProject, history }: Props) => {
             <button
               onClick={() => {
                 //TODO : ask for confirmation and remove projects from projects displayed if no error
-                sendDelete(`/projects/${project._id}`, "DELETE");
+                const confirm = window.confirm("Do you really want to delete");
+                if (confirm) {
+                  sendDelete(`/projects/${project._id}`, "DELETE");
+                }
               }}
             >
               <img src={deleteIcon} alt="delete" aria-label="delete" />

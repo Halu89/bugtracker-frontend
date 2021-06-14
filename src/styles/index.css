@@ -415,19 +415,19 @@ main {
   box-shadow: none;
 }
 .projects aside .filters__team-buttons button {
-  background-color: white;
-  color: #004e17;
-  margin: 0.5rem;
-  border: 2px solid #004e17;
-  transition-property: background-color, color;
-  transition-duration: 0.3s;
-}
-.projects aside .filters__team-buttons button:hover, .projects aside .filters__team-buttons button:focus {
-  font-weight: bold;
-}
-.projects aside .filters__team-buttons button.active {
   background-color: #004e17;
   color: white;
+  margin: 0.5rem;
+  border: 2px solid #004e17;
+  transition-property: background-color, color, transform;
+  transition-duration: 0.3s;
+}
+.projects aside .filters__team-buttons button:hover {
+  transform: scale(1.05);
+}
+.projects aside .filters__team-buttons button.active {
+  background-color: white;
+  color: #004e17;
 }
 .projects aside .filters__issues-open {
   padding: 0.5rem 1rem;

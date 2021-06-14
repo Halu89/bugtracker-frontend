@@ -171,7 +171,7 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
 
         <form onSubmit={handleSubmit}>
           {status === "pending" && (
-            <div>Sending the project to the server...</div>
+            <div>Sending the issue to the server...</div>
           )}
           <TextInput<typeof state>
             label="Issue name : "

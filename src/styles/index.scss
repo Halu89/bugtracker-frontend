@@ -421,20 +421,20 @@ main {
       }
       &__team-buttons {
         button {
-          background-color: white;
-          color: $main-color;
+          background-color: $main-color;
+          color: white;
+
           margin: 0.5rem;
           border: 2px solid $main-color;
-          transition-property: background-color, color;
+          transition-property: background-color, color, transform;
           transition-duration: 0.3s;
-          &:hover,
-          &:focus {
-            font-weight: bold;
+          &:hover {
+            transform: scale(1.05);
           }
 
           &.active {
-            background-color: $main-color;
-            color: white;
+            background-color: white;
+            color: $main-color;
           }
         }
       }
