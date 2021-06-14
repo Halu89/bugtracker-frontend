@@ -4,9 +4,9 @@ import { useFetch } from "../../hooks";
 import { IProject, IUser } from "../../types";
 import { useGlobalContext } from "../../utils/context";
 import Project from "./Project";
-import searchIcon from "../../images/icons/search-outline.svg";
+import ProjectFilters from "./ProjectFilters";
 
-type filtersType = {
+export type filtersType = {
   author: boolean;
   admins: boolean;
   issueOpen: boolean;
@@ -98,59 +98,7 @@ const ProjectList = () => {
           >
             New project
           </button>
-          <div className="filters">
-            <h2>Filters</h2>
-            <div className="filters__search-input">
-              <input
-                type="text"
-                placeholder="Name"
-                aria-label="Project Name"
-                onChange={(e) => {
-                  const projectName = e.currentTarget.value;
-                  setFilters({ ...filters, name: projectName });
-                }}
-                value={filters.name}
-              />
-              <img src={searchIcon} alt="search"></img>
-            </div>
-            <div className="filters__team-buttons">
-              <button
-                className={filters.author ? "active" : ""}
-                onClick={() => {
-                  setFilters({ ...filters, author: !filters.author });
-                }}
-              >
-                Author
-              </button>
-              <button
-                className={filters.admins ? "active" : ""}
-                onClick={() => {
-                  setFilters({ ...filters, admins: !filters.admins });
-                }}
-              >
-                Admin
-              </button>
-              <button
-                className={filters.member ? "active" : ""}
-                onClick={() => {
-                  setFilters({ ...filters, member: !filters.member });
-                }}
-              >
-                Member
-              </button>
-            </div>
-            <label className="filters__issues-open" htmlFor="checkbox">
-              <input
-                type="checkbox"
-                name="issues_open"
-                id="checkbox"
-                onChange={() => {
-                  setFilters({ ...filters, issueOpen: !filters.issueOpen });
-                }}
-              />
-              <span className="checkbox-label">Only with issues open</span>
-            </label>
-          </div>
+          <ProjectFilters filters={filters} setFilters={setFilters} />
         </div>
       </aside>
     </main>

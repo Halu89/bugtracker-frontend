@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks";
-import { IIssue } from "../../types";
+import { IIssue, IUser } from "../../types";
 import { apiCall } from "../../utils";
 import { useGlobalContext } from "../../utils/context";
 import Issue from "./Issue";
@@ -9,12 +9,58 @@ import IssuesFilters from "./IssuesFilters";
 
 export interface Props {}
 
+export type filtersType = {
+  title: string;
+  statusText: string;
+  openIssues: boolean;
+  closedIssues: boolean;
+  assignedToMe: boolean;
+};
+
+const applyFilters = (
+  issuesArray: IIssue[],
+  filters: filtersType,
+  user: IUser
+) => {
+  let result = [...issuesArray];
+  if (filters.title) {
+    const titleReg = new RegExp(filters.title.toLowerCase());
+    result = result.filter((issue) =>
+      issue.title.toLowerCase().match(titleReg)
+    );
+  }
+  if (filters.statusText) {
+    const statusReg = new RegExp(filters.statusText.toLowerCase());
+    result = result.filter((issue) => {
+      if (!issue.statusText) return false;
+      return issue.statusText.toLowerCase().match(statusReg);
+    });
+  }
+  if (!filters.openIssues) {
+    result = result.filter((issue) => !issue.isOpen);
+  }
+  if (!filters.closedIssues) {
+    result = result.filter((issue) => issue.isOpen);
+  }
+  if (filters.assignedToMe) {
+    result = result.filter((issue) => issue.author._id !== user.id);
+  }
+  return result;
+};
+
 const IssuesList: React.FC<Props> = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const { currentProject, setCurrentProject } = useGlobalContext();
+  const { currentProject, setCurrentProject, user } = useGlobalContext();
   const [issues, setIssues] = React.useState<IIssue[]>([]);
   const history = useHistory();
 
+  const [filters, setFilters] = React.useState<filtersType>({
+    title: "",
+    statusText: "",
+    openIssues: true,
+    closedIssues: true,
+    assignedToMe: false,
+  });
   //Populate the project in case we refresh
   React.useEffect(() => {
     if (currentProject) return;
@@ -39,6 +85,7 @@ const IssuesList: React.FC<Props> = () => {
     }
   }, [response]);
 
+  const displayedIssues = applyFilters(issues, filters, user);
   return (
     <div className="issues">
       <div className="container">
@@ -50,7 +97,7 @@ const IssuesList: React.FC<Props> = () => {
         </header>
         {loading && <div>Loading...</div>}
         <div className="issues__list">
-          {issues.map((issue: IIssue) => {
+          {displayedIssues.map((issue: IIssue) => {
             return (
               <Issue
                 issue={issue}
@@ -71,7 +118,7 @@ const IssuesList: React.FC<Props> = () => {
           >
             New Issue
           </button>
-          <IssuesFilters />
+          <IssuesFilters filters={filters} setFilters={setFilters} />
         </div>
       </aside>
     </div>

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import useSend from "../../hooks/useSend";
-import { IIssue } from "../../types";
 import { apiCall } from "../../utils";
 import { useGlobalContext } from "../../utils/context";
 import TextInput, { TextArea } from "../FormInputs";
-import ManageMembers from "../ManageMembers";
 
 export interface NewIssueFormProps {
   // issue: IIssue;
@@ -26,7 +24,8 @@ const validate = {
   },
 };
 const EditIssueForm: React.FC<NewIssueFormProps> = () => {
-  const { currentProject, setCurrentProject, issue, setIssue } = useGlobalContext();
+  const { currentProject, setCurrentProject, issue, setIssue } =
+    useGlobalContext();
 
   const [state, setState] = useState({
     title: issue?.title,

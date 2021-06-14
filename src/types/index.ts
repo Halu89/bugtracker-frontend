@@ -2,6 +2,7 @@ export type stateType = { username: string; password: string; email: string };
 
 export interface IUser {
   id: string;
+  _id: string;
   username: string;
   email?: string;
   issues?: string[];
