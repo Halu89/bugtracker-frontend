@@ -700,6 +700,12 @@ main {
   display: flex;
   flex-direction: column;
 }
+.edit-project .manage-members .controls .error {
+  align-self: center;
+  width: 80%;
+  color: #c21b1b;
+  font-size: 0.85em;
+}
 .edit-project .manage-members .controls .container {
   display: flex;
   align-content: center;
@@ -715,18 +721,18 @@ main {
 .edit-project .manage-members .controls button {
   margin: 1em;
 }
-.edit-project .manage-members .controls button.admin {
+.edit-project .manage-members .controls button.admin, .edit-project .manage-members .controls button#admins {
   background-color: #c21b1b;
 }
-.edit-project .manage-members .controls button.admin:hover, .edit-project .manage-members .controls button.admin:focus {
+.edit-project .manage-members .controls button.admin:hover, .edit-project .manage-members .controls button.admin:focus, .edit-project .manage-members .controls button#admins:hover, .edit-project .manage-members .controls button#admins:focus {
   background-color: white;
   border: 1px solid #c21b1b;
   color: #c21b1b;
 }
-.edit-project .manage-members .controls button.member {
+.edit-project .manage-members .controls button.member, .edit-project .manage-members .controls button#members {
   background-color: #004e17;
 }
-.edit-project .manage-members .controls button.member:hover, .edit-project .manage-members .controls button.member:focus {
+.edit-project .manage-members .controls button.member:hover, .edit-project .manage-members .controls button.member:focus, .edit-project .manage-members .controls button#members:hover, .edit-project .manage-members .controls button#members:focus {
   background-color: white;
   border: 1px solid #004e17;
   color: #004e17;
@@ -748,4 +754,5 @@ main {
   flex-direction: column;
   width: 80%;
   align-self: center;
+  font-size: 1.2rem;
 }/*# sourceMappingURL=index.css.map */
