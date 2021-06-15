@@ -28,7 +28,6 @@ button:hover, button:focus {
 form {
   display: flex;
   flex-direction: column;
-  margin-left: 10%;
   position: relative;
 }
 form label {
@@ -42,7 +41,7 @@ form input {
   font-size: 0.9rem;
   margin-top: 0.2em;
   padding: 0.3em 0.8em;
-  width: 90%;
+  width: 100%;
   border-radius: 0.2em;
   border: 1px solid black;
 }
@@ -312,7 +311,7 @@ main {
 }
 .register .form-container {
   margin: 0.5rem;
-  padding: 2.5rem 1.3rem;
+  padding: 2.5rem 3rem;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
   display: grid;
@@ -655,4 +654,98 @@ main {
 }
 .issues aside .container .filters__checkboxes label {
   margin-top: 0.6em;
+}
+
+.edit-project {
+  display: grid;
+  grid-template-columns: 1fr 40%;
+}
+.edit-project .manage-members {
+  padding: 2rem;
+}
+.edit-project .manage-members .project__members {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid #004e17;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+.edit-project .manage-members .project__members p {
+  margin-bottom: 1em;
+}
+.edit-project .manage-members .project__members .usertag {
+  background-color: rgba(6, 54, 30, 0.753);
+  padding: 0.3em 0.6em;
+  border-radius: 0.5em;
+  color: white;
+}
+.edit-project .manage-members .project__members .members,
+.edit-project .manage-members .project__members .admins {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+}
+.edit-project .manage-members .project__members .admins {
+  margin-top: 1rem;
+}
+.edit-project .manage-members .project__members .admins .usertag {
+  background-color: rgba(139, 0, 0, 0.705);
+}
+.edit-project .manage-members .controls {
+  background-color: white;
+  border: 1px solid #004e17;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.edit-project .manage-members .controls .container {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
+.edit-project .manage-members .controls h2 {
+  grid-area: header;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  color: #004e17;
+  text-align: center;
+}
+.edit-project .manage-members .controls button {
+  margin: 1em;
+}
+.edit-project .manage-members .controls button.admin {
+  background-color: #c21b1b;
+}
+.edit-project .manage-members .controls button.admin:hover, .edit-project .manage-members .controls button.admin:focus {
+  background-color: white;
+  border: 1px solid #c21b1b;
+  color: #c21b1b;
+}
+.edit-project .manage-members .controls button.member {
+  background-color: #004e17;
+}
+.edit-project .manage-members .controls button.member:hover, .edit-project .manage-members .controls button.member:focus {
+  background-color: white;
+  border: 1px solid #004e17;
+  color: #004e17;
+}
+.edit-project .manage-members .controls button#admins {
+  background-color: #c21b1b;
+}
+.edit-project .manage-members .controls button#admins:hover, .edit-project .manage-members .controls button#admins:focus {
+  background-color: white;
+}
+.edit-project .manage-members .controls button#members {
+  background-color: #004e17;
+}
+.edit-project .manage-members .controls button#members:hover, .edit-project .manage-members .controls button#members:focus {
+  background-color: white;
+}
+.edit-project .manage-members .controls label {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-self: center;
 }/*# sourceMappingURL=index.css.map */

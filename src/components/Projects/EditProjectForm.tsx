@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import useSend from "../../hooks/useSend";
+import { IProject, IUser } from "../../types";
 import { apiCall } from "../../utils";
 import { useGlobalContext } from "../../utils/context";
 import TextInput, { TextArea } from "../FormInputs";
@@ -23,7 +24,8 @@ const validate = {
   },
 };
 const EditProjectForm: React.FC<NewProjectFormProps> = () => {
-  const { currentProject, setCurrentProject } = useGlobalContext();
+  const { currentProject } = useGlobalContext();
+  const [proj, setProj] = useState<IProject>();
   const [state, setState] = useState({
     name: currentProject?.name,
     description: currentProject?.description,
@@ -42,17 +44,17 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
   const params = useParams() as { projectId: string };
   useEffect(() => {
     const { projectId } = params;
-    if (!currentProject) {
+    if (!proj) {
       apiCall(`/projects/${projectId}/details`, "GET")
         .then((resp) => {
           return resp.json();
         })
         .then((d) => {
           setState({ name: d.name, description: d.description });
-          setCurrentProject(d);
+          setProj(d);
         });
     }
-  }, [currentProject, params, setCurrentProject]);
+  }, [proj, params]);
 
   type FormFieldsType = keyof typeof state;
   useEffect(() => {
@@ -176,7 +178,12 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
           </div>
         </form>
       </div>
-      <ManageMembers projectId={currentProject?._id} />
+
+      <ManageMembers
+        projectId={proj?._id}
+        members={proj?.team as IUser[] | undefined}
+        admins={proj?.admins as IUser[] | undefined}
+      />
     </div>
   );
 };

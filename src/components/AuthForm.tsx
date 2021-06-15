@@ -11,6 +11,8 @@ interface errorType {
 }
 type Props = { type: "signin" | "signup" };
 
+
+
 const AuthForm = ({ type }: Props) => {
   const [state, setState] = useState({ username: "", email: "", password: "" });
   const [errors, setErrors] = useState<errorType>({
@@ -31,9 +33,11 @@ const AuthForm = ({ type }: Props) => {
   type FormFieldsType = keyof typeof state;
   const { setUser } = useGlobalContext();
 
+
   //Skip email validation on login form
+  const validateForm = {...validate}
   if (type === "signin") {
-    validate.email = () => {
+    validateForm.email = () => {
       return false;
     };
   }
@@ -42,7 +46,9 @@ const AuthForm = ({ type }: Props) => {
     const labelArrays = Object.keys(state) as Array<FormFieldsType>;
     // Apply custom styles depending on the fields validation
     labelArrays.forEach((field) => {
+      //TODO : on the register page, the ids are not unique
       const input = document.getElementById(field);
+      console.log(input)
       if (!input) return;
       if (touched[field] && errors[field]) {
         input.classList.add("invalid");
@@ -74,7 +80,7 @@ const AuthForm = ({ type }: Props) => {
       value: string;
     };
     //Check for errors
-    setErrors({ ...errors, [name]: validate[name](value) });
+    setErrors({ ...errors, [name]: validateForm[name](value) });
     // Set touched
     setTouched({ ...touched, [e.currentTarget.name]: true });
   };
@@ -89,7 +95,7 @@ const AuthForm = ({ type }: Props) => {
     const labelArray = Object.keys(state) as FormFieldsType[];
     labelArray.forEach((el) => {
       setTouched((touched) => ({ ...touched, [el]: true }));
-      setErrors((errors) => ({ ...errors, [el]: validate[el](state[el]) }));
+      setErrors((errors) => ({ ...errors, [el]: validateForm[el](state[el]) }));
     });
     console.log(errors); //XXX
     // Verify that there is no error

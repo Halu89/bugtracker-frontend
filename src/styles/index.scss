@@ -36,7 +36,6 @@ button {
 form {
   display: flex;
   flex-direction: column;
-  margin-left: 10%;
   position: relative;
   label {
     display: flex;
@@ -49,7 +48,7 @@ form {
     font-size: 0.9rem;
     margin-top: 0.2em;
     padding: 0.3em 0.8em;
-    width: 90%;
+    width: 100%;
     border-radius: 0.2em;
     border: 1px solid black;
   }
@@ -225,7 +224,7 @@ main {
   background-color: $bg-color;
   height: 100%;
   display: grid;
-  width:98vw;
+  width: 98vw;
 }
 
 .homepage {
@@ -309,7 +308,7 @@ main {
 
   .form-container {
     margin: 0.5rem;
-    padding: 2.5rem 1.3rem;
+    padding: 2.5rem 3rem;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 1rem;
     display: grid;
@@ -674,6 +673,108 @@ main {
             margin-top: 0.6em;
           }
         }
+      }
+    }
+  }
+}
+
+.edit-project {
+  display: grid;
+  grid-template-columns: 1fr 40%;
+  .manage-members {
+    padding: 2rem;
+
+    .project__members {
+      background-color: white;
+      padding: 1rem;
+      border: 1px solid $main-color;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      p {
+        margin-bottom: 1em;
+      }
+
+      .usertag {
+        background-color: rgba(6, 54, 30, 0.753);
+        padding: 0.3em 0.6em;
+        border-radius: 0.5em;
+        color: white;
+      }
+      .members,
+      .admins {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5em;
+      }
+      .admins {
+        margin-top: 1rem;
+        & .usertag {
+          background-color: rgba(139, 0, 0, 0.705);
+        }
+      }
+    }
+
+    .controls {
+      background-color: white;
+      border: 1px solid $main-color;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      .container {
+        display: flex;
+        align-content: center;
+        justify-content: space-evenly;
+      }
+      h2 {
+        grid-area: header;
+        font-size: 1.8rem;
+        font-weight: lighter;
+        color: $main-color;
+        text-align: center;
+      }
+      button {
+        margin: 1em;
+        &.admin {
+          background-color: $dark-red;
+          &:hover,
+          &:focus {
+            background-color: white;
+            border: 1px solid $dark-red;
+            color: $dark-red;
+          }
+        }
+        &.member {
+          background-color: $main-color;
+          &:hover,
+          &:focus {
+            background-color: white;
+            border: 1px solid $main-color;
+            color: $main-color;
+          }
+        }
+        &#admins {
+          background-color: $dark-red;
+          &:hover,
+          &:focus {
+            background-color: white;
+          }
+        }
+        &#members {
+          background-color: $main-color;
+          &:hover,
+          &:focus {
+            background-color: white;
+          }
+        }
+      }
+      label {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        align-self: center;
       }
     }
   }

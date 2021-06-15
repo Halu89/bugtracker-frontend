@@ -7,7 +7,7 @@ import AuthForm from "../AuthForm";
 const NavUser = ({ user }: { user: IUser }) => {
   const { setUser } = useGlobalContext();
   const [displayLogin, setDisplayLogin] = useState(false);
-
+  const [showNode, setShowNode] = useState(true);
   const history = useHistory();
 
   //Listen for page changes to remove the login form
@@ -19,6 +19,15 @@ const NavUser = ({ user }: { user: IUser }) => {
     });
     return unlisten;
   }, [history]);
+
+  //Remove the node to have unique id on the register page if we hide the login form
+  useEffect(() => {
+    if (!displayLogin) {
+      setTimeout(() => {
+        setShowNode(false);
+      }, 1000);
+    }
+  }, [displayLogin]);
 
   if (user) {
     return (
@@ -41,17 +50,25 @@ const NavUser = ({ user }: { user: IUser }) => {
     return (
       <>
         <li>
-          <button onClick={() => setDisplayLogin(!displayLogin)}>Login</button>
+          <button
+            onClick={() => {
+              setShowNode(true);
+              setDisplayLogin(!displayLogin);
+            }}
+          >
+            Login
+          </button>
         </li>
         <li>
           <NavLink exact to="/register" className="nav__link">
             Register
           </NavLink>
         </li>
-
-        <div className={displayLogin ? "login-form" : "login-form hide"}>
-          <AuthForm type="signin" />
-        </div>
+        {showNode && (
+          <div className={displayLogin ? "login-form" : "login-form hide"}>
+            <AuthForm type="signin" />
+          </div>
+        )}
       </>
     );
   }

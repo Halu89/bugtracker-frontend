@@ -17,7 +17,7 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
   const { user } = useGlobalContext();
 
   // Format the contributors message string
-  const contribNum = new Set([...project.team, ...project.admins]).size + 1;
+  const contribNum = new Set([...project.team, ...project.admins, project.author]).size;
   const contribMessage = `${contribNum} contributor${
     contribNum > 1 ? "s" : ""
   }`;
