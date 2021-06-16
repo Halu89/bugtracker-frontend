@@ -3,6 +3,7 @@
 [ ] Figure out a way to display error messages from requests
 [x] Fix jumping filters when scrollbar disappear  
 [ ] Add a clear filters btn  
+[ ] Loading indication when clicking on a button that interacts with the server(assign an issue, close an issue, etc...)  
 [x] Test the issue filter  
 [ ] Add all fields to edit issue form (or to the issue page)  
 [ ] Customize the delete confirm prompt  

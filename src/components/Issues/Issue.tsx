@@ -11,7 +11,7 @@ export interface IssueControlProps {
   removeIssue: () => void;
 }
 interface IssueProps extends IssueControlProps {
-  manageAssignToMe: (id: string, action: "REMOVE" | "ADD") => void;
+  manageAssignToMe: (id: string) => void;
 }
 
 const Issue: React.FC<IssueProps> = ({
@@ -114,7 +114,7 @@ const IssueFooter = ({
 }: {
   issue: IIssue;
   showControls: boolean;
-  manageAssignToMe: (id: string, action: "REMOVE" | "ADD") => void;
+  manageAssignToMe: (id: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(issue.isOpen);
   const { user, currentProject } = useGlobalContext();
@@ -123,33 +123,24 @@ const IssueFooter = ({
     response: openResp,
     status: openStatus,
   } = useSend();
-  const { sendRequest: sendUsername, response: userResp } = useSend();
+  const {
+    sendRequest: sendUsername,
+    response: userResp,
+    status: userStatus,
+  } = useSend();
 
-  // useEffect(() => {
-  //   setToMe(
-  //     assignedTo.reduce((acc: boolean, el) => {
-  //       if (user.id === el._id) return true;
-  //       return acc;
-  //     }, false)
-  //   );
-  // }, [assignedTo, user.id]);
-
+  // Is the issue assigned to the logged in User
   const [toMe, setToMe] = useState(
     issue.assignedTo.reduce((acc, el) => {
       if (user.id === el._id) return true;
       return acc;
     }, false)
   );
-  console.log("toMe.current :>> ", issue.title, toMe);
-  // const assignedToMe = issue.assignedTo.reduce((acc, el) => {
-  //   if (user.id === el._id) return true;
-  //   return acc;
-  // }, false);
 
+  // Sync the assignedTo with the backend
   useEffect(() => {
-    //FIXME useReducer ?
     if (userResp) {
-      manageAssignToMe(issue._id, toMe ? "REMOVE" : "ADD");
+      manageAssignToMe(issue._id);
       setToMe((val) => !val);
     }
   }, [userResp, manageAssignToMe, issue._id]);
@@ -169,6 +160,7 @@ const IssueFooter = ({
       <button
         className="take-issue"
         onClick={() => {
+          if (userStatus === "pending") return;
           sendUsername(
             `/projects/${currentProject._id}/${issue._id}/${
               toMe ? "unassignUser" : "assignUser"

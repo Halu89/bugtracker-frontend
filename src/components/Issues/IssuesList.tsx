@@ -92,18 +92,28 @@ const IssuesList: React.FC<Props> = () => {
     }
   }, [response]);
 
-  const manageAssignToMe = (id: string, action: "REMOVE" | "ADD") => {
+  const manageAssignToMe = (id: string) => {
     const issueToModify = issues.find((el) => {
       return el._id === id;
     })!;
-    if (action === "ADD") {
-      issueToModify.assignedTo = [...issueToModify.assignedTo, user];
-    }
-    if (action === "REMOVE") {
+    //Check if the issue is assigned to the logged in user
+    const toMe = issueToModify.assignedTo.reduce((acc, el) => {
+      if (user.id === el._id) return true;
+      return acc;
+    }, false);
+
+    // Add or remove the user from the issue accordingly
+    if (!toMe) {
+      issueToModify.assignedTo = [
+        ...issueToModify.assignedTo,
+        { ...user, _id: user.id },
+      ];
+    } else if (toMe) {
       issueToModify.assignedTo = issueToModify.assignedTo.filter(
         (u) => u.username !== user.username
       );
     }
+    // Trigger a re-render with the mutated issue
     setIssues(issues);
   };
 
