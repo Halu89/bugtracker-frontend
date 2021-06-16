@@ -93,6 +93,7 @@ const IssuesList: React.FC<Props> = () => {
   }, [response]);
 
   const manageAssignToMe = (id: string) => {
+    console.log("Managing issue");
     const issueToModify = issues.find((el) => {
       return el._id === id;
     })!;

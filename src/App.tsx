@@ -13,7 +13,8 @@ import NewIssueForm from "./components/Issues/NewIssueForm";
 import EditIssueForm from "./components/Issues/EditIssueForm";
 
 function App() {
-  const { setUser } = useGlobalContext();
+  const { setUser, cursor } = useGlobalContext();
+  
   useEffect(() => {
     if (localStorage.getItem("token")) {
       console.log("Authenticating from the cookie"); // XXX
@@ -34,7 +35,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <main>
+        <main style={{ cursor: cursor }}>
           <Switch>
             <Route path="/projects/new">
               <NewProjectForm />
@@ -46,7 +47,7 @@ function App() {
               <NewIssueForm />
             </Route>
             <Route path="/projects/:projectId/:issueId/edit">
-              <EditIssueForm  />
+              <EditIssueForm />
             </Route>
             <Route path="/projects/:projectId">
               <IssuesList />

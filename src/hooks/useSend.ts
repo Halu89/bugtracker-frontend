@@ -15,6 +15,7 @@ function useSend() {
     data?: object
   ) => {
     setStatus("pending");
+    setResponse(undefined);
     setError(undefined);
     try {
       const resp = await apiCall(path, method, data);

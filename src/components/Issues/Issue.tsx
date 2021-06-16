@@ -4,7 +4,7 @@ import editIcon from "../../images/icons/edit.svg";
 import { useGlobalContext } from "../../utils/context";
 import { useHistory } from "react-router";
 import useSend from "../../hooks/useSend";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface IssueControlProps {
   issue: IIssue;
@@ -129,6 +129,18 @@ const IssueFooter = ({
     status: userStatus,
   } = useSend();
 
+  // Display a loading cursor if waiting for a server resp
+  const { setCursor, cursor } = useGlobalContext();
+  useEffect(() => {
+    if (userStatus === "idle" && openStatus === "idle") {
+      setCursor("auto");
+    }
+
+    if (openStatus === "pending" || userStatus === "pending") {
+      setCursor("wait");
+    }
+  }, [openStatus, userStatus, setCursor]);
+
   // Is the issue assigned to the logged in User
   const [toMe, setToMe] = useState(
     issue.assignedTo.reduce((acc, el) => {
@@ -158,6 +170,7 @@ const IssueFooter = ({
       {showControls && <button className="manage-assigns">Manage</button>}
 
       <button
+        style={{ cursor: (cursor === "auto" ? "pointer" : "wait" )}}
         className="take-issue"
         onClick={() => {
           if (userStatus === "pending") return;
@@ -174,6 +187,7 @@ const IssueFooter = ({
       </button>
 
       <button
+        style={{ cursor: (cursor === "auto" ? "pointer" : "wait") }}
         onClick={() => {
           if (openStatus === "pending") return;
           sendOpenOrClose(

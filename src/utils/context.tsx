@@ -10,6 +10,7 @@ const AppProvider = ({ children }: Props): JSX.Element => {
   const [issue, setIssue] = useState<IIssue | undefined>();
   const [errors, setErrors] = useState();
   const [projects, setProjects] = useState<IProject[]>([]);
+  const [cursor, setCursor] = useState("auto");
 
   return (
     <AppContext.Provider
@@ -23,7 +24,9 @@ const AppProvider = ({ children }: Props): JSX.Element => {
         errors,
         setErrors,
         setProjects,
-        projects
+        projects,
+        cursor,
+        setCursor,
       }}
     >
       {children}
