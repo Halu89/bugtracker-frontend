@@ -534,10 +534,13 @@ main {
   background-color: transparent;
   width: 4rem;
 }
-.issues .container .issues__list .issue .issue__description {
+.issues .container .issues__list .issue header button:not(:last-child) {
+  margin-right: 0.7rem;
+}
+.issues .container .issues__list .issue__description {
   position: relative;
 }
-.issues .container .issues__list .issue .issue__description::after {
+.issues .container .issues__list .issue__description::after {
   content: "";
   width: 20rem;
   bottom: -1rem;
@@ -545,6 +548,19 @@ main {
   height: 2px;
   background: linear-gradient(to right, #004e17, transparent);
   position: absolute;
+}
+.issues .container .issues__list .issue__footer {
+  display: flex;
+  align-items: center;
+}
+.issues .container .issues__list .issue__footer button {
+  background: transparent;
+  color: #004e17;
+  text-transform: none;
+}
+.issues .container .issues__list .issue__footer button.take-issue {
+  margin-left: auto;
+  margin-right: 1rem;
 }
 .issues .container .issues__list .issue__subtitle {
   font-size: 0.8em;
@@ -560,7 +576,7 @@ main {
   margin: 1.5rem 0;
 }
 .issues .container .issues__list .issue__assignedTo {
-  margin-top: 1rem;
+  margin-right: 1rem;
 }
 .issues aside {
   position: relative;

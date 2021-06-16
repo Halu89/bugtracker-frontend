@@ -71,7 +71,7 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
           history.push(`/projects/${project._id}`);
         }}
       >
-        {project.issues.length} issues open
+        {project.issues.length} issues
       </button>
     </div>
   );

@@ -43,7 +43,14 @@ const applyFilters = (
     result = result.filter((issue) => issue.isOpen);
   }
   if (filters.assignedToMe) {
-    result = result.filter((issue) => issue.author._id !== user.id);
+    result = result.filter((issue) =>
+      issue.assignedTo.reduce((acc: boolean, el: IUser): boolean => {
+        if (el._id === (user.id || user._id)) {
+          return true;
+        }
+        return acc;
+      }, false)
+    );
   }
   return result;
 };
@@ -85,6 +92,21 @@ const IssuesList: React.FC<Props> = () => {
     }
   }, [response]);
 
+  const manageAssignToMe = (id: string, action: "REMOVE" | "ADD") => {
+    const issueToModify = issues.find((el) => {
+      return el._id === id;
+    })!;
+    if (action === "ADD") {
+      issueToModify.assignedTo = [...issueToModify.assignedTo, user];
+    }
+    if (action === "REMOVE") {
+      issueToModify.assignedTo = issueToModify.assignedTo.filter(
+        (u) => u.username !== user.username
+      );
+    }
+    setIssues(issues);
+  };
+
   const displayedIssues = applyFilters(issues, filters, user);
   return (
     <div className="issues">
@@ -103,6 +125,7 @@ const IssuesList: React.FC<Props> = () => {
                 issue={issue}
                 key={issue._id}
                 removeIssue={() => removeIssue(issue._id)}
+                manageAssignToMe={manageAssignToMe}
               />
             );
           })}
