@@ -17,7 +17,7 @@ function App() {
   
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      console.log("Authenticating from the cookie"); // XXX
+      console.log("Authenticating from the localStorage"); // XXX
       try {
         const { id, username } = jwtDecode<{ id: string; username: string }>(
           localStorage.token

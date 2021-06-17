@@ -147,7 +147,7 @@ const IssuesList: React.FC<Props> = () => {
           <button
             className="issues__new-button"
             onClick={() => {
-              history.push(`/projects/${projectId}/new`); // TODO
+              history.push(`/projects/${projectId}/new`); 
             }}
           >
             New Issue

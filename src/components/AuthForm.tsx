@@ -46,7 +46,7 @@ const AuthForm = ({ type }: Props) => {
     const labelArrays = Object.keys(state) as Array<FormFieldsType>;
     // Apply custom styles depending on the fields validation
     labelArrays.forEach((field) => {
-      //TODO : on the register page, the ids are not unique
+      //TODO : on the register page, the ids are not unique =>  useRef ?
       const input = document.getElementById(field);
       console.log(input)
       if (!input) return;

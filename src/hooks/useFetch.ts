@@ -14,7 +14,6 @@ const useFetch = (
   useEffect(() => {
     setLoading(true);
     const sendReq = async () => {
-      console.log("sending request"); // XXX
       try {
         const resp = await apiCall(url, method);
         setLoading(false);
@@ -23,7 +22,7 @@ const useFetch = (
         }
         const jsonResp = await resp.json();
         if (!resp.ok) {
-          console.log("Error from fetch", jsonResp);
+          console.log("Error from fetch", jsonResp); //XXX
           return setError(jsonResp.message);
         } else {
           return setResponse(jsonResp);
