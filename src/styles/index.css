@@ -552,9 +552,13 @@ main {
   background: linear-gradient(to right, #004e17, transparent);
   position: absolute;
 }
+.issues .container .issues__list .issue__statusText {
+  font-size: 0.9em;
+}
 .issues .container .issues__list .issue__footer {
   display: flex;
   flex-direction: column;
+  font-size: 0.9em;
 }
 .issues .container .issues__list .issue__footer .container {
   display: flex;
@@ -593,6 +597,7 @@ main {
   background: transparent;
   color: #004e17;
   text-transform: none;
+  font-size: 1.5em;
 }
 .issues .container .issues__list .issue__footer button.take-issue {
   margin-left: auto;

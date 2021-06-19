@@ -128,7 +128,7 @@ const IssuesList: React.FC<Props> = () => {
         }
         return original;
       })
-    )
+    );
   }, []);
 
   const displayedIssues = applyFilters(issues, filters, user);

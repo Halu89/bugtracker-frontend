@@ -43,7 +43,10 @@ const Issue: React.FC<IssueProps> = ({
         <span className="author">{issue?.author?.username}</span>
       </p>
 
-      <p className="issue__description">{issue.description}</p>
+      <p className="issue__description">{issue?.description}</p>
+      {issue?.statusText && (
+        <p className="issue__statusText">Status : {issue?.statusText}</p>
+      )}
       <IssueFooter
         issue={issue}
         showControls={showControls}

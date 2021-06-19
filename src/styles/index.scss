@@ -531,7 +531,6 @@ main {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       a {
         color: $main-color;
         font-size: 1.2rem;
@@ -570,10 +569,14 @@ main {
             position: absolute;
           }
         }
+        &__statusText {
+          font-size: 0.9em;
+        }
         &__footer {
           display: flex;
           // align-items: center;
           flex-direction: column;
+          font-size: 0.9em;
 
           .container {
             display: flex;
@@ -614,6 +617,7 @@ main {
             background: transparent;
             color: $main-color;
             text-transform: none;
+            font-size: 1.5em;
             &.take-issue {
               margin-left: auto;
               margin-right: 1rem;
@@ -873,7 +877,7 @@ main {
         & ~ ::before {
           transition: background-color 0.4s;
           position: absolute;
-          font-size: .8em;
+          font-size: 0.8em;
           left: -2.3em;
           top: 0.2em;
           content: "";
