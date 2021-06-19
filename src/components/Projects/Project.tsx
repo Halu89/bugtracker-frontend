@@ -17,7 +17,11 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
   const { user } = useGlobalContext();
 
   // Format the contributors message string
-  const contribNum = new Set([...project.team, ...project.admins, project.author]).size;
+  const contribNum = new Set([
+    ...project.team,
+    ...project.admins,
+    project.author,
+  ]).size;
   const contribMessage = `${contribNum} contributor${
     contribNum > 1 ? "s" : ""
   }`;
@@ -32,35 +36,38 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
     <div className="project" key={project._id}>
       <div className="project__header">
         <h3 className="project__name">{project.name}</h3>
-
-        {showControls && (
-          <div className="project__controls">
-            <button
-              aria-label="edit"
-              onClick={() => {
-                setProject(project);
-                history.push(`/projects/${project._id}/edit`);
-              }}
-            >
-              <img src={editIcon} alt="edit" />
-            </button>
-            <button
-              onClick={() => {
-                //TODO : ask for confirmation and remove projects from projects displayed if no error
-                const confirm = window.confirm("Do you really want to delete");
-                if (confirm) {
-                  removeProject();
-                  sendDelete(`/projects/${project._id}`, "DELETE");
-                }
-              }}
-            >
-              <img src={deleteIcon} alt="delete" aria-label="delete" />
-            </button>
+        <div className="container">
+          {showControls && (
+            <div className="project__controls">
+              <button
+                aria-label="edit"
+                onClick={() => {
+                  setProject(project);
+                  history.push(`/projects/${project._id}/edit`);
+                }}
+              >
+                <img src={editIcon} alt="edit" />
+              </button>
+              <button
+                onClick={() => {
+                  //TODO : ask for confirmation and remove projects from projects displayed if no error
+                  const confirm = window.confirm(
+                    "Do you really want to delete"
+                  );
+                  if (confirm) {
+                    removeProject();
+                    sendDelete(`/projects/${project._id}`, "DELETE");
+                  }
+                }}
+              >
+                <img src={deleteIcon} alt="delete" aria-label="delete" />
+              </button>
+            </div>
+          )}
+          <div className="project__contrib">
+            <img src={personOutline} alt="icon"></img>
+            <span>{contribMessage}</span>
           </div>
-        )}
-        <div className="project__contrib">
-          <img src={personOutline} alt="icon"></img>
-          <span>{contribMessage}</span>
         </div>
       </div>
       <p className="project__description">{project.description}</p>

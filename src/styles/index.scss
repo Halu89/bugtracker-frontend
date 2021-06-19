@@ -227,6 +227,8 @@ main {
   width: 98vw;
 }
 
+// Homepage
+
 .homepage {
   display: grid;
 
@@ -301,6 +303,7 @@ main {
   }
 }
 
+// Register page
 .register {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -315,6 +318,8 @@ main {
     width: clamp(18rem, 80%, 25rem);
   }
 }
+
+// Projects List
 
 .projects {
   display: grid;
@@ -363,9 +368,20 @@ main {
       flex-direction: row;
       align-items: center;
     }
-    &__controls {
+    .container {
+      display: flex;
       margin-left: auto;
-      margin-right: 1rem;
+
+      .project__controls {
+        margin-right: 1rem;
+      }
+      .project__contrib {
+        display: flex;
+        align-items: center;
+        img {
+          display: inline-block;
+        }
+      }
     }
     &__description {
       grid-area: main;
@@ -374,14 +390,6 @@ main {
     &__issues-open {
       grid-area: issues;
       width: max-content;
-    }
-
-    &__contrib {
-      display: flex;
-      align-items: center;
-      img {
-        display: inline-block;
-      }
     }
   }
 
@@ -475,6 +483,8 @@ main {
   }
 }
 
+// Edit and new project form
+
 .new-project-form,
 .new-issue-form,
 .edit-project-form {
@@ -503,6 +513,8 @@ main {
     }
   }
 }
+
+// Issues list page
 
 .issues {
   display: grid;
@@ -560,7 +572,43 @@ main {
         }
         &__footer {
           display: flex;
-          align-items: center;
+          // align-items: center;
+          flex-direction: column;
+
+          .container {
+            display: flex;
+            align-items: center;
+          }
+          .issue__manage-assign {
+            transition: max-height 0.5s;
+            max-height: 0;
+            overflow-y: hidden;
+            position: relative;
+            .error-message {
+              position: absolute;
+              top: -0.2em;
+              font-size: 0.8em;
+              color: $dark-red;
+            }
+            &.show {
+              max-height: 7rem;
+            }
+            .inner {
+              display: flex;
+              padding: 1em 0 0.2em 1em;
+              button {
+                font-size: 1em;
+              }
+              button:last-child {
+                margin-left: auto;
+              }
+            }
+
+            input {
+              margin: 0.5em 1em;
+              padding: 0.2em 0.6em;
+            }
+          }
 
           button {
             background: transparent;
@@ -696,6 +744,7 @@ main {
   }
 }
 
+// Edit project page
 .edit-project {
   display: grid;
   grid-template-columns: 1fr 40%;
@@ -801,6 +850,46 @@ main {
         width: 80%;
         align-self: center;
         font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.edit-issue {
+  padding: 2rem;
+  form {
+    label.edit-issue__checkbox {
+      margin-left: 2em;
+
+      span.edit-issue__checkbox-label {
+        font-size: 1.3rem;
+        color: $main-color;
+      }
+
+      input[type="checkbox"] {
+        // Hijack the default checkbox
+        display: none;
+
+        & ~ ::before {
+          transition: background-color 0.4s;
+          position: absolute;
+          font-size: .8em;
+          left: -2.3em;
+          top: 0.2em;
+          content: "";
+          width: 1.5em;
+          height: 1.5em;
+          border: 2px solid $main-color;
+          color: white;
+        }
+        &:hover ~ ::before {
+          background-color: #004e173a;
+        }
+
+        &:checked ~ ::before {
+          content: "‎‎ ‎✓";
+          background-color: $main-color;
+        }
       }
     }
   }

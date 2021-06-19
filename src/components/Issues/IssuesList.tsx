@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks";
 import { IIssue, IUser } from "../../types";
@@ -118,6 +119,18 @@ const IssuesList: React.FC<Props> = () => {
     setIssues(issues);
   };
 
+  const manageAssign = useCallback((newIssue: IIssue) => {
+    // Replace the issues array with the new issue received from the backend
+    setIssues((issues) =>
+      issues.map((original: IIssue) => {
+        if (original._id === newIssue._id) {
+          return { ...original, assignedTo: newIssue.assignedTo };
+        }
+        return original;
+      })
+    )
+  }, []);
+
   const displayedIssues = applyFilters(issues, filters, user);
   return (
     <div className="issues">
@@ -137,6 +150,7 @@ const IssuesList: React.FC<Props> = () => {
                 key={issue._id}
                 removeIssue={() => removeIssue(issue._id)}
                 manageAssignToMe={manageAssignToMe}
+                manageAssign={manageAssign}
               />
             );
           })}
@@ -147,7 +161,7 @@ const IssuesList: React.FC<Props> = () => {
           <button
             className="issues__new-button"
             onClick={() => {
-              history.push(`/projects/${projectId}/new`); 
+              history.push(`/projects/${projectId}/new`);
             }}
           >
             New Issue

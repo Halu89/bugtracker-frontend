@@ -4,18 +4,18 @@ import { useGlobalContext } from "../../../utils/context";
 import IssueControls from "./IssueControls";
 import IssueFooter from "./IssueFooter";
 
-export interface IssueControlProps {
+interface IssueProps {
   issue: IIssue;
   removeIssue: () => void;
-}
-interface IssueProps extends IssueControlProps {
   manageAssignToMe: (id: string) => void;
+  manageAssign: (issue: IIssue) => void;
 }
 
 const Issue: React.FC<IssueProps> = ({
   issue,
   removeIssue,
   manageAssignToMe,
+  manageAssign,
 }) => {
   const createdAt = new Date(issue.createdAt).toDateString();
 
@@ -26,15 +26,17 @@ const Issue: React.FC<IssueProps> = ({
   const showControls =
     user.id === currentProject?.author?._id ||
     currentProject?.admins.includes(user.id) ||
-    currentProject?.author;
+    user.id === currentProject?.author;
 
   return (
     <div className="issue" key={issue._id}>
       <header>
         <h3 className="issue__title">{issue.title}</h3>
-        {showControls && (
-          <IssueControls issue={issue} removeIssue={removeIssue} />
-        )}
+        <IssueControls
+          issue={issue}
+          removeIssue={removeIssue}
+          showControls={showControls}
+        />
       </header>
       <p className="issue__subtitle">
         Opened on <span className="date">{createdAt}</span> by{" "}
@@ -46,6 +48,7 @@ const Issue: React.FC<IssueProps> = ({
         issue={issue}
         showControls={showControls}
         manageAssignToMe={manageAssignToMe}
+        manageAssign={manageAssign}
       />
     </div>
   );

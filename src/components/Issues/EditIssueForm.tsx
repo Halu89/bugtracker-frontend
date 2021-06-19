@@ -9,9 +9,19 @@ export interface NewIssueFormProps {
   // issue: IIssue;
 }
 
-type ProjectFormError = { title: string | false; description: string | false };
-type ProjectFormTouched = { title: boolean; description: boolean };
-type FormFields = "title" | "description";
+type ProjectFormError = {
+  title: string | false;
+  description: string | false;
+  statusText: string | false;
+  isOpen: string | false;
+};
+type ProjectFormTouched = {
+  title: boolean;
+  description: boolean;
+  statusText: boolean;
+  isOpen: boolean;
+};
+type FormFields = "title" | "description" | "statusText" | "isOpen";
 
 const validate = {
   title: (a: string) => {
@@ -22,6 +32,8 @@ const validate = {
     if (!a.trim()) return "Please fill out this field";
     return false;
   },
+  statusText: (a: string) => false,
+  isOpen: (a: string) => false,
 };
 const EditIssueForm: React.FC<NewIssueFormProps> = () => {
   const { currentProject, setCurrentProject, issue, setIssue } =
@@ -30,14 +42,20 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
   const [state, setState] = useState({
     title: issue?.title,
     description: issue?.description,
+    statusText: issue?.statusText,
+    isOpen: issue?.isOpen,
   });
   const [errors, setErrors] = useState<ProjectFormError>({
     title: false,
     description: false,
+    statusText: false,
+    isOpen: false,
   });
   const [touched, setTouched] = useState<ProjectFormTouched>({
     title: false,
     description: false,
+    statusText: false,
+    isOpen: false,
   });
 
   // Populate the edit fields in case we did
@@ -64,7 +82,13 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
           return resp.json();
         })
         .then((data) => {
-          setState({ title: data.title, description: data.description });
+          const { title, description, statusText, isOpen } = data;
+          setState({
+            title,
+            description,
+            statusText,
+            isOpen,
+          });
           setIssue(data);
         });
     }
@@ -140,10 +164,13 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
     const isError = Object.values(errors).reduce((acc: boolean, el) => {
       return el ? true : acc;
     }, false);
-    // Verify that we have values
-    const isEmpty = Object.values(state).reduce((acc: boolean, el: string) => {
-      return el.length <= 0 ? true : acc;
-    }, false);
+    // Verify that we have values in the required fields
+    const isEmpty = [state.description, state.title].reduce(
+      (acc: boolean, el: string) => {
+        return el.length <= 0 ? true : acc;
+      },
+      false
+    );
 
     if (isError || isEmpty) return;
 
@@ -153,7 +180,7 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
       "PUT",
       state
     ).then(() => {
-      setState({ title: "", description: "" });
+      setState({ title: "", description: "", statusText: "", isOpen: false });
     });
   };
 
@@ -183,8 +210,27 @@ const EditIssueForm: React.FC<NewIssueFormProps> = () => {
             value={state.description || ""}
             field="description"
             formLogic={formLogic}
-            dimensions={{ rows: 8, cols: 40 }}
+            dimensions={{ rows: 7, cols: 40 }}
           />
+          <TextInput<typeof state>
+            label="Status text : "
+            value={state.statusText || ""}
+            field="statusText"
+            formLogic={formLogic}
+          />
+          <label className="edit-issue__checkbox" htmlFor="closed-checkbox">
+            <input
+              type="checkbox"
+              name="issues_open"
+              id="closed-checkbox"
+              checked={!state.isOpen}
+              onChange={(e) => {
+                const isOpen = !e.currentTarget.checked;
+                setState({ ...state, isOpen });
+              }}
+            />
+            <span className="edit-issue__checkbox-label">Close the issue</span>
+          </label>
           <div className="form-commands">
             <button type="submit">Submit</button>
             <button

@@ -357,9 +357,19 @@ main {
   flex-direction: row;
   align-items: center;
 }
-.projects .project__controls {
+.projects .project .container {
+  display: flex;
   margin-left: auto;
+}
+.projects .project .container .project__controls {
   margin-right: 1rem;
+}
+.projects .project .container .project__contrib {
+  display: flex;
+  align-items: center;
+}
+.projects .project .container .project__contrib img {
+  display: inline-block;
 }
 .projects .project__description {
   grid-area: main;
@@ -370,13 +380,6 @@ main {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-}
-.projects .project__contrib {
-  display: flex;
-  align-items: center;
-}
-.projects .project__contrib img {
-  display: inline-block;
 }
 .projects aside .container {
   display: flex;
@@ -551,7 +554,40 @@ main {
 }
 .issues .container .issues__list .issue__footer {
   display: flex;
+  flex-direction: column;
+}
+.issues .container .issues__list .issue__footer .container {
+  display: flex;
   align-items: center;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign {
+  transition: max-height 0.5s;
+  max-height: 0;
+  overflow-y: hidden;
+  position: relative;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign .error-message {
+  position: absolute;
+  top: -0.2em;
+  font-size: 0.8em;
+  color: #c21b1b;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign.show {
+  max-height: 7rem;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign .inner {
+  display: flex;
+  padding: 1em 0 0.2em 1em;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign .inner button {
+  font-size: 1em;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign .inner button:last-child {
+  margin-left: auto;
+}
+.issues .container .issues__list .issue__footer .issue__manage-assign input {
+  margin: 0.5em 1em;
+  padding: 0.2em 0.6em;
 }
 .issues .container .issues__list .issue__footer button {
   background: transparent;
@@ -771,4 +807,37 @@ main {
   width: 80%;
   align-self: center;
   font-size: 1.2rem;
+}
+
+.edit-issue {
+  padding: 2rem;
+}
+.edit-issue form label.edit-issue__checkbox {
+  margin-left: 2em;
+}
+.edit-issue form label.edit-issue__checkbox span.edit-issue__checkbox-label {
+  font-size: 1.3rem;
+  color: #004e17;
+}
+.edit-issue form label.edit-issue__checkbox input[type=checkbox] {
+  display: none;
+}
+.edit-issue form label.edit-issue__checkbox input[type=checkbox] ~ ::before {
+  transition: background-color 0.4s;
+  position: absolute;
+  font-size: 0.8em;
+  left: -2.3em;
+  top: 0.2em;
+  content: "";
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid #004e17;
+  color: white;
+}
+.edit-issue form label.edit-issue__checkbox input[type=checkbox]:hover ~ ::before {
+  background-color: #004e173a;
+}
+.edit-issue form label.edit-issue__checkbox input[type=checkbox]:checked ~ ::before {
+  content: "‎‎ ‎✓";
+  background-color: #004e17;
 }/*# sourceMappingURL=index.css.map */
