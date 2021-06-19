@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../../utils/context";
 export interface ManageAssignProps {
   showManage: boolean;
   issue: IIssue;
-  manageAssign: (issue: IIssue) => void;
+  updateIssues: (issue: IIssue) => void;
   setShowManage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -14,7 +14,7 @@ const ManageAssign: React.FC<ManageAssignProps> = ({
   showManage,
   setShowManage,
   issue,
-  manageAssign,
+  updateIssues,
 }) => {
   const { cursor, setCursor } = useGlobalContext();
   const [username, setUsername] = useState("");
@@ -48,10 +48,10 @@ const ManageAssign: React.FC<ManageAssignProps> = ({
   useEffect(() => {
     if (response) {
       //Replace the issue with the response
-      manageAssign(response as IIssue);
+      updateIssues(response as IIssue);
       setUsername("");
     }
-  }, [response, manageAssign]);
+  }, [response, updateIssues]);
 
   return (
     <div className={"issue__manage-assign " + (showManage ? "show" : "")}>

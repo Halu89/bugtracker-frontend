@@ -7,16 +7,10 @@ import IssueFooter from "./IssueFooter";
 interface IssueProps {
   issue: IIssue;
   removeIssue: () => void;
-  manageAssignToMe: (id: string) => void;
-  manageAssign: (issue: IIssue) => void;
+  updateIssues: (issue: IIssue) => void;
 }
 
-const Issue: React.FC<IssueProps> = ({
-  issue,
-  removeIssue,
-  manageAssignToMe,
-  manageAssign,
-}) => {
+const Issue: React.FC<IssueProps> = ({ issue, removeIssue, updateIssues }) => {
   const createdAt = new Date(issue.createdAt).toDateString();
 
   const { currentProject, user } = useGlobalContext();
@@ -50,8 +44,7 @@ const Issue: React.FC<IssueProps> = ({
       <IssueFooter
         issue={issue}
         showControls={showControls}
-        manageAssignToMe={manageAssignToMe}
-        manageAssign={manageAssign}
+        updateIssues={updateIssues}
       />
     </div>
   );

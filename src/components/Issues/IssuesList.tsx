@@ -82,7 +82,7 @@ const IssuesList: React.FC<Props> = () => {
   }, [currentProject, projectId, setCurrentProject]);
 
   const removeIssue = (id: string) => {
-    setIssues(issues.filter((issue) => issue._id !== id));
+    setIssues((issues) => issues.filter((issue) => issue._id !== id));
   };
 
   // Load the issues from the server
@@ -93,38 +93,15 @@ const IssuesList: React.FC<Props> = () => {
     }
   }, [response]);
 
-  const manageAssignToMe = (id: string) => {
-    console.log("Managing issue");
-    const issueToModify = issues.find((el) => {
-      return el._id === id;
-    })!;
-    //Check if the issue is assigned to the logged in user
-    const toMe = issueToModify.assignedTo.reduce((acc, el) => {
-      if (user.id === el._id) return true;
-      return acc;
-    }, false);
-
-    // Add or remove the user from the issue accordingly
-    if (!toMe) {
-      issueToModify.assignedTo = [
-        ...issueToModify.assignedTo,
-        { ...user, _id: user.id },
-      ];
-    } else if (toMe) {
-      issueToModify.assignedTo = issueToModify.assignedTo.filter(
-        (u) => u.username !== user.username
-      );
-    }
-    // Trigger a re-render with the mutated issue
-    setIssues(issues);
-  };
-
-  const manageAssign = useCallback((newIssue: IIssue) => {
-    // Replace the issues array with the new issue received from the backend
+  const updateIssues = useCallback((newIssue) => {
     setIssues((issues) =>
       issues.map((original: IIssue) => {
         if (original._id === newIssue._id) {
-          return { ...original, assignedTo: newIssue.assignedTo };
+          return {
+            ...original,
+            isOpen: newIssue.isOpen,
+            assignedTo: newIssue.assignedTo,
+          };
         }
         return original;
       })
@@ -132,6 +109,7 @@ const IssuesList: React.FC<Props> = () => {
   }, []);
 
   const displayedIssues = applyFilters(issues, filters, user);
+
   return (
     <div className="issues">
       <div className="container">
@@ -149,8 +127,7 @@ const IssuesList: React.FC<Props> = () => {
                 issue={issue}
                 key={issue._id}
                 removeIssue={() => removeIssue(issue._id)}
-                manageAssignToMe={manageAssignToMe}
-                manageAssign={manageAssign}
+                updateIssues={updateIssues}
               />
             );
           })}

@@ -8,15 +8,13 @@ import ManageAssign from "./ManageAssign";
 const IssueFooter = ({
   issue,
   showControls,
-  manageAssignToMe,
-  manageAssign,
+  updateIssues,
 }: {
   issue: IIssue;
   showControls: boolean;
-  manageAssignToMe: (id: string) => void;
-  manageAssign: (issue: IIssue) => void;
+  updateIssues: (issue: IIssue) => void;
 }) => {
-  const [isOpen, setIsOpen] = useState(issue.isOpen);
+  const isOpen = issue.isOpen;
   const [showManage, setShowManage] = useState(false);
   const { user, currentProject } = useGlobalContext();
   const {
@@ -29,6 +27,11 @@ const IssueFooter = ({
     response: userResp,
     status: userStatus,
   } = useSend();
+  // Is the issue assigned to the logged in User
+  const toMe = issue.assignedTo.reduce((acc, el) => {
+    if (user.id === el._id) return true;
+    return acc;
+  }, false);
 
   // Display a loading cursor if waiting for a server resp
   const { setCursor, cursor } = useGlobalContext();
@@ -42,28 +45,19 @@ const IssueFooter = ({
     }
   }, [openStatus, userStatus, setCursor]);
 
-  // Is the issue assigned to the logged in User
-  const [toMe, setToMe] = useState(
-    issue.assignedTo.reduce((acc, el) => {
-      if (user.id === el._id) return true;
-      return acc;
-    }, false)
-  );
-
   // Sync the assignedTo with the backend
   useEffect(() => {
     if (userResp) {
-      manageAssignToMe(issue._id);
-      setToMe((val) => !val);
+      updateIssues(userResp as IIssue);
     }
-  }, [userResp, manageAssignToMe, issue._id]);
+  }, [userResp, updateIssues]);
 
   // Sync the issue open or close state with the backend server
   useEffect(() => {
     if (openResp) {
-      setIsOpen((isOpen) => !isOpen);
+      updateIssues(openResp as IIssue);
     }
-  }, [openResp]);
+  }, [openResp, updateIssues]);
 
   return (
     <div className="issue__footer">
@@ -115,7 +109,7 @@ const IssueFooter = ({
         showManage={showManage}
         setShowManage={setShowManage}
         issue={issue}
-        manageAssign={manageAssign}
+        updateIssues={updateIssues}
       />
     </div>
   );

@@ -816,6 +816,7 @@ main {
 
 .edit-issue {
   padding: 2rem;
+  display: grid;
 }
 .edit-issue form label.edit-issue__checkbox {
   margin-left: 2em;

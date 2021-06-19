@@ -4,13 +4,15 @@
 [x] Test the issue filter  
 [x] Loading indication when clicking on a button that interacts with the server(assign an issue, close an issue, etc...)
 
-[ ] Style issue and Project buttons
-[ ] Add all fields to edit issue form (or to the issue page)  
-[ ] Figure out a way to display error messages from requests
+[x] Add all fields to edit issue form (or to the issue page)  
+[x] Fix issue filters not updating   
+
+[ ] Figure out a way to display error messages from delete requests ?
 [ ] Create a Get started (redirect to register ?) and Learn more page
 [ ] Add a clear filters btn
 
 [ ] Customize the delete confirm prompt
 
 ## Stretch
+[ ] Style issue and Project buttons better
 [ ] Add a project team chat
