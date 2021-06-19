@@ -527,6 +527,11 @@ main {
   margin: 1rem 0;
   padding: 0.5rem 2rem 1.5rem;
   border-radius: 1em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s;
+}
+.issues .container .issues__list .issue:hover, .issues .container .issues__list .issue:focus {
+  box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.2);
 }
 .issues .container .issues__list .issue header {
   display: flex;
