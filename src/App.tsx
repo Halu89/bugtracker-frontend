@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import AuthForm from "./components/AuthForm";
 import Navbar from "./components/Navbar";
@@ -11,10 +11,13 @@ import Home from "./components/Home";
 import EditProjectForm from "./components/Projects/EditProjectForm";
 import NewIssueForm from "./components/Issues/NewIssueForm";
 import EditIssueForm from "./components/Issues/EditIssueForm";
+import Docs from "./components/Docs";
+
+import WithAuth from "./hoc/WithAuth";
 
 function App() {
   const { setUser, cursor } = useGlobalContext();
-  
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       console.log("Authenticating from the localStorage"); // XXX
@@ -38,25 +41,31 @@ function App() {
         <main style={{ cursor: cursor }}>
           <Switch>
             <Route path="/projects/new">
-              <NewProjectForm />
+              <WithAuth component={<NewProjectForm />} />
             </Route>
             <Route path="/projects/:projectId/edit">
-              <EditProjectForm />
+              <WithAuth component={<EditProjectForm />} />
             </Route>
             <Route path="/projects/:projectId/new">
-              <NewIssueForm />
+              <WithAuth component={<NewIssueForm />} />
             </Route>
             <Route path="/projects/:projectId/:issueId/edit">
-              <EditIssueForm />
+              <WithAuth component={<EditIssueForm />} />
             </Route>
             <Route path="/projects/:projectId">
-              <IssuesList />
+              <WithAuth component={<IssuesList />} />
             </Route>
             <Route path="/projects">
-              <ProjectList />
+              <WithAuth component={<ProjectList />} />
             </Route>
             <Route path="/login">
-              <AuthForm type="signin" />
+              <div className="register">
+                <h2>You need to be signed in to view this page</h2>
+                <AuthForm type="signin" />
+              </div>
+            </Route>
+            <Route path="/docs">
+              <Docs />
             </Route>
             <Route path="/register">
               <div className="register">

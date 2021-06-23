@@ -1,8 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 export interface Props {}
 
 const Home: React.FC<Props> = () => {
+  const history = useHistory();
   return (
     <section className="homepage">
       <div className="hero">
@@ -17,8 +19,10 @@ const Home: React.FC<Props> = () => {
         </h1>
       </div>
       <div className="cta">
-        <button id="get-started">Get started</button>
-        <button id="learn-more">Learn more</button>
+        <button id="get-started" onClick={() => history.push("/register")}>
+          Get started
+        </button>
+        <button id="learn-more" onClick={() => history.push("/docs")}>Learn more</button>
       </div>
     </section>
   );

@@ -40,7 +40,8 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
           {showControls && (
             <div className="project__controls">
               <button
-                aria-label="edit"
+                title="Edit"
+                aria-label="Edit"
                 onClick={() => {
                   setProject(project);
                   history.push(`/projects/${project._id}/edit`);
@@ -49,6 +50,8 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
                 <img src={editIcon} alt="edit" />
               </button>
               <button
+                title="Delete"
+                aria-label="Delete"
                 onClick={() => {
                   //TODO : ask for confirmation and remove projects from projects displayed if no error
                   const confirm = window.confirm(
@@ -72,6 +75,7 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
       </div>
       <p className="project__description">{project.description}</p>
       <button
+        title="Open project"
         className="project__issues-open"
         onClick={() => {
           setProject(project);

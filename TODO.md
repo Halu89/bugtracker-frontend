@@ -15,4 +15,5 @@
 
 ## Stretch
 [ ] Style issue and Project buttons better
+[ ] Sort by date
 [ ] Add a project team chat

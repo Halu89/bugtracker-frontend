@@ -11,8 +11,6 @@ interface errorType {
 }
 type Props = { type: "signin" | "signup" };
 
-
-
 const AuthForm = ({ type }: Props) => {
   const [state, setState] = useState({ username: "", email: "", password: "" });
   const [errors, setErrors] = useState<errorType>({
@@ -25,17 +23,18 @@ const AuthForm = ({ type }: Props) => {
     email: false,
     password: false,
   });
-  const [status, reqMessage, user, jwtToken, submitForm] = useAuthSubmit(
-    type,
-    state
-  );
+  const {
+    status,
+    message: reqMessage,
+    user,
+    submitForm,
+  } = useAuthSubmit(type, state);
   // Restrict the type so we can be call errors[field] and touched[field]
   type FormFieldsType = keyof typeof state;
   const { setUser } = useGlobalContext();
 
-
   //Skip email validation on login form
-  const validateForm = {...validate}
+  const validateForm = { ...validate };
   if (type === "signin") {
     validateForm.email = () => {
       return false;
@@ -48,7 +47,7 @@ const AuthForm = ({ type }: Props) => {
     labelArrays.forEach((field) => {
       //TODO : on the register page, the ids are not unique =>  useRef ?
       const input = document.getElementById(field);
-      console.log(input)
+      console.log(input);
       if (!input) return;
       if (touched[field] && errors[field]) {
         input.classList.add("invalid");
@@ -63,7 +62,7 @@ const AuthForm = ({ type }: Props) => {
 
   useEffect(() => {
     setUser(user);
-  }, [user, jwtToken, setUser]);
+  }, [user, setUser]);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget as typeof e.currentTarget & {
@@ -97,7 +96,7 @@ const AuthForm = ({ type }: Props) => {
       setTouched((touched) => ({ ...touched, [el]: true }));
       setErrors((errors) => ({ ...errors, [el]: validateForm[el](state[el]) }));
     });
-    console.log(errors); //XXX
+
     // Verify that there is no error
     // errors here is the errors object before the handleSubmit call
     const isError = Object.values(errors).reduce((acc: boolean, el) => {
@@ -109,12 +108,11 @@ const AuthForm = ({ type }: Props) => {
       isEmpty = Object.values(state).reduce((acc: boolean, el: string) => {
         return el.length === 0 ? true : acc;
       }, false);
-    } else {
+    } else if (type === "signin") {
+      // Only look at the username and password if signin
       isEmpty = state.username.length === 0 || state.password.length === 0;
     }
 
-    console.log("Error", isError);
-    console.log("empty", isEmpty);
     if (isError || isEmpty) return;
 
     // Submit

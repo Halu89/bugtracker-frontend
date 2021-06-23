@@ -46,13 +46,13 @@ export type Tmessage =
     }
   | undefined;
 
-export type TCustomHook = [
-  Tstatus,
-  Tmessage,
-  IUser | undefined,
-  string | undefined,
-  () => void
-];
+export type TCustomHook = {
+  status: Tstatus;
+  message: Tmessage;
+  user: IUser | undefined;
+  token: string | undefined;
+  submitForm: () => void;
+};
 
 export interface IFormState {
   username: string | false;

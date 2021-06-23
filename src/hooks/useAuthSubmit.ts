@@ -39,7 +39,7 @@ function useAuthSubmit(
       setMessage({ type: "error", message: error.message });
     }
   };
-  return [status, message, user, jwtToken, submitForm];
+  return { status, message, user, token: jwtToken, submitForm };
 }
 
 export default useAuthSubmit;

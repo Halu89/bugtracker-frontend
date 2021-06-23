@@ -24,7 +24,8 @@ const IssueControls = ({
   return (
     <div className="issue__controls">
       <button
-        aria-label="edit"
+        title="Edit"
+        aria-label="Edit"
         onClick={() => {
           setIssue(issue);
           history.push(`/projects/${currentProject?._id}/${issue?._id}/edit`);
@@ -35,6 +36,8 @@ const IssueControls = ({
 
       {showControls && (
         <button
+          title="Delete"
+          aria-label="Delete"        
           onClick={() => {
             //TODO : ask for confirmation and remove issue from issues displayed if no error
             if (window.confirm("Are you sure ?")) {
