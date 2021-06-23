@@ -1,0 +1,140 @@
+@use "../variables/colors" as *;
+
+.new-project-form,
+.new-issue-form,
+.edit-project-form {
+  place-self: center;
+  width: clamp(20rem, 70%, 50rem);
+  form {
+    input {
+      width: 100%;
+    }
+    .form-commands {
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: 1.5rem;
+      button:focus {
+        outline: none;
+      }
+      button:not([type="submit"]) {
+        background-color: white;
+        color: $main-color;
+        border: 2px solid $main-color;
+        &:hover {
+          background-color: $main-color;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.edit-project {
+  display: grid;
+  grid-template-columns: 1fr 40%;
+  .manage-members {
+    padding: 2rem;
+
+    .project__members {
+      background-color: white;
+      padding: 1rem;
+      border: 1px solid $main-color;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      p {
+        margin-bottom: 1em;
+      }
+
+      .usertag {
+        background-color: rgba(6, 54, 30, 0.753);
+        padding: 0.3em 0.6em;
+        border-radius: 0.5em;
+        color: white;
+      }
+      .members,
+      .admins {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5em;
+      }
+      .admins {
+        margin-top: 1rem;
+        & .usertag {
+          background-color: rgba(139, 0, 0, 0.705);
+        }
+      }
+    }
+
+    .controls {
+      background-color: white;
+      border: 1px solid $main-color;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      .error {
+        align-self: center;
+        width: 80%;
+        color: $dark-red;
+        font-size: 0.85em;
+      }
+      .container {
+        display: flex;
+        align-content: center;
+        justify-content: space-evenly;
+      }
+      h2 {
+        grid-area: header;
+        font-size: 1.8rem;
+        font-weight: lighter;
+        color: $main-color;
+        text-align: center;
+      }
+      button {
+        margin: 1em;
+        &.admin,
+        &#admins {
+          background-color: $dark-red;
+          &:hover,
+          &:focus {
+            background-color: white;
+            border: 1px solid $dark-red;
+            color: $dark-red;
+          }
+        }
+        &.member,
+        &#members {
+          background-color: $main-color;
+          &:hover,
+          &:focus {
+            background-color: white;
+            border: 1px solid $main-color;
+            color: $main-color;
+          }
+        }
+        &#admins {
+          background-color: $dark-red;
+          &:hover,
+          &:focus {
+            background-color: white;
+          }
+        }
+        &#members {
+          background-color: $main-color;
+          &:hover,
+          &:focus {
+            background-color: white;
+          }
+        }
+      }
+      label {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        align-self: center;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

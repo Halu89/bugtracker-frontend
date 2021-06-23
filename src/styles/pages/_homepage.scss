@@ -1,0 +1,75 @@
+@use "../variables/colors" as *;
+
+.homepage {
+  display: grid;
+
+  background: url(../images/background.png),
+    linear-gradient(-45deg, transparent, rgba(167, 167, 167, 0.568));
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: bottom;
+  .hero {
+    font-size: 2.5rem;
+    justify-self: left;
+    align-self: center;
+    margin-left: 8%;
+    color: $main-color;
+    text-shadow: 2px 2px 6px rgba(226, 226, 226, 0.637);
+    span {
+      color: $accent-color;
+    }
+  }
+  .cta {
+    justify-self: center;
+    button {
+      color: $accent-color;
+      font-weight: bold;
+      border: 2px solid $accent-color;
+      border-radius: 0.5em;
+      font-size: 1.6rem;
+      margin: 0.8em;
+      padding: 0.3em 1em;
+      cursor: pointer;
+      text-transform: none;
+      &#get-started {
+        color: white;
+        background-color: $accent-color;
+      }
+      &#learn-more {
+        background-color: white;
+      }
+      &:hover,
+      &:focus {
+        animation-name: bounce;
+        animation-duration: 1s;
+        animation-timing-function: cubic-bezier(0.28, 0.84, 0.42, 1);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+      @keyframes bounce {
+        0% {
+          transform: scale(1, 1) translateY(0);
+        }
+        10% {
+          transform: scale(1.1, 0.9) translateY(0);
+        }
+        30% {
+          transform: scale(0.9, 1.1) translateY(-0.5em);
+        }
+        50% {
+          transform: scale(1.05, 0.95) translateY(0);
+        }
+        57% {
+          transform: scale(1, 1) translateY(-0.05em);
+        }
+        64% {
+          transform: scale(1, 1) translateY(0);
+        }
+        100% {
+          transform: scale(1, 1) translateY(0);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@use "../variables/colors" as *;
+
+// Register page
+.register {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+
+  .form-container {
+    margin: 0.5rem;
+    padding: 2.5rem 3rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1rem;
+    display: grid;
+    width: clamp(18rem, 80%, 25rem);
+  }
+}

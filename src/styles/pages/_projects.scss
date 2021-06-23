@@ -1,0 +1,163 @@
+@use "../variables/colors" as *;
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 20rem;
+  position: relative;
+  padding: 2rem;
+  gap: 1.5rem;
+
+  &__new-button {
+    padding: 0.5em 2em;
+    margin: 0 auto;
+  }
+  .project {
+    background-color: white;
+    border-radius: 1em;
+    display: grid;
+    grid-template-areas:
+      "header"
+      "main"
+      "issues";
+    padding: 1.5rem;
+    margin: 1rem;
+    // border: 1px solid transparent;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.5s;
+
+    img {
+      width: 2.5rem;
+    }
+
+    button {
+      background-color: transparent;
+      color: $main-color;
+    }
+    &:hover,
+    &:focus {
+      box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.2);
+      // border: 1px solid $main-color;
+      .project__issues-open {
+        border: 1px $main-color solid;
+      }
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .container {
+      display: flex;
+      margin-left: auto;
+
+      .project__controls {
+        margin-right: 1rem;
+      }
+      .project__contrib {
+        display: flex;
+        align-items: center;
+        img {
+          display: inline-block;
+        }
+      }
+    }
+    &__description {
+      grid-area: main;
+      padding: 2rem;
+    }
+    &__issues-open {
+      grid-area: issues;
+      width: max-content;
+    }
+  }
+
+  aside {
+    .container {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: min-content;
+    }
+    .filters {
+      background-color: white;
+      border-radius: 0.35em;
+      padding: 1rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      h2 {
+        align-self: center;
+      }
+
+      &__search-input {
+        position: relative;
+        margin: 1rem;
+        img {
+          fill: $main-color;
+          top: 0;
+          right: 0;
+          position: absolute;
+          width: 1.8rem;
+        }
+        input {
+          border: none;
+          border-bottom: 1px solid $main-color;
+          padding: 0.3em 0.8em;
+          outline: none;
+          box-shadow: none;
+        }
+      }
+      &__team-buttons {
+        button {
+          background-color: $main-color;
+          color: white;
+
+          margin: 0.5rem;
+          border: 2px solid $main-color;
+          transition-property: background-color, color, transform;
+          transition-duration: 0.3s;
+          &:hover {
+            transform: scale(1.05);
+          }
+
+          &.active {
+            background-color: white;
+            color: $main-color;
+          }
+        }
+      }
+
+      &__issues-open {
+        padding: 0.5rem 1rem;
+        width: max-content;
+        align-self: center;
+        position: relative;
+
+        input[type="checkbox"] {
+          // Hijack the default checkbox
+          display: none;
+          & ~ ::before {
+            transition: background-color 0.4s;
+            position: absolute;
+            left: -1rem;
+            content: "";
+            width: 20px;
+            height: 20px;
+            border: 2px solid $main-color;
+            color: white;
+            line-height: 1.1;
+          }
+          &:hover ~ ::before {
+            background-color: #004e173a;
+          }
+
+          &:checked ~ ::before {
+            content: "✓";
+            background-color: $main-color;
+          }
+        }
+      }
+    }
+  }
+}
