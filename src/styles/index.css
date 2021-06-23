@@ -185,6 +185,89 @@ nav .login-form.hide {
   transform: scaleY(0.6);
 }
 
+button {
+  text-transform: lowercase;
+  background: #9b411a;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1.4rem;
+  padding: 0.2em 0.6em;
+  transition: all 0.2s;
+}
+button:hover, button:focus {
+  border: 1px solid #9b411a;
+  color: #9b411a;
+  background-color: white;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+form label {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1em;
+  color: #004e17;
+  font-size: 1.5rem;
+}
+form input {
+  font-size: 0.9rem;
+  margin-top: 0.2em;
+  padding: 0.3em 0.8em;
+  width: 100%;
+  border-radius: 0.2em;
+  border: 1px solid black;
+}
+form input + span::after,
+form textarea + span::after {
+  position: absolute;
+  top: -1.7em;
+  left: -1.2em;
+}
+form input.valid,
+form textarea.valid {
+  border-color: green;
+}
+form input.valid + span::after,
+form textarea.valid + span::after {
+  content: "✓";
+  color: green;
+}
+form input.invalid,
+form textarea.invalid {
+  border-color: #c21b1b;
+}
+form input.invalid + span::after,
+form textarea.invalid + span::after {
+  content: "X";
+  color: #c21b1b;
+}
+form span {
+  position: relative;
+  font-size: 0.8rem;
+  color: #c21b1b;
+}
+form button {
+  padding: 0.35em 1.5em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-self: center;
+  font-size: 1.2rem;
+}
+form textarea {
+  width: 100%;
+  font-size: 0.9rem;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 0.3em 0.8em;
+}
+
 .homepage {
   display: grid;
   background: url(../images/background.png), linear-gradient(-45deg, transparent, rgba(167, 167, 167, 0.568));
@@ -844,92 +927,9 @@ nav .login-form.hide {
   background-color: #eeeeee;
 }
 
-button {
-  text-transform: lowercase;
-  background: #9b411a;
-  color: white;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  font-size: 1.4rem;
-  padding: 0.2em 0.6em;
-  transition: all 0.2s;
-}
-button:hover, button:focus {
-  border: 1px solid #9b411a;
-  color: #9b411a;
-  background-color: white;
-  cursor: pointer;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-form label {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 1em;
-  color: #004e17;
-  font-size: 1.5rem;
-}
-form input {
-  font-size: 0.9rem;
-  margin-top: 0.2em;
-  padding: 0.3em 0.8em;
-  width: 100%;
-  border-radius: 0.2em;
-  border: 1px solid black;
-}
-form input + span::after,
-form textarea + span::after {
-  position: absolute;
-  top: -1.7em;
-  left: -1.2em;
-}
-form input.valid,
-form textarea.valid {
-  border-color: green;
-}
-form input.valid + span::after,
-form textarea.valid + span::after {
-  content: "✓";
-  color: green;
-}
-form input.invalid,
-form textarea.invalid {
-  border-color: #c21b1b;
-}
-form input.invalid + span::after,
-form textarea.invalid + span::after {
-  content: "X";
-  color: #c21b1b;
-}
-form span {
-  position: relative;
-  font-size: 0.8rem;
-  color: #c21b1b;
-}
-form button {
-  padding: 0.35em 1.5em;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  align-self: center;
-  font-size: 1.2rem;
-}
-form textarea {
-  width: 100%;
-  font-size: 0.9rem;
-  resize: none;
-  border-radius: 5px;
-  border: 1px solid black;
-  padding: 0.3em 0.8em;
-}
-
 main {
   background-color: #eeeeee;
   height: 100%;
   display: grid;
-  width: 98vw;
+  width: calc(100vw - 2rem);
 }/*# sourceMappingURL=index.css.map */

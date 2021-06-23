@@ -4,6 +4,8 @@
 
 // Components
 @use "./components/nav";
+@use "./components/button";
+@use "./components/form";
 
 //Pages
 @use "./pages/homepage";
@@ -21,96 +23,9 @@
   background-color: $bg-color;
 }
 
-// Buttons default
-button {
-  text-transform: lowercase;
-  background: $accent-color;
-  color: white;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  font-size: 1.4rem;
-  padding: 0.2em 0.6em;
-  transition: all 0.2s;
-  &:hover,
-  &:focus {
-    border: 1px solid $accent-color;
-    color: $accent-color;
-    background-color: white;
-    cursor: pointer;
-  }
-}
-
-// Forms default
-form {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  label {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 1em;
-    color: $main-color;
-    font-size: 1.5rem;
-  }
-  input {
-    font-size: 0.9rem;
-    margin-top: 0.2em;
-    padding: 0.3em 0.8em;
-    width: 100%;
-    border-radius: 0.2em;
-    border: 1px solid black;
-  }
-  input + span::after,
-  textarea + span::after {
-    position: absolute;
-    top: -1.7em;
-    left: -1.2em;
-  }
-  input.valid,
-  textarea.valid {
-    border-color: green;
-  }
-  input.valid + span::after,
-  textarea.valid + span::after {
-    content: "✓";
-    color: green;
-  }
-  input.invalid,
-  textarea.invalid {
-    border-color: $dark-red;
-  }
-  input.invalid + span::after,
-  textarea.invalid + span::after {
-    content: "X";
-    color: $dark-red;
-  }
-  span {
-    position: relative;
-    font-size: 0.8rem;
-    color: $dark-red;
-  }
-
-  button {
-    padding: 0.35em 1.5em;
-    width: fit-content;
-    align-self: center;
-    font-size: 1.2rem;
-  }
-  textarea {
-    width: 100%;
-    font-size: 0.9rem;
-    resize: none;
-    border-radius: 5px;
-    border: 1px solid black;
-    padding: 0.3em 0.8em;
-  }
-}
-
 main {
   background-color: $bg-color;
   height: 100%;
   display: grid;
-  width: 98vw;
+  width: calc(100vw - 2rem); //Leave room for scrollbar
 }
-
-

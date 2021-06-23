@@ -1,0 +1,20 @@
+@use "../variables/colors" as *;
+
+// Button default
+button {
+  text-transform: lowercase;
+  background: $accent-color;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1.4rem;
+  padding: 0.2em 0.6em;
+  transition: all 0.2s;
+  &:hover,
+  &:focus {
+    border: 1px solid $accent-color;
+    color: $accent-color;
+    background-color: white;
+    cursor: pointer;
+  }
+}
