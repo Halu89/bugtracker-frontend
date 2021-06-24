@@ -35,7 +35,16 @@ const Project = ({ project, setProject, history, removeProject }: Props) => {
   return (
     <div className="project" key={project._id}>
       <div className="project__header">
-        <h3 className="project__name">{project.name}</h3>
+        <h3
+          style={{ cursor: "pointer" }}
+          className="project__name"
+          onClick={() => {
+            setProject(project);
+            history.push(`/projects/${project._id}`);
+          }}
+        >
+          {project.name}
+        </h3>
         <div className="container">
           {showControls && (
             <div className="project__controls">

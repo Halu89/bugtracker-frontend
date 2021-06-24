@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams } from "react-router-dom";
 import useSend from "../../hooks/useSend";
 import { apiCall } from "../../utils";
 import { useGlobalContext } from "../../utils/context";

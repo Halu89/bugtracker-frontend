@@ -1,6 +1,21 @@
+@use "../variables/colors" as *;
+
 .docs {
-  p {
-    color: red;
-    font-size: 2rem;
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  aside {
+    // height: max-content;
+    background-color: gray;
+    ul {
+      position: sticky;
+      top: 0;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      text-decoration: none;
+      margin-bottom: 1rem;
+    }
   }
 }

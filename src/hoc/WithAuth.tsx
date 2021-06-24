@@ -1,5 +1,6 @@
-import { ReactElement, useEffect } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router";
+import { Redirect } from "react-router-dom";
 import { useGlobalContext } from "../utils/context";
 
 const useAuth = () => {
@@ -15,8 +16,11 @@ const useAuth = () => {
   return user || null;
 };
 
-const WithAuth = ({ component }: { component: ReactElement }) => {
-  return useAuth() && component;
+const withAuth = (Component: React.ElementType) => {
+  return (props: any) => {
+    const { user } = useGlobalContext();
+    return user ? <Component {...props} /> : <Redirect to="/login" />;
+  };
 };
 
-export default WithAuth;
+export default withAuth;

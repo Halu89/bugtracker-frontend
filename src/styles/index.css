@@ -914,9 +914,23 @@ form textarea {
   font-size: 1.2rem;
 }
 
-.docs p {
-  color: red;
-  font-size: 2rem;
+.docs {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+}
+.docs aside {
+  background-color: gray;
+}
+.docs aside ul {
+  position: sticky;
+  top: 0;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.docs aside a {
+  text-decoration: none;
+  margin-bottom: 1rem;
 }
 
 .App {
