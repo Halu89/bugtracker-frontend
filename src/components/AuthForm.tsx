@@ -47,7 +47,7 @@ const AuthForm = ({ type }: Props) => {
     labelArrays.forEach((field) => {
       //TODO : on the register page, the ids are not unique =>  useRef ?
       const input = document.getElementById(field);
-      console.log(input);
+
       if (!input) return;
       if (touched[field] && errors[field]) {
         input.classList.add("invalid");

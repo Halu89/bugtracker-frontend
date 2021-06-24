@@ -1,4 +1,9 @@
-import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+  Switch,
+} from "react-router-dom";
 import { useGlobalContext } from "./utils/context";
 
 //Components
@@ -17,64 +22,68 @@ import EditProjectForm from "./components/Projects/EditProjectForm";
 import NewIssueForm from "./components/Issues/NewIssueForm";
 import EditIssueForm from "./components/Issues/EditIssueForm";
 
+import withAuth, { PrivateRoute } from "./hoc/WithAuth";
+
 function App() {
-  const { cursor, user } = useGlobalContext();
+  const { cursor } = useGlobalContext();
 
   return (
     <Router>
       <div className="App">
         <Navbar />
         <main style={{ cursor: cursor }}>
-          {user && (
-            // Protected Routes
-            <>
-              <Route exact path="/projects/new">
-                <NewProjectForm />
-              </Route>
-              <Route exact path="/projects/:projectId/edit">
-                <EditProjectForm />
-              </Route>
-              <Route exact path="/projects/:projectId/new">
-                <NewIssueForm />
-              </Route>
-              <Route exact path="/projects/:projectId/:issueId/edit">
-                <EditIssueForm />
-              </Route>
-              <Route exact path="/projects/:projectId">
-                <IssuesList />
-              </Route>
-              <Route exact path="/projects">
-                <ProjectList />
-              </Route>
-            </>
-          )}
-          <Route exact path="/login">
-            <div className="register">
-              <h2>You need to be signed in to view this page</h2>
-              <AuthForm type="signin" />
-            </div>
-          </Route>
-          <Route exact path="/docs">
-            <Docs />
-          </Route>
-          <Route exact path="/register">
-            <div className="register">
-              <AuthForm type="signup" />
-              <section className="illustration">
-                <div className="registration">
-                  <h2>Simple and easy</h2>
-                  <h2>No email validation</h2>
-                  <h2>Get started in 20 seconds</h2>
-                </div>
-              </section>
-            </div>
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
+          <Switch>
+            {/* <PrivateRoute path="/projects/newbis" component={NewProjectForm} /> */}
+            <Route path="/projects/new" component={withAuth(NewProjectForm)} />
+            <Route
+              path="/projects/:projectId/edit"
+              component={withAuth(EditProjectForm)}
+            />
+            <Route
+              path="/projects/:projectId/new"
+              component={withAuth(NewIssueForm)}
+            />
+            <Route
+              path="/projects/:projectId/:issueId/edit"
+              component={withAuth(EditIssueForm)}
+            />
+            <Route
+              path="/projects/:projectId"
+              component={withAuth(IssuesList)}
+            />
+            <Route path="/projects" component={withAuth(ProjectList)} />
 
-          {/* Default route not found */}
-          <Redirect to="/" />
+            <Route path="/login">
+              <div className="register">
+                <h2>You need to be signed in to view this page</h2>
+                <AuthForm type="signin" />
+              </div>
+            </Route>
+            <Route path="/docs">
+              <Docs />
+            </Route>
+            <Route path="/register">
+              <div className="register">
+                <AuthForm type="signup" />
+                <section className="illustration">
+                  <div className="registration">
+                    <h2>Simple and easy</h2>
+                    <h2>No email validation</h2>
+                    <h2>Get started in 20 seconds</h2>
+                  </div>
+                </section>
+              </div>
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+            {/* Default route not found */}
+            <Route>
+              <div style={{ placeSelf: "center" }}>
+                Error 404 : We couldn't find that route{" "}
+              </div>
+            </Route>
+          </Switch>
         </main>
       </div>
     </Router>

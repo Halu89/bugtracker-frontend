@@ -13,7 +13,7 @@ function useAuthSubmit(
   const [message, setMessage] = useState<Tmessage>();
   const [user, setUser] = useState<IUser | undefined>();
   const [jwtToken, setToken] = useState<string | undefined>();
-  const history = useHistory();
+  const history = useHistory<any>();
 
   const submitForm = async () => {
     setStatus("pending");
@@ -33,7 +33,12 @@ function useAuthSubmit(
         console.log(receivedUser); //XXX
         setUser(receivedUser);
         setMessage(undefined);
-        history.push("/projects");
+        // Continue to the original page if the user was redirected to the login form
+        if (history.location.state) {
+          history.push(history.location.state.from);
+        } else {
+          history.push("/projects");
+        }
       }
     } catch (error) {
       setMessage({ type: "error", message: error.message });

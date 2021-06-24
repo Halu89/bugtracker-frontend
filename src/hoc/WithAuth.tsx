@@ -1,26 +1,52 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../utils/context";
 
 const useAuth = () => {
-  const history = useHistory();
   const { user } = useGlobalContext();
-
-  useEffect(() => {
-    if (!user) {
-      history.push("/login");
-    }
-  }, [user, history]);
-
   return user || null;
 };
 
 const withAuth = (Component: React.ElementType) => {
   return (props: any) => {
     const { user } = useGlobalContext();
-    return user ? <Component {...props} /> : <Redirect to="/login" />;
+    const location = useLocation();
+    return user ? (
+      <Component {...props} />
+    ) : (
+      <Redirect
+        to={{ pathname: "/login", state: { from: location } }}
+      />
+    );
   };
 };
+
+export function PrivateRoute({
+  component,
+  ...rest
+}: {
+  component: JSX.Element;
+}) {
+  let user = useAuth();
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        user ? (
+          component
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 export default withAuth;
