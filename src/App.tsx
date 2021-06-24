@@ -1,9 +1,4 @@
-import {
-  Route,
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { useGlobalContext } from "./utils/context";
 
 //Components
@@ -22,7 +17,8 @@ import EditProjectForm from "./components/Projects/EditProjectForm";
 import NewIssueForm from "./components/Issues/NewIssueForm";
 import EditIssueForm from "./components/Issues/EditIssueForm";
 
-import withAuth, { PrivateRoute } from "./hoc/WithAuth";
+import withAuth from "./hoc/WithAuth";
+
 
 function App() {
   const { cursor } = useGlobalContext();
@@ -33,7 +29,6 @@ function App() {
         <Navbar />
         <main style={{ cursor: cursor }}>
           <Switch>
-            {/* <PrivateRoute path="/projects/newbis" component={NewProjectForm} /> */}
             <Route path="/projects/new" component={withAuth(NewProjectForm)} />
             <Route
               path="/projects/:projectId/edit"
@@ -80,7 +75,7 @@ function App() {
             {/* Default route not found */}
             <Route>
               <div style={{ placeSelf: "center" }}>
-                Error 404 : We couldn't find that route{" "}
+                Error 404 : We couldn't find that route.
               </div>
             </Route>
           </Switch>

@@ -1,11 +1,11 @@
 import jwtDecode from "jwt-decode";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { IIssue, IProject, IUser } from "../types";
 
 const AppContext = React.createContext<any>({ user: undefined });
 type Props = { children: React.ReactNode };
 
-// Needs to be before the component render to fix auth on page refresh 
+// Needs to be before the component render to fix auth on page refresh
 let user: IUser | {};
 if (localStorage.getItem("token")) {
   try {
@@ -20,7 +20,7 @@ if (localStorage.getItem("token")) {
 }
 
 const AppProvider = ({ children }: Props): JSX.Element => {
-  const [_, setUser] = useState<IUser | undefined>();
+  const [, setUser] = useState<IUser | undefined>();
   const [currentProject, setCurrentProject] = useState<IProject | undefined>();
   const [issue, setIssue] = useState<IIssue | undefined>();
   const [errors, setErrors] = useState();

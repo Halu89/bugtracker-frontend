@@ -1,6 +1,3 @@
-import jwtDecode from "jwt-decode";
-import { useEffect } from "react";
-import { useHistory } from "react-router";
 import { Redirect, Route, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../utils/context";
 

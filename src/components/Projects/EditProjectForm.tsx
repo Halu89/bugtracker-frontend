@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import useSend from "../../hooks/useSend";
-import { IProject, IUser } from "../../types";
+import { IProject } from "../../types";
 import { apiCall } from "../../utils";
 import { useGlobalContext } from "../../utils/context";
 import TextInput, { TextArea } from "../FormInputs";
@@ -14,12 +14,12 @@ type ProjectFormTouched = { name: boolean; description: boolean };
 type FormFields = "name" | "description";
 
 const validate = {
-  name: (a: string) => {
-    if (!a.trim()) return "Please fill out this field";
+  name: (txt: string) => {
+    if (!txt.trim()) return "Please fill out this field";
     return false;
   },
-  description: (a: string) => {
-    if (!a.trim()) return "Please fill out this field";
+  description: (txt: string) => {
+    if (!txt.trim()) return "Please fill out this field";
     return false;
   },
 };
@@ -39,8 +39,7 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
     description: false,
   });
 
-  // Populate the edit fields in case we did
-  // not get to the page via the app and the projects context is not populated
+  // Get the projects details (populate the form fields, and get the team and admins member)
   const params = useParams() as { projectId: string };
   useEffect(() => {
     const { projectId } = params;
@@ -74,7 +73,7 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
     });
   }, [errors, state, touched]);
 
-  const { status, response, error, sendRequest: sendNewProject } = useSend();
+  const { status, response, error, sendRequest: updateProject } = useSend();
 
   const history = useHistory();
   useEffect(() => {
@@ -82,6 +81,7 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
       history.push("/projects");
     }
   }, [response, history]);
+
   const handleChange = (
     e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -132,11 +132,9 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
     if (isError || isEmpty) return;
 
     // Submit
-    sendNewProject(`/projects/${currentProject?._id}`, "PUT", state).then(
-      () => {
-        setState({ name: "", description: "" });
-      }
-    );
+    updateProject(`/projects/${currentProject?._id}`, "PUT", state).then(() => {
+      setState({ name: "", description: "" });
+    });
   };
 
   useEffect(() => {
@@ -179,11 +177,7 @@ const EditProjectForm: React.FC<NewProjectFormProps> = () => {
         </form>
       </div>
 
-      <ManageMembers
-        projectId={proj?._id}
-        members={proj?.team as IUser[] | undefined}
-        admins={proj?.admins as IUser[] | undefined}
-      />
+      <ManageMembers project={proj} />
     </div>
   );
 };

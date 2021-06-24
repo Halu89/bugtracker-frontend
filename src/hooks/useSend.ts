@@ -26,6 +26,7 @@ function useSend() {
         setError(jsonData);
       } else {
         setResponse(jsonData);
+        return jsonData;
       }
     } catch (e) {
       setStatus("idle");

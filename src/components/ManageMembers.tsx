@@ -1,17 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import useSend from "../hooks/useSend";
-import { IUser } from "../types";
+import { IProject } from "../types";
 
 const validate = (val: string) => {
   if (val) return false;
   return "You need to provide a username";
 };
 interface Props {
-  projectId: string | undefined;
-  members: IUser[] | undefined;
-  admins: IUser[] | undefined;
+  project: IProject | undefined;
 }
-const ManageMembers = ({ projectId, members, admins }: Props) => {
+
+type Init = {
+  type: string;
+  payload: IProject;
+};
+
+type Manage = {
+  type: string;
+  payload: string;
+};
+
+function reducer(
+  state: { members: Set<string>; admins: Set<string> },
+  action: Init | Manage
+): any {
+  switch (action.type) {
+    case "INIT": {
+      const { team, admins } = action.payload as IProject;
+      return {
+        ...state,
+        members: new Set(team.map((user: any) => user.username)),
+        admins: new Set(admins.map((user: any) => user.username)),
+      };
+    }
+
+    case "ADD_MEMBER": {
+      const username = action.payload as string;
+      return { ...state, members: state.members.add(username) };
+    }
+    case "REMOVE_MEMBER": {
+      const username = action.payload as string;
+      const newSet = new Set(state.members);
+      newSet.delete(username);
+      return { ...state, members: newSet };
+    }
+    case "ADD_ADMIN": {
+      const username = action.payload as string;
+      return { ...state, admins: state.admins.add(username) };
+    }
+    case "REMOVE_ADMIN": {
+      const username = action.payload as string;
+      const newSet = new Set(state.admins);
+      newSet.delete(username);
+      return { ...state, admins: newSet };
+    }
+    default:
+      return state;
+  }
+}
+
+const ManageMembers = ({ project }: Props) => {
   const [displayBtn, setDisplayBTN] = useState(false);
   const [type, setType] = useState<"member" | "admin">("member");
   const { sendRequest, error: reqError, status } = useSend();
@@ -19,57 +67,43 @@ const ManageMembers = ({ projectId, members, admins }: Props) => {
   const [touched, setTouched] = useState(false);
   const [error, setError] = useState<string | false>(false);
 
-  const [adminsArray, setAdminsArray] = useState<string[]>([]);
-  useEffect(() => {
-    if (admins) {
-      setAdminsArray(admins.map((user) => user.username));
-    }
-  }, [admins]);
+  const [state, dispatch] = useReducer(reducer, { members: [], admins: [] });
 
-  const [memberArray, setMemberArray] = useState<string[]>([]);
   useEffect(() => {
-    if (members) {
-      setMemberArray(members.map((user) => user.username));
+    if (project) {
+      dispatch({ type: "INIT", payload: project });
     }
-  }, [members]);
+  }, [project]);
 
   const path = {
     add: type === "admin" ? "/addAdmin" : "/addUser",
     remove: type === "admin" ? "/removeAdmin" : "/removeUser",
   };
 
+  const membersArray: string[] = Array.from(state.members);
+  const adminsArray: string[] = Array.from(state.admins);
+
   const execute = (action: "add" | "remove") => {
     if (!username) return;
 
-    sendRequest(`/projects/${projectId}${path[action]}`, "PUT", {
-      username,
-    }).then(() => {
-      //Update the interface
-      setTouched(false);
-      setError(false);
+    const dispatchType =
+      action === "add"
+        ? type === "admin"
+          ? "ADD_ADMIN"
+          : "ADD_MEMBER"
+        : type === "admin"
+        ? "REMOVE_ADMIN"
+        : "REMOVE_MEMBER";
 
-      setUsername("");
-      if (type === "member") {
-        if (action === "add") {
-          // Avoid duplicates
-          const newMembersArray = Array.from(
-            new Set([...memberArray, username])
-          );
-          setMemberArray(newMembersArray);
-        }
-        if (action === "remove") {
-          setMemberArray(memberArray.filter((name) => name !== username));
-        }
-      }
-      if (type === "admin") {
-        // Avoid duplicates
-        if (action === "add") {
-          const newArr = Array.from(new Set([...adminsArray, username]));
-          setAdminsArray(newArr);
-        }
-        if (action === "remove") {
-          setAdminsArray(adminsArray.filter((name) => name !== username));
-        }
+    sendRequest(`/projects/${project?._id}${path[action]}`, "PUT", {
+      username,
+    }).then((resp) => {
+      // resp is only defined if we didn't get an error
+      if (resp) {
+        dispatch({ type: dispatchType, payload: username });
+        setTouched(false);
+        setError(false);
+        setUsername("");
       }
     });
   };
@@ -78,8 +112,9 @@ const ManageMembers = ({ projectId, members, admins }: Props) => {
   useEffect(() => {
     if (displayBtn) {
       document.getElementById("username")?.focus();
+      setTouched(false);
     }
-  }, [displayBtn]);
+  }, [displayBtn, type]);
 
   // Input custom styles depending on validation
   useEffect(() => {
@@ -100,7 +135,7 @@ const ManageMembers = ({ projectId, members, admins }: Props) => {
       <div className="project__members">
         <div className="members">
           Members :{" "}
-          {memberArray?.map((username) => (
+          {membersArray.map((username) => (
             <span key={username} className="usertag">
               {username}{" "}
             </span>
@@ -108,7 +143,7 @@ const ManageMembers = ({ projectId, members, admins }: Props) => {
         </div>
         <div className="admins">
           Admins :{" "}
-          {adminsArray.map((username) => (
+          {adminsArray?.map((username: string) => (
             <span key={username} className="usertag">
               {username}
             </span>
