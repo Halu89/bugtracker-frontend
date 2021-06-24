@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { Redirect, Route, useLocation } from "react-router-dom";
@@ -12,12 +13,11 @@ const withAuth = (Component: React.ElementType) => {
   return (props: any) => {
     const { user } = useGlobalContext();
     const location = useLocation();
+    
     return user ? (
       <Component {...props} />
     ) : (
-      <Redirect
-        to={{ pathname: "/login", state: { from: location } }}
-      />
+      <Redirect to={{ pathname: "/login", state: { from: location } }} />
     );
   };
 };

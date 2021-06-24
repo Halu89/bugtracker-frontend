@@ -66,7 +66,7 @@ const IssuesList: React.FC<Props> = () => {
     title: "",
     statusText: "",
     openIssues: true,
-    closedIssues: true,
+    closedIssues: false,
     assignedToMe: false,
   });
   //Populate the project in case we refresh
