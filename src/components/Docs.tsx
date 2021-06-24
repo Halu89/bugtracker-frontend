@@ -1,5 +1,14 @@
 import newProject from "../images/tutorial/new_project.png";
 import firstProject from "../images/tutorial/first_project.png";
+import editProject from "../images/tutorial/edit_project.png";
+import addAdmin from "../images/tutorial/add_admin.png";
+import addMember from "../images/tutorial/add_member.png";
+import afterProjectEdit from "../images/tutorial/After_project_edit.png";
+import firstIssue from "../images/tutorial/first_issue.png";
+import issueFromMember from "../images/tutorial/issue_from_member.png";
+import projectFromMember from "../images/tutorial/project_from_member.png";
+import statusUpdated from "../images/tutorial/status_updated.png";
+import teamRecap from "../images/tutorial/team_recap.png";
 
 const Docs = () => {
   return (
@@ -24,9 +33,10 @@ const Docs = () => {
             </ul>
           </li>
           <li>
-            <a href="#features">Tech Stack</a>
+            <a href="#conclusion">Conclusion</a>
           </li>
         </ul>
+        {/* <button>Back to top</button> */}
       </aside>
       <div className="docs__main">
         <h1>Documentation</h1>
@@ -97,19 +107,99 @@ const Docs = () => {
             </p>
             <p>
               There, we can edit our project title, description, and see a list
-              of all the project members and admins, as well as add or remove
+              of all the project's members and admins, as well as add or remove
               users from our project.
             </p>
+            <img src={editProject} alt="" />
+            <p>Since we're here, let's add a user to our project</p>
+            <p>
+              I click on the members button, and I can add a new user to my team
+            </p>
+            <img src={addMember} alt="" />
+            <p>
+              Might aswell add an admin too. Let's click on the admins button
+              and add an admin to our project.
+            </p>
+            <img src={addAdmin} alt="" />
+            <p>
+              As you can see, our new team additions are reflected on the Team
+              display.
+            </p>
+            <img src={teamRecap} alt="" />
+            <p>
+              To remove a user from the project, nothing more simple, just click
+              on the admins or members button, write a username, and click
+              remove.
+            </p>
+            <p>
+              Ok, we made our edit to the project's description, and you can see
+              that our project now has 3 contributors listed.
+            </p>
+            <img src={afterProjectEdit} alt="" />
           </section>
           <section id="issues">
             <h3>Issues</h3>
             <p>
-              The authentication is handled with JSON Web Tokens (JWT). On
-              login, the user informations are sent to the server wich verify
-              the credentials and returns a signed JWT. The token is then added
-              to the Local Storage, and added to every subsequent requests. The
-              server verifies that the token is there and hasn't been tampered
-              with.
+              Time to create our first issue. Click on the issues button, and
+              you're now on your project's page.
+            </p>
+            <p>
+              Here you can see all the issues you created associated with that
+              project, filter them by name, status text, etc.
+            </p>
+            <p>
+              Let's create our first issue. Just like before with the project,
+              click on the new issue button, and give a title and a description.
+            </p>
+            <p>
+              Okay, our first issue is created. Just like projects, I can edit,
+              or delete the issue, but as the project's author, I can also
+              manage the members assigned to my issue, or close it.
+            </p>
+            <img src={firstIssue} alt="" />
+            <p>
+              To assign someone to the issue, I just need to click manage, and
+              like before, provide a username. Let's put a cookie specialist on
+              the case.
+            </p>
+            <p>
+              Let's also update the status of the issue. To do that, I click on
+              the edit button, and simply write my status and click submit.
+            </p>
+            <img src={statusUpdated} alt="" />
+            <p>
+              You're free to have status as diverse as you want, but a good idea
+              might be to have a few predetermined status you can use to
+              communicate with your team, like :
+            </p>
+            <ul>
+              <li>Just started</li>
+              <li>Waiting for tests</li>
+              <li>Ready to deploy</li>
+              <li>etc...</li>
+            </ul>
+            <p>
+              Rudolph is only a team member. As such, he can't assign or delete
+              issues, here's what a project on his projects page looks like.
+            </p>
+            <img src={projectFromMember} alt="" />
+            <p>
+              And here's the issues page. As you can see, he can still edit
+              issues to update the status, assign or remove himself from an
+              issue, close an issue, or create a new one, but he can't manage
+              users assigned to the issue, or delete one.
+            </p>
+            <img src={issueFromMember} alt="" />
+          </section>
+          <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>
+              If you have any questions, feel free to email me at
+              corentin.briand@gmail.com. I'm also looking for a job, and you can
+              see all my recent projects{" "}
+              <a href="http://cbriand.fr" id="portfolio">
+                on my personal website
+              </a>
             </p>
           </section>
         </section>

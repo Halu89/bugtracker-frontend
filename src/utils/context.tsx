@@ -6,21 +6,21 @@ const AppContext = React.createContext<any>({ user: undefined });
 type Props = { children: React.ReactNode };
 
 // Needs to be before the component render to fix auth on page refresh
-let user: IUser | {};
+let userSession: IUser | undefined;
 if (localStorage.getItem("token")) {
   try {
     const { id, username } = jwtDecode<{ id: string; username: string }>(
       localStorage.token
     );
-    user = { id, username, _id: id };
+    userSession = { id, username, _id: id };
   } catch (e) {
     //If the token has been tampered with
-    user = {};
+    userSession = undefined;
   }
 }
 
 const AppProvider = ({ children }: Props): JSX.Element => {
-  const [, setUser] = useState<IUser | undefined>();
+  const [user, setUser] = useState<IUser | undefined>(userSession);
   const [currentProject, setCurrentProject] = useState<IProject | undefined>();
   const [issue, setIssue] = useState<IIssue | undefined>();
   const [errors, setErrors] = useState();

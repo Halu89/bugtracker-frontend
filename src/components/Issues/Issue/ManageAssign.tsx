@@ -85,7 +85,7 @@ const ManageAssign: React.FC<ManageAssignProps> = ({
           // style={{ marginLeft: "auto" }}
           onClick={() => setShowManage(false)}
         >
-          Close
+          X
         </button>
       </div>
     </div>
