@@ -3,6 +3,7 @@
 .issues {
   display: grid;
   grid-template-columns: 1fr 24rem;
+  padding: 2rem 10%;
 
   .container {
     .issues__header {

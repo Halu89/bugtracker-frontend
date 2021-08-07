@@ -382,6 +382,7 @@ form textarea {
 .issues {
   display: grid;
   grid-template-columns: 1fr 24rem;
+  padding: 2rem 10%;
 }
 .issues .container .issues__header {
   background-color: white;
@@ -635,7 +636,7 @@ form textarea {
   display: grid;
   grid-template-columns: 1fr 20rem;
   position: relative;
-  padding: 2rem;
+  padding: 2rem 10%;
   gap: 1.5rem;
 }
 .projects__new-button {
